@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimary">#4B4944</color>
+    <color name="colorPrimaryDark">#23221D</color>
+    <color name="colorAccent">#358DED</color>
+
+    <color name="item_photo_title">#CC000000</color>
+    <color name="item_photo_date">#FFB1B1B2</color>
 </resources>
