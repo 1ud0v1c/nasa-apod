@@ -6,16 +6,16 @@ import com.squareup.moshi.Json
  * Result of the NASA APOD API
  * @see: NasaAPI
  */
-data class Photo(val date: String,
-				 val copyright: String,
+data class Photo(val title: String,
+				 val date: String,
+				 val url: String,
+				 val hdurl: String,
+				 val explanation: String,
 				 @field:Json(name = "media_type")
 				 val mediaType: String,
-				 val hdurl: String,
 				 @field:Json(name = "service_version")
 				 val serviceVersion: String,
-				 val explanation: String,
-				 val title: String,
-				 val url: String) {
+				 val copyright: String) {
 	companion object {
 		const val VIDEO_MEDIA_TYPE = "video"
 	}
