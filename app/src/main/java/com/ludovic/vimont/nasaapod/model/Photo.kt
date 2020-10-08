@@ -14,7 +14,7 @@ data class Photo(val title: String,
 				 @field:Json(name = "media_type")
 				 val mediaType: String,
 				 @field:Json(name = "service_version")
-				 val serviceVersion: String,
+				 val thumbnailUrl: String,
 				 val copyright: String) {
 	companion object {
 		const val VIDEO_MEDIA_TYPE = "video"

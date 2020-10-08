@@ -7,21 +7,14 @@ import com.ludovic.vimont.nasaapod.model.Photo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class HomeViewModel: ViewModel(), HomeRepository.HomeRepositoryListener {
+class HomeViewModel: ViewModel() {
     private val homeRepository = HomeRepository()
-    val photo = MutableLiveData<Photo>()
-
-    init {
-        homeRepository.homeRepositoryListener = this
-    }
+    val photos = MutableLiveData<List<Photo>>()
 
     fun loadNasaPhotos() {
         viewModelScope.launch(Dispatchers.Default) {
-            homeRepository.fetchNasaPhotos()
+            val fetchedPhotos: List<Photo> = homeRepository.fetchNasaPhotos()
+            photos.postValue(fetchedPhotos)
         }
-    }
-
-    override fun onPhotoLoaded(newPhoto: Photo) {
-        photo.postValue(newPhoto)
     }
 }

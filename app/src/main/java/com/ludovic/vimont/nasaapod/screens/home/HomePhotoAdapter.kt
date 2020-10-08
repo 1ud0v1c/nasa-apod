@@ -59,9 +59,9 @@ class HomePhotoAdapter(private val photos: ArrayList<Photo>): RecyclerView.Adapt
         return photos.size
     }
 
-    fun addItem(photo: Photo) {
+    fun addItems(newPhotos: List<Photo>) {
         val lastPhotosSize: Int = photos.size
-        photos.add(photo)
+        photos.addAll(newPhotos)
         val newPhotosSize: Int = photos.size
         if (newPhotosSize > lastPhotosSize) {
             notifyItemRangeChanged(lastPhotosSize, newPhotosSize)

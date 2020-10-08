@@ -25,8 +25,8 @@ class HomeActivity: AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(applicationContext, RecyclerView.VERTICAL, false)
 
         viewModel.loadNasaPhotos()
-        viewModel.photo.observe(this, {
-            photoAdapter.addItem(it)
+        viewModel.photos.observe(this, {
+            photoAdapter.addItems(it)
         })
     }
 }

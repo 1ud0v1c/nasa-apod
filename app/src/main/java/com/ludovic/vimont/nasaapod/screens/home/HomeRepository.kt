@@ -6,18 +6,13 @@ import com.ludovic.vimont.nasaapod.model.Photo
 import retrofit2.Response
 
 class HomeRepository {
-    interface HomeRepositoryListener {
-        fun onPhotoLoaded(newPhoto: Photo)
-    }
-    var homeRepositoryListener: HomeRepositoryListener? = null
-
-    suspend fun fetchNasaPhotos() {
-        val thirtyDays: List<String> = TimeHelper.getLastDays()
-        for (currentDay: String in thirtyDays) {
-            val responsePhoto: Response<Photo> = RemoteService.nasaAPI.getPhoto(currentDay)
-            responsePhoto.body()?.let { photo: Photo ->
-                homeRepositoryListener?.onPhotoLoaded(photo)
-            }
+    suspend fun fetchNasaPhotos(): List<Photo> {
+        val photos = ArrayList<Photo>()
+        val startDate: String = TimeHelper.getSpecificDay()
+        val responsePhoto: Response<List<Photo>> = RemoteService.nasaAPI.getPhotos(startDate)
+        responsePhoto.body()?.let { receivedPhotos: List<Photo> ->
+            photos.addAll(receivedPhotos.reversed())
         }
+        return photos
     }
 }

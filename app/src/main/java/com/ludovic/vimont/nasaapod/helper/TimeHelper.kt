@@ -3,24 +3,24 @@ package com.ludovic.vimont.nasaapod.helper
 import com.ludovic.vimont.nasaapod.api.NasaAPI
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 object TimeHelper {
-    /**
-     * Return a formatted list of string date based on the current day minus the number of previous
-     * days to fetch.
-     * For example: today=07/10/2020, numberOfDaysToFetch=3, result=[2020-10-07, 2020-10-06, 2020-10-05]
-     */
-    fun getLastDays(numberOfDaysToFetch: Int = NasaAPI.NUMBER_OF_DAY_TO_FETCH): List<String> {
-        val dates = ArrayList<String>()
+    fun getToday(): String {
         val today = Date()
         val dateFormat = SimpleDateFormat(NasaAPI.API_DATE_FORMAT, Locale.getDefault())
-        for (i: Int in numberOfDaysToFetch - 1 downTo 0) {
-            val calendar: Calendar = GregorianCalendar()
-            calendar.time = today
-            calendar.add(Calendar.DAY_OF_MONTH, -i)
-            dates.add(dateFormat.format(calendar.time))
-        }
-        return dates.reversed()
+        return dateFormat.format(today.time)
+    }
+
+    /**
+     * Help us to determine the start_date of the request used in the NasaAPI given an interval of day.
+     * We subtract 1 to this interval to exclude the end_date, which is today.
+     */
+    fun getSpecificDay(numberOfDaysToFetch: Int = NasaAPI.NUMBER_OF_DAY_TO_FETCH): String {
+        val today = Date()
+        val dateFormat = SimpleDateFormat(NasaAPI.API_DATE_FORMAT, Locale.getDefault())
+        val calendar: Calendar = GregorianCalendar()
+        calendar.time = today
+        calendar.add(Calendar.DAY_OF_MONTH, -(numberOfDaysToFetch - 1))
+        return dateFormat.format(calendar.time)
     }
 }
