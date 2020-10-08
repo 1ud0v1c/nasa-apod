@@ -8,17 +8,15 @@ import org.koin.core.KoinComponent
 import org.koin.core.inject
 import retrofit2.Response
 
-class HomeRepository(): KoinComponent {
+class HomeRepository: KoinComponent {
     private val nasaAPI: NasaAPI by inject()
     private val photoDao: PhotoDao by inject()
 
     suspend fun fetchNasaPhotos(): List<Photo> {
         val cachedPhotos: List<Photo> = photoDao.getAll()
         if (cachedPhotos.isNotEmpty()) {
-            println("load from DB, cachedPhotos size: ${cachedPhotos.size}")
             return cachedPhotos
         }
-        println("load from Internet")
         val photos = ArrayList<Photo>()
         val startDate: String = TimeHelper.getSpecificDay()
         val responsePhoto: Response<List<Photo>> = nasaAPI.getPhotos(startDate)

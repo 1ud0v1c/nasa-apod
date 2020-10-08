@@ -5,11 +5,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.ludovic.vimont.nasaapod.NasaApplication
 import com.ludovic.vimont.nasaapod.R
 import com.ludovic.vimont.nasaapod.databinding.ActivityMainBinding
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import kotlin.collections.ArrayList
 
 class HomeActivity: AppCompatActivity() {
