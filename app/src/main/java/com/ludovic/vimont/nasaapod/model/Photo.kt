@@ -1,24 +1,30 @@
 package com.ludovic.vimont.nasaapod.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 
 /**
  * Result of the NASA APOD API
  * @see: NasaAPI
  */
+@Entity
 data class Photo(val title: String,
 				 val date: String,
 				 val url: String,
-				 val hdurl: String,
+				 val hdurl: String?,
 				 val explanation: String,
 				 @field:Json(name = "media_type")
 				 val mediaType: String,
 				 @field:Json(name = "service_version")
-				 val thumbnailUrl: String,
-				 val copyright: String) {
+				 val serviceVersion: String,
+				 val copyright: String?) {
 	companion object {
 		const val VIDEO_MEDIA_TYPE = "video"
 	}
+
+	@PrimaryKey(autoGenerate = true)
+	var photoId: Int = 0
 
 	/**
 	 * After analysis, the API, we can have two different type of media:
