@@ -2,8 +2,13 @@
 <resources>
     <color name="colorPrimary">#4B4944</color>
     <color name="colorPrimaryDark">#23221D</color>
-    <color name="colorAccent">#358DED</color>
+    <color name="colorAccent">#42D5DC</color>
+    <color name="colorAccentDark">#25B5DC</color>
+    <color name="colorAccentDarkWithOpacity">#5925B5DC</color>
 
-    <color name="item_photo_title">#CC000000</color>
-    <color name="item_photo_date">#FFB1B1B2</color>
+    <color name="colorWhite">#FFFFFFFF</color>
+    <color name="colorGray">#FF8C8C8C</color>
+
+    <color name="itemPhotoTitle">#CC000000</color>
+    <color name="itemPhotoDate">#FFB1B1B2</color>
 </resources>

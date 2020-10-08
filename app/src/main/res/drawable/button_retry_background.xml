@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <layer-list>
+            <item android:top="2dp" android:left="2dp" android:right="2dp">
+                <shape>
+                    <corners android:radius="@dimen/home_activity_button_retry_border_radius" />
+                    <solid android:color="@color/colorAccentDarkWithOpacity" />
+                </shape>
+            </item>
+            <item android:bottom="1dp">
+                <shape android:shape="rectangle">
+                    <corners android:radius="@dimen/home_activity_button_retry_border_radius" />
+                    <gradient android:angle="45"
+                        android:startColor="@color/colorPrimary"
+                        android:endColor="@color/colorPrimaryDark"
+                        android:type="linear" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    <item>
+        <layer-list>
+            <item android:top="2dp" android:left="2dp" android:right="2dp">
+                <shape>
+                    <corners android:radius="@dimen/home_activity_button_retry_border_radius" />
+                    <solid android:color="@color/colorAccentDarkWithOpacity" />
+                </shape>
+            </item>
+            <item android:bottom="1dp">
+                <shape android:shape="rectangle">
+                    <corners android:radius="@dimen/home_activity_button_retry_border_radius" />
+                    <gradient android:angle="45"
+                        android:startColor="@color/colorAccent"
+                        android:endColor="@color/colorAccentDark"
+                        android:type="linear" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>

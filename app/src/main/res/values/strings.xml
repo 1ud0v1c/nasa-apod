@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">NasaApod</string>
 
+    <string name="action_retry">Retry</string>
+
     <string name="home_activity_title">Last 30 astronomical photos</string>
     <string name="home_activity_photo_content_description">Nasa photo of the day</string>
+    <string name="home_activity_no_internet_title">Connection Failed</string>
+    <string name="home_activity_no_internet_description">Could not connect to the network.\nPlease check and try again.</string>
+    <string name="home_activity_image_view_error_state_content_description">Home Activity Image Error State</string>
 </resources>

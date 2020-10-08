@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/activity_horizontal_little_margin"
             android:layout_weight="1"
-            android:textColor="@color/item_photo_title"
+            android:textColor="@color/itemPhotoTitle"
             android:textSize="@dimen/item_photo_title_text_size"
             android:textStyle="bold" />
 
@@ -28,7 +28,7 @@
             android:id="@+id/text_view_photo_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/item_photo_date"
+            android:textColor="@color/itemPhotoDate"
             android:textSize="@dimen/item_photo_date_text_size" />
 
     </LinearLayout>
