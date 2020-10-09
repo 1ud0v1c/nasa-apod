@@ -19,9 +19,12 @@
 
     <!-- DetailActivity -->
     <string name="detail_activity_explanation_title">Explanation</string>
+    <string name="detail_activity_explanation">\t\t%s</string>
     <string name="detail_activity_photo_date">Photo taken: %s</string>
     <string name="detail_activity_copyright">Copyright: %s</string>
+    <string name="detail_activity_share_subject">"Share APOD of: %s</string>
     <string name="detail_activity_image_content_description">DetailActivity selected image</string>
-    <string name="detail_activity_download_content_description">DetailActivity download button</string>
+    <string name="detail_activity_wallpaper_content_description">DetailActivity set as wallpaper button</string>
     <string name="detail_activity_share_content_description">DetailActivity share button</string>
+    <string name="detail_activity_download_in_progress">Download in progress</string>
 </resources>

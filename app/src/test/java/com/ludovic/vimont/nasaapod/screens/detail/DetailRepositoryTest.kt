@@ -2,16 +2,13 @@ package com.ludovic.vimont.nasaapod.screens.detail
 
 import android.os.Build
 import com.ludovic.vimont.nasaapod.MockModel
-import com.ludovic.vimont.nasaapod.api.NasaAPI
 import com.ludovic.vimont.nasaapod.db.PhotoDao
 import com.ludovic.vimont.nasaapod.model.Photo
-import com.ludovic.vimont.nasaapod.screens.home.HomeRepository
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.core.get
 import org.koin.test.AutoCloseKoinTest
 import org.koin.test.inject
 import org.robolectric.RobolectricTestRunner
@@ -22,7 +19,11 @@ import org.robolectric.annotation.Config
 class DetailRepositoryTest : AutoCloseKoinTest() {
     private val googleURL = "https://google.fr/"
     private val appleURL = "https://apple.com"
-    private val mediaType = "video"
+    private val imageMediaType = "image"
+    private val videoMediaType = "video"
+    private val firstDate = "2020-10-07"
+    private val secondDate = "2020-10-08"
+
     private val photos = ArrayList<Photo>()
     private val photoDao: PhotoDao by inject()
     private lateinit var detailRepository: DetailRepository
@@ -30,19 +31,19 @@ class DetailRepositoryTest : AutoCloseKoinTest() {
     @Before
     fun setUp() {
         detailRepository = DetailRepository()
-        photos.add(MockModel.buildPhoto(googleURL))
-        photos.add(MockModel.buildPhoto(appleURL, mediaType))
+        photos.add(MockModel.buildPhoto(googleURL, imageMediaType, firstDate))
+        photos.add(MockModel.buildPhoto(appleURL, videoMediaType, secondDate))
     }
 
     @Test
     fun testGetPhoto() = runBlocking {
         photoDao.insert(photos)
-        val photo: Photo = detailRepository.getPhoto(1)
+        val photo: Photo = detailRepository.getPhoto(firstDate)
         Assert.assertEquals(googleURL, photo.url)
-        Assert.assertEquals("image", photo.mediaType)
+        Assert.assertEquals(imageMediaType, photo.mediaType)
 
-        val secondPhoto: Photo = detailRepository.getPhoto(2)
+        val secondPhoto: Photo = detailRepository.getPhoto(secondDate)
         Assert.assertEquals(appleURL, secondPhoto.url)
-        Assert.assertEquals(mediaType, secondPhoto.mediaType)
+        Assert.assertEquals(videoMediaType, secondPhoto.mediaType)
     }
 }

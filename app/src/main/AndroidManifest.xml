@@ -22,6 +22,5 @@
         </activity>
 
         <activity android:name=".screens.detail.DetailActivity" />
-
     </application>
 </manifest>

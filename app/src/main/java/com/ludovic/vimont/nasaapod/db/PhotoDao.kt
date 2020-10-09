@@ -15,8 +15,8 @@ interface PhotoDao {
     @Query("SELECT * FROM photo")
     suspend fun getAll(): List<Photo>
 
-    @Query("SELECT * FROM photo WHERE photoId=:photoId")
-    suspend fun get(photoId: Int): Photo
+    @Query("SELECT * FROM photo WHERE date=:date")
+    suspend fun get(date: String): Photo
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(photos: List<Photo>)

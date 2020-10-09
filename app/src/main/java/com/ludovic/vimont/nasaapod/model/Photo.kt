@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.ludovic.vimont.nasaapod.helper.TimeHelper
 import com.squareup.moshi.Json
+import java.lang.StringBuilder
 
 /**
  * Result of the NASA APOD API
@@ -52,5 +53,13 @@ data class Photo(val title: String,
 			return formattedDate
 		}
 		return date
+	}
+
+	fun getApodLink(): String {
+		val fragmentedDate: List<String> = date.split("-")
+		val year: String = fragmentedDate[0].substring(2)
+		val month: String = fragmentedDate[1]
+		val day: String = fragmentedDate[2]
+		return "https://apod.nasa.gov/apod/ap$year$month$day.html"
 	}
 }

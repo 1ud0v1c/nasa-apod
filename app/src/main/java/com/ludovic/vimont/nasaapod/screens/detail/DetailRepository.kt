@@ -8,7 +8,7 @@ import org.koin.core.inject
 class DetailRepository: KoinComponent {
     private val photoDao: PhotoDao by inject()
 
-    suspend fun getPhoto(photoId: Int): Photo {
+    suspend fun getPhoto(photoId: String): Photo {
         return photoDao.get(photoId)
     }
 }

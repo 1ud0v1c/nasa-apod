@@ -8,17 +8,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
 import com.ludovic.vimont.nasaapod.R
+import com.ludovic.vimont.nasaapod.helper.ViewHelper
 import com.ludovic.vimont.nasaapod.model.Photo
 
 class HomePhotoAdapter(private val photos: ArrayList<Photo>): RecyclerView.Adapter<HomePhotoAdapter.PhotoViewHolder>() {
-    companion object {
-        const val FADE_IN_DURATION = 300
-    }
     var onItemClick: ((Photo) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
@@ -42,16 +41,12 @@ class HomePhotoAdapter(private val photos: ArrayList<Photo>): RecyclerView.Adapt
 
     private fun loadPhoto(holder: PhotoViewHolder, photo: Photo) {
         val applicationContext: Context = holder.itemView.context
-
         val cornersRadiusSize: Int = applicationContext.resources.getDimension(R.dimen.item_photo_corners_radius).toInt()
-        val factory: DrawableCrossFadeFactory = DrawableCrossFadeFactory.Builder(FADE_IN_DURATION)
-            .setCrossFadeEnabled(true)
-            .build()
 
         Glide.with(applicationContext)
             .load(photo.getImageURL())
             .placeholder(R.drawable.photo_placeholder)
-            .transition(DrawableTransitionOptions.withCrossFade(factory))
+            .transition(DrawableTransitionOptions.withCrossFade(ViewHelper.GLIDE_FADE_IN_DURATION))
             .transform(CenterCrop(), RoundedCorners(cornersRadiusSize))
             .into(holder.imageViewPhoto)
     }

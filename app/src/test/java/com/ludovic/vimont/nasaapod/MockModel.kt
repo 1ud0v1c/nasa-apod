@@ -3,8 +3,8 @@ package com.ludovic.vimont.nasaapod
 import com.ludovic.vimont.nasaapod.model.Photo
 
 object MockModel {
-    fun buildPhoto(url: String, mediaType: String = "image"): Photo {
-        return Photo("Ou4: A Giant Squid in a Flying Bat", "2020-10-07",
+    fun buildPhoto(url: String, mediaType: String = "image", date: String = "2020-10-07"): Photo {
+        return Photo("Ou4: A Giant Squid in a Flying Bat", date,
             url, "https://apod.nasa.gov/apod/image/2010/SquidBat_Akar_4485.jpg",
             "A very faint but very large squid-like nebula is visible in planet Earth's sky " +
                     "-- but inside a still larger bat.  The Giant Squid Nebula cataloged as Ou4, and Sh2-129 " +

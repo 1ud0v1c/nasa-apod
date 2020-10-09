@@ -21,7 +21,7 @@ import kotlin.collections.ArrayList
 
 class HomeActivity: AppCompatActivity() {
     companion object {
-        const val KEY_PHOTO_ID = "nasa_apod_photo_id"
+        const val KEY_PHOTO_DATE = "nasa_apod_photo_date"
     }
     private val photoAdapter = HomePhotoAdapter(ArrayList())
     private val viewModel: HomeViewModel by viewModels()
@@ -62,7 +62,7 @@ class HomeActivity: AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(applicationContext, RecyclerView.VERTICAL, false)
         photoAdapter.onItemClick = { photo: Photo ->
             val intent = Intent(applicationContext, DetailActivity::class.java)
-            intent.putExtra(KEY_PHOTO_ID, photo.photoId)
+            intent.putExtra(KEY_PHOTO_DATE, photo.date)
             startActivity(intent)
         }
     }
