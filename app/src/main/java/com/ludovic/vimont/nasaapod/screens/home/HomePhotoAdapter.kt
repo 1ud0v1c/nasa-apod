@@ -27,9 +27,7 @@ class HomePhotoAdapter(private val photos: ArrayList<Photo>): RecyclerView.Adapt
             parent,
             false
         )
-        return PhotoViewHolder(
-            itemView
-        )
+        return PhotoViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {

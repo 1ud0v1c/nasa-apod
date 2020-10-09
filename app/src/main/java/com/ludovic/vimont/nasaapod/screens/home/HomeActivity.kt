@@ -1,18 +1,26 @@
 package com.ludovic.vimont.nasaapod.screens.home
 
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ludovic.vimont.nasaapod.R
 import com.ludovic.vimont.nasaapod.databinding.ActivityMainBinding
+import com.ludovic.vimont.nasaapod.helper.network.ConnectionLiveData
+import com.ludovic.vimont.nasaapod.helper.network.NetworkHelper
+import com.ludovic.vimont.nasaapod.helper.viewmodel.DataStatus
+import com.ludovic.vimont.nasaapod.helper.viewmodel.StateData
+import com.ludovic.vimont.nasaapod.model.Photo
 import kotlin.collections.ArrayList
 
 class HomeActivity: AppCompatActivity() {
     private val photoAdapter = HomePhotoAdapter(ArrayList())
     private val viewModel: HomeViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
+    private lateinit var connectionLiveData: ConnectionLiveData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,9 +32,75 @@ class HomeActivity: AppCompatActivity() {
         recyclerView.adapter = photoAdapter
         recyclerView.layoutManager = LinearLayoutManager(applicationContext, RecyclerView.VERTICAL, false)
 
+        handleNetworkAvailability()
         viewModel.loadNasaPhotos()
-        viewModel.photos.observe(this, {
-            photoAdapter.addItems(it)
+
+        viewModel.photosState.observe(this, { stateData: StateData<List<Photo>> ->
+            when (stateData.status) {
+                DataStatus.LOADING -> {
+                    showLoadingStatus()
+                }
+                DataStatus.SUCCESS -> {
+                    showSuccessStatus(stateData)
+                }
+                DataStatus.ERROR_NO_INTERNET -> {
+                    showErrorStatus(stateData, false)
+                }
+                DataStatus.ERROR_NETWORK -> {
+                    showErrorStatus(stateData, true)
+                }
+            }
         })
+    }
+
+    /**
+     * Allow us to update the network availability of the HomeViewModel thanks to a live data, which
+     * listen to network modification.
+     */
+    private fun handleNetworkAvailability() {
+        connectionLiveData = ConnectionLiveData(applicationContext)
+        connectionLiveData.observe(this) { hasNetworkAccess: Boolean ->
+            viewModel.isNetworkAvailable.value = hasNetworkAccess
+        }
+        viewModel.isNetworkAvailable.value = NetworkHelper.isOnline(applicationContext)
+    }
+
+    private fun showLoadingStatus() {
+        binding.recyclerViewPhotos.visibility = View.GONE
+        binding.linearLayoutStateContainer.visibility = View.VISIBLE
+        binding.imageViewState.setImageResource(R.drawable.state_loading)
+        binding.textViewStateTitle.text = getString(R.string.home_activity_loading_title)
+        binding.textViewStateDescription.text = getString(R.string.home_activity_loading_description)
+        binding.buttonStateAction.visibility = View.GONE
+    }
+
+    private fun showSuccessStatus(stateData: StateData<List<Photo>>) {
+        binding.recyclerViewPhotos.visibility = View.VISIBLE
+        binding.linearLayoutStateContainer.visibility = View.GONE
+        stateData.data?.let { photos: List<Photo> ->
+            photoAdapter.addItems(photos)
+        }
+    }
+
+    private fun showErrorStatus(stateData: StateData<List<Photo>>, hasInternet: Boolean) {
+        binding.recyclerViewPhotos.visibility = View.GONE
+        binding.linearLayoutStateContainer.visibility = View.VISIBLE
+
+        if (hasInternet) {
+            binding.imageViewState.setImageResource(R.drawable.state_request_error)
+            binding.textViewStateTitle.text = getString(R.string.home_activity_error_title)
+            binding.textViewStateDescription.text = stateData.errorMessage
+        } else {
+            binding.imageViewState.setImageResource(R.drawable.state_error_no_internet)
+            binding.textViewStateTitle.text = getString(R.string.home_activity_no_internet_title)
+            binding.textViewStateDescription.text = getString(R.string.home_activity_no_internet_description)
+        }
+
+        val buttonState: Button = binding.buttonStateAction
+        buttonState.text = getString(R.string.action_retry)
+        buttonState.visibility = View.VISIBLE
+        buttonState.setOnClickListener {
+            viewModel.loadNasaPhotos()
+        }
     }
 }

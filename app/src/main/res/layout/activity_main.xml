@@ -13,6 +13,7 @@
         android:layout_height="match_parent" />
 
     <LinearLayout
+        android:id="@+id/linear_layout_state_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -24,44 +25,44 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/image_view_error_state"
+            android:id="@+id/image_view_state"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:contentDescription="@string/home_activity_image_view_error_state_content_description"
+            android:contentDescription="@string/home_activity_image_view_state_content_description"
             android:scaleType="centerCrop"
-            android:src="@drawable/state_error_no_internet" />
+            android:src="@drawable/state_no_data" />
 
         <TextView
-            android:id="@+id/text_view_error_information_title"
+            android:id="@+id/text_view_state_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_vertical_big_margin"
-            android:text="@string/home_activity_no_internet_title"
+            android:text="@string/home_activity_no_data_title"
             android:textAlignment="center"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/home_activity_error_information_title_size"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/text_view_error_information_description"
+            android:id="@+id/text_view_state_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_vertical_little_margin"
-            android:text="@string/home_activity_no_internet_description"
+            android:text="@string/home_activity_no_data_description"
             android:textAlignment="center"
             android:textColor="@color/colorGray"
             android:textSize="@dimen/home_activity_error_information_description_size" />
 
         <Button
-            android:id="@+id/button_retry"
+            android:id="@+id/button_state_action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/activity_vertical_big_margin"
             android:background="@drawable/button_retry_background"
             android:minWidth="@dimen/home_activity_button_retry_min_width"
-            android:text="@string/action_retry"
+            android:text="@string/action_launch"
             android:textColor="@color/colorWhite" />
 
     </LinearLayout>

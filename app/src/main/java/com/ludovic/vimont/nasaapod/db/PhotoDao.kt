@@ -9,6 +9,9 @@ import com.ludovic.vimont.nasaapod.model.Photo
  */
 @Dao
 interface PhotoDao {
+    @Query("SELECT count(photoId) FROM photo")
+    suspend fun count(): Int
+
     @Query("SELECT * FROM photo")
     suspend fun getAll(): List<Photo>
 

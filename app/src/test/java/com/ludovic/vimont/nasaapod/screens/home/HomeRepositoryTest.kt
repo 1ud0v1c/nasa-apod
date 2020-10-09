@@ -16,7 +16,7 @@ import org.robolectric.annotation.Config
 
 @Config(sdk = [Build.VERSION_CODES.P], manifest = Config.NONE)
 @RunWith(RobolectricTestRunner::class)
-class HomeRepositoryTest: AutoCloseKoinTest() {
+class HomeRepositoryTest : AutoCloseKoinTest() {
     private val photoDao: PhotoDao by inject()
     private lateinit var homeRepository: HomeRepository
 
@@ -26,20 +26,20 @@ class HomeRepositoryTest: AutoCloseKoinTest() {
     }
 
     @Test
-    fun testFetchNasaPhotos() = runBlocking {
-        val photos: List<Photo> = homeRepository.fetchNasaPhotos()
-        Assert.assertTrue(photos.isNotEmpty())
-        Assert.assertEquals(NasaAPI.NUMBER_OF_DAY_TO_FETCH, photos.size)
+    fun testRetrievedNasaPhotos(): Unit = runBlocking {
+        homeRepository.retrievedNasaPhotos().data?.let { photos: List<Photo> ->
+            Assert.assertTrue(photos.isNotEmpty())
+            Assert.assertEquals(NasaAPI.NUMBER_OF_DAY_TO_FETCH, photos.size)
+        }
     }
 
     @Test
     fun testDatabaseFilled() = runBlocking {
         Assert.assertTrue(photoDao.getAll().isEmpty())
-
-        val photos: List<Photo> = homeRepository.fetchNasaPhotos()
-        Assert.assertTrue(photos.isNotEmpty())
-        Assert.assertEquals(NasaAPI.NUMBER_OF_DAY_TO_FETCH, photos.size)
-
+        homeRepository.retrievedNasaPhotos().data?.let { photos: List<Photo> ->
+            Assert.assertTrue(photos.isNotEmpty())
+            Assert.assertEquals(NasaAPI.NUMBER_OF_DAY_TO_FETCH, photos.size)
+        }
         Assert.assertTrue(photoDao.getAll().isNotEmpty())
     }
 }
