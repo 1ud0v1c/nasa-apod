@@ -31,4 +31,8 @@ class HomeViewModel: ViewModel() {
             photosState.postValue(stateData)
         }
     }
+
+    fun setNetworkAvailability(isConnected: Boolean) {
+        isNetworkAvailable.value = isConnected
+    }
 }

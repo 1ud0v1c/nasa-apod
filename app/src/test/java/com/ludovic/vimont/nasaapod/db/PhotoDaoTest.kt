@@ -28,6 +28,13 @@ class PhotoDaoTest : AutoCloseKoinTest() {
     }
 
     @Test
+    fun testCount() = runBlocking {
+        Assert.assertEquals(0, photoDao.count())
+        photoDao.insert(photos)
+        Assert.assertEquals(photos.size, photoDao.count())
+    }
+
+    @Test
     fun testInsert() = runBlocking {
         Assert.assertEquals(0, photoDao.getAll().size)
         photoDao.insert(photos)

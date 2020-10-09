@@ -41,7 +41,7 @@ class HomeRepository: KoinComponent {
                     }
                 }
             }
-            responsePhoto.body()?.let { receivedPhotos ->
+            responsePhoto.body()?.let { receivedPhotos: List<Photo> ->
                 val newPhotos: List<Photo> = receivedPhotos.reversed()
                 photos.addAll(newPhotos)
                 photoDao.insert(newPhotos)
