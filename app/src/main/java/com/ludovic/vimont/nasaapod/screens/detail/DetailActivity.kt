@@ -1,5 +1,6 @@
 package com.ludovic.vimont.nasaapod.screens.detail
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -11,8 +12,12 @@ import com.ludovic.vimont.nasaapod.helper.IntentHelper
 import com.ludovic.vimont.nasaapod.helper.ViewHelper
 import com.ludovic.vimont.nasaapod.model.Photo
 import com.ludovic.vimont.nasaapod.screens.home.HomeActivity
+import com.ludovic.vimont.nasaapod.screens.zoom.ZoomActivity
 
 class DetailActivity : AppCompatActivity() {
+    companion object {
+        const val KEY_MEDIA_URL = "nasa_apod_photo_media_url"
+    }
     private val viewModel: DetailViewModel by viewModels()
     private lateinit var binding: ActivityDetailBinding
 
@@ -38,6 +43,12 @@ class DetailActivity : AppCompatActivity() {
             .placeholder(R.drawable.photo_placeholder)
             .transition(DrawableTransitionOptions.withCrossFade(ViewHelper.GLIDE_FADE_IN_DURATION))
             .into(binding.imageViewPhoto)
+
+        binding.imageViewPhoto.setOnClickListener {
+            val intent = Intent(applicationContext, ZoomActivity::class.java)
+            intent.putExtra(DetailActivity.KEY_MEDIA_URL, photo.hdurl)
+            startActivity(intent)
+        }
 
         val formattedDate: String = photo.getFormattedDate()
         binding.textViewPhotoDate.text = getString(R.string.detail_activity_photo_date, formattedDate)
