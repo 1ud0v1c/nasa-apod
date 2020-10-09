@@ -1,12 +1,13 @@
 <resources>
     <string name="app_name">NasaApod</string>
 
+    <!-- Common action -->
     <string name="action_launch">Launch</string>
     <string name="action_retry">Retry</string>
 
+    <!-- HomeActivity -->
     <string name="home_activity_title">Last 30 astronomical photos</string>
     <string name="home_activity_photo_content_description">Nasa photo of the day</string>
-
     <string name="home_activity_image_view_state_content_description">Home Activity ImageView current state</string>
     <string name="home_activity_no_data_title">No data</string>
     <string name="home_activity_no_data_description">We don\'t have any available data for now.\nPlease launch a request.</string>
@@ -15,4 +16,12 @@
     <string name="home_activity_no_internet_title">Connection Failed</string>
     <string name="home_activity_no_internet_description">Could not connect to the network.\nPlease check and try again.</string>
     <string name="home_activity_error_title">An error occurred</string>
+
+    <!-- DetailActivity -->
+    <string name="detail_activity_explanation_title">Explanation</string>
+    <string name="detail_activity_photo_date">Photo taken: %s</string>
+    <string name="detail_activity_copyright">Copyright: %s</string>
+    <string name="detail_activity_image_content_description">DetailActivity selected image</string>
+    <string name="detail_activity_download_content_description">DetailActivity download button</string>
+    <string name="detail_activity_share_content_description">DetailActivity share button</string>
 </resources>

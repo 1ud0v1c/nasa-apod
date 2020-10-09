@@ -1,10 +1,26 @@
 package com.ludovic.vimont.nasaapod.helper
 
 import com.ludovic.vimont.nasaapod.api.NasaAPI
+import com.ludovic.vimont.nasaapod.model.Photo
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
 object TimeHelper {
+    fun getFormattedDate(dateValue: String,): String? {
+        val apiFormat = SimpleDateFormat(NasaAPI.API_DATE_FORMAT, Locale.getDefault())
+        try {
+            apiFormat.parse(dateValue)?.let { date: Date ->
+                val desiredDateFormat = SimpleDateFormat(Photo.DETAIL_DATE_FORMAT, Locale.getDefault())
+                return desiredDateFormat.format(date)
+
+            }
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return null
+    }
+
     fun getToday(): String {
         val today = Date()
         val dateFormat = SimpleDateFormat(NasaAPI.API_DATE_FORMAT, Locale.getDefault())

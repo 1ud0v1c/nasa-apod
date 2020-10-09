@@ -6,13 +6,21 @@
     <dimen name="activity_horizontal_big_margin">24dp</dimen>
     <dimen name="activity_vertical_big_margin">24dp</dimen>
 
+    <dimen name="button_padding">4dp</dimen>
+
+    <!-- HomeActivity -->
     <dimen name="home_activity_error_information_title_size">20sp</dimen>
     <dimen name="home_activity_error_information_description_size">15sp</dimen>
     <dimen name="home_activity_button_retry_border_radius">32dp</dimen>
     <dimen name="home_activity_button_retry_min_width">150dp</dimen>
 
-    <dimen name="item_photo_height">200dp</dimen>
+    <!-- HomeActivity PhotoAdapter -->
+    <dimen name="item_photo_height">175dp</dimen>
     <dimen name="item_photo_corners_radius">12dp</dimen>
     <dimen name="item_photo_title_text_size">16sp</dimen>
     <dimen name="item_photo_date_text_size">13sp</dimen>
+
+    <!-- DetailActivity -->
+    <dimen name="detail_activity_featured_image">250dp</dimen>
+    <dimen name="detail_activity_explanation_title_size">20sp</dimen>
 </resources>

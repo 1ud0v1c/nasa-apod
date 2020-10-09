@@ -2,6 +2,7 @@ package com.ludovic.vimont.nasaapod.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.ludovic.vimont.nasaapod.helper.TimeHelper
 import com.squareup.moshi.Json
 
 /**
@@ -20,6 +21,7 @@ data class Photo(val title: String,
 				 val serviceVersion: String,
 				 val copyright: String?) {
 	companion object {
+		const val DETAIL_DATE_FORMAT = "dd MMMM yyyy"
 		const val VIDEO_MEDIA_TYPE = "video"
 	}
 
@@ -43,5 +45,12 @@ data class Photo(val title: String,
 			}
 		}
 		return url
+	}
+
+	fun getFormattedDate(): String {
+		TimeHelper.getFormattedDate(date)?.let { formattedDate: String ->
+			return formattedDate
+		}
+		return date
 	}
 }

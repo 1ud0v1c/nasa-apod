@@ -1,9 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".screens.detail.DetailActivity">
+    tools:context=".screens.detail.DetailActivity"
+    tools:ignore="RtlHardcoded">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image_view_photo"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/detail_activity_featured_image"
+            android:background="@color/colorPrimaryDark"
+            android:contentDescription="@string/detail_activity_image_content_description"
+            android:scaleType="centerCrop"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/linear_layout_action_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/activity_vertical_little_margin"
+            app:layout_constraintTop_toBottomOf="@+id/image_view_photo">
+
+            <TextView
+                android:id="@+id/text_view_photo_date"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical" />
+
+            <ImageView
+                android:id="@+id/image_view_download"
+                style="@style/MaterialImageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/activity_vertical_margin"
+                android:contentDescription="@string/detail_activity_download_content_description"
+                android:src="@drawable/ic_download" />
+
+            <ImageView
+                android:id="@+id/image_view_share"
+                style="@style/MaterialImageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/activity_vertical_margin"
+                android:contentDescription="@string/detail_activity_share_content_description"
+                android:src="@drawable/ic_share" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_view_photo_explanation_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_vertical_little_margin"
+            android:text="@string/detail_activity_explanation_title"
+            android:textSize="@dimen/detail_activity_explanation_title_size"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/linear_layout_action_container" />
+
+        <TextView
+            android:id="@+id/text_view_photo_explanation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_vertical_little_margin"
+            android:layout_marginTop="@dimen/activity_vertical_little_margin"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_photo_explanation_title" />
+
+        <TextView
+            android:id="@+id/text_view_copyright"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_vertical_little_margin"
+            android:gravity="right"
+            android:paddingVertical="@dimen/activity_vertical_margin"
+            android:textColor="@color/copyrightTextColor"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_photo_explanation" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
