@@ -1,5 +1,6 @@
 package com.ludovic.vimont.nasaapod.screens.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -15,9 +16,13 @@ import com.ludovic.vimont.nasaapod.helper.network.NetworkHelper
 import com.ludovic.vimont.nasaapod.helper.viewmodel.DataStatus
 import com.ludovic.vimont.nasaapod.helper.viewmodel.StateData
 import com.ludovic.vimont.nasaapod.model.Photo
+import com.ludovic.vimont.nasaapod.screens.detail.DetailActivity
 import kotlin.collections.ArrayList
 
 class HomeActivity: AppCompatActivity() {
+    companion object {
+        const val KEY_PHOTO_ID = "nasa_apod_photo_id"
+    }
     private val photoAdapter = HomePhotoAdapter(ArrayList())
     private val viewModel: HomeViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
@@ -29,10 +34,7 @@ class HomeActivity: AppCompatActivity() {
         setContentView(binding.root)
         title = getString(R.string.home_activity_title)
 
-        val recyclerView: RecyclerView = binding.recyclerViewPhotos
-        recyclerView.adapter = photoAdapter
-        recyclerView.layoutManager = LinearLayoutManager(applicationContext, RecyclerView.VERTICAL, false)
-
+        configureRecyclerView()
         handleNetworkAvailability()
         viewModel.loadNasaPhotos()
 
@@ -52,6 +54,17 @@ class HomeActivity: AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun configureRecyclerView() {
+        val recyclerView: RecyclerView = binding.recyclerViewPhotos
+        recyclerView.adapter = photoAdapter
+        recyclerView.layoutManager = LinearLayoutManager(applicationContext, RecyclerView.VERTICAL, false)
+        photoAdapter.onItemClick = { photo: Photo ->
+            val intent = Intent(applicationContext, DetailActivity::class.java)
+            intent.putExtra(KEY_PHOTO_ID, photo.photoId)
+            startActivity(intent)
+        }
     }
 
     /**

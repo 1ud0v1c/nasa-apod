@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel: ViewModel() {
     private val homeRepository = HomeRepository()
-    val isNetworkAvailable = MutableLiveData<Boolean>()
+    private val isNetworkAvailable = MutableLiveData<Boolean>()
     val photosState = MutableLiveData<StateData<List<Photo>>>()
 
     fun loadNasaPhotos() {
