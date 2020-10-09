@@ -17,6 +17,7 @@ import com.ludovic.vimont.nasaapod.screens.zoom.ZoomActivity
 class DetailActivity : AppCompatActivity() {
     companion object {
         const val KEY_MEDIA_URL = "nasa_apod_photo_media_url"
+        const val KEY_MEDIA_IS_A_VIDEO = "nasa_apod_photo_media_is_video"
     }
     private val viewModel: DetailViewModel by viewModels()
     private lateinit var binding: ActivityDetailBinding
@@ -45,8 +46,10 @@ class DetailActivity : AppCompatActivity() {
             .into(binding.imageViewPhoto)
 
         binding.imageViewPhoto.setOnClickListener {
+            val mediaURL: String? = if (photo.isMediaVideo()) photo.url else photo.hdurl ?: ""
             val intent = Intent(applicationContext, ZoomActivity::class.java)
-            intent.putExtra(DetailActivity.KEY_MEDIA_URL, photo.hdurl)
+            intent.putExtra(DetailActivity.KEY_MEDIA_URL, mediaURL)
+            intent.putExtra(DetailActivity.KEY_MEDIA_IS_A_VIDEO, photo.isMediaVideo())
             startActivity(intent)
         }
 

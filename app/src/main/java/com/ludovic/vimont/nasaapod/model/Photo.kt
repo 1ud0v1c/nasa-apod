@@ -29,6 +29,10 @@ data class Photo(val title: String,
 	@PrimaryKey(autoGenerate = true)
 	var photoId: Int = 0
 
+	fun isMediaVideo(): Boolean {
+		return mediaType == VIDEO_MEDIA_TYPE
+	}
+
 	/**
 	 * After analysis, the API, we can have two different type of media:
 	 * <ul>
@@ -39,7 +43,7 @@ data class Photo(val title: String,
 	 * @see: https://stackoverflow.com/questions/8841159/how-to-make-youtube-video-thumbnails-in-android/8842839#8842839
 	 */
 	fun getImageURL(): String {
-		if (mediaType == VIDEO_MEDIA_TYPE) {
+		if (isMediaVideo()) {
 			if (url.contains("youtube")) {
 				val youtubeId: String = url.split("?")[0].split("/").last()
 				return "https://img.youtube.com/vi/$youtubeId/0.jpg"
