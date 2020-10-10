@@ -4,7 +4,7 @@
   <a href="https://android-arsenal.com/api?level=21"><img alt="API" src="https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat"/></a>
 </p>
 
-Android application which list the last 30 photos of the NASA's API: Astronomy Picture of the Day.
+Android application which list the last 30 photos of the [NASA's API](https://github.com/1ud0v1c/nasa-apod/blob/main/data/mvvm-architecture.png): [Astronomy Picture of the Day](https://github.com/nasa/apod-api#docs-).
 
 
 ## Design
@@ -18,14 +18,14 @@ To be able to provide a great user experience when loading or when an error occu
 To find the logo to display the current state of my adapter list, I used the website [Undraw](https://undraw.co/).
 
 
-# Inspiration
+## Inspiration
 
 I wanted to thank, those two applications which give me inspiration for design or even some actions (like set as wallpaper):
 - [Resplash](https://github.com/b-lam/Resplash): A very effective application to find beautiful wallpaper for our smartphone powered by the website [Unsplash](https://unsplash.com/)
 - [APODWallpaper](https://github.com/JakeSteam/APODWallpaper): An application which consumes the APOD API. 
 
 
-# Architecture 
+## Architecture 
 
 For this test, I used an [MVVM architecture](https://developer.android.com/jetpack/guide).
 

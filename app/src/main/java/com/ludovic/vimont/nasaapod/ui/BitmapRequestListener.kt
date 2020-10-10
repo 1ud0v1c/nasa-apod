@@ -7,10 +7,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.ludovic.vimont.nasaapod.helper.viewmodel.StateData
 
-/**
- * Simple overriding of Glide RequestListener which simplify code readability
- */
-open class GlideRequestListener(private val lambda: (stateData: StateData<Bitmap>) -> Unit): RequestListener<Bitmap> {
+open class BitmapRequestListener(private val lambda: (stateData: StateData<Bitmap>) -> Unit): RequestListener<Bitmap> {
     override fun onResourceReady(resource: Bitmap?,
                                  model: Any?,
                                  target: Target<Bitmap>?,

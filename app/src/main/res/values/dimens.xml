@@ -23,4 +23,7 @@
     <!-- DetailActivity -->
     <dimen name="detail_activity_featured_image">250dp</dimen>
     <dimen name="detail_activity_explanation_title_size">20sp</dimen>
+
+    <!-- ZoomActivity -->
+    <dimen name="zoom_activity_progress_bar_min_size">75dp</dimen>
 </resources>

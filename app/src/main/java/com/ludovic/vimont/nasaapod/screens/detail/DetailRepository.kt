@@ -5,7 +5,7 @@ import com.bumptech.glide.RequestManager
 import com.ludovic.vimont.nasaapod.db.PhotoDao
 import com.ludovic.vimont.nasaapod.helper.viewmodel.StateData
 import com.ludovic.vimont.nasaapod.model.Photo
-import com.ludovic.vimont.nasaapod.ui.GlideRequestListener
+import com.ludovic.vimont.nasaapod.ui.BitmapRequestListener
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import java.lang.Exception
@@ -21,7 +21,7 @@ class DetailRepository: KoinComponent {
     fun fetchBitmap(imageURL: String): StateData<Bitmap> {
         var stateData: StateData<Bitmap> = StateData.loading()
         try {
-            glide.asBitmap().load(imageURL).listener(GlideRequestListener {
+            glide.asBitmap().load(imageURL).listener(BitmapRequestListener {
                 stateData = it
             }).submit().get()
         } catch (exception: Exception) {

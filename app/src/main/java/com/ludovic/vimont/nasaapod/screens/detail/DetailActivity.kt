@@ -4,6 +4,8 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
@@ -102,16 +104,23 @@ class DetailActivity : AppCompatActivity() {
     private fun setAsWallpaper(photo: Photo) {
         if (photo.isMediaImage() && photo.hdurl != null) {
             val downloadText: String = getString(R.string.detail_activity_download_in_progress)
-            snackBar = Snackbar.make(binding.root, downloadText, Snackbar.LENGTH_INDEFINITE)
+            updateSnackBar(downloadText)
             snackBar.show()
             viewModel.loadImageHD(photo.hdurl)
         } else {
             val errorMessage: String = getString(R.string.detail_activity_cannot_set_wallpaper_for_video)
-            snackBar = Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_INDEFINITE)
-                .setAction(getString(R.string.action_ok)) {
-                    snackBar.dismiss()
-                }
+            updateSnackBar(errorMessage)
+            snackBar.setAction(getString(R.string.action_ok)) {
+                snackBar.dismiss()
+            }
             snackBar.show()
         }
+    }
+
+    private fun updateSnackBar(text: String, length: Int = Snackbar.LENGTH_INDEFINITE) {
+        snackBar = Snackbar.make(binding.root, text, length)
+        val snackBarView: View = snackBar.view
+        val snackBarTextView: TextView = snackBarView.findViewById(com.google.android.material.R.id.snackbar_text)
+        snackBarTextView.maxLines = 3
     }
 }

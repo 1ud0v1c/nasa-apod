@@ -1,20 +1,21 @@
 package com.ludovic.vimont.nasaapod.screens.zoom
 
 import android.annotation.SuppressLint
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebView
-import android.widget.ImageView
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.target.ViewTarget
 import com.ludovic.vimont.nasaapod.R
 import com.ludovic.vimont.nasaapod.databinding.ActivityZoomBinding
 import com.ludovic.vimont.nasaapod.helper.ViewHelper
 import com.ludovic.vimont.nasaapod.screens.detail.DetailActivity
+import com.ludovic.vimont.nasaapod.ui.BitmapRequestListener
+import com.ludovic.vimont.nasaapod.ui.DrawableRequestListener
 
 class ZoomActivity : AppCompatActivity() {
     private lateinit var binding: ActivityZoomBinding
@@ -33,6 +34,7 @@ class ZoomActivity : AppCompatActivity() {
                     loadVideo(mediaURL)
                 } else {
                     loadImage(mediaURL)
+                    showProgressBar()
                 }
             }
         }
@@ -60,11 +62,27 @@ class ZoomActivity : AppCompatActivity() {
         videoWebView.webChromeClient = WebChromeClient()
     }
 
-    private fun loadImage(mediaURL: String): ViewTarget<ImageView, Drawable> {
-        return Glide.with(applicationContext)
+    private fun loadImage(mediaURL: String) {
+        Glide.with(applicationContext)
             .load(mediaURL)
-            .placeholder(R.drawable.photo_placeholder)
             .transition(DrawableTransitionOptions.withCrossFade(ViewHelper.GLIDE_FADE_IN_DURATION))
+            .listener(DrawableRequestListener {
+                hideProgressBar()
+            })
             .into(binding.photoViewHd)
+    }
+
+    private fun showProgressBar() {
+        val progressBar: ProgressBar = binding.progressBar
+        progressBar.visibility = View.VISIBLE
+    }
+
+    private fun hideProgressBar() {
+        val progressBar: ProgressBar = binding.progressBar
+        if (progressBar.isVisible) {
+            ViewHelper.fadeOutAnimation(progressBar, {
+                progressBar.visibility = View.GONE
+            })
+        }
     }
 }
