@@ -2,6 +2,7 @@ package com.ludovic.vimont.nasaapod
 
 import android.app.Application
 import androidx.room.Room
+import com.bumptech.glide.Glide
 import com.ludovic.vimont.nasaapod.api.NasaAPI
 import com.ludovic.vimont.nasaapod.db.PhotoDatabase
 import org.koin.android.ext.koin.androidContext
@@ -18,10 +19,12 @@ class NasaApplication: Application() {
 
         val networkModule: Module = buildNetworkModule()
         val databaseModule: Module = buildDatabaseModule()
+        val glideModule: Module = buildGlideModule()
 
         startKoin {
             androidContext(this@NasaApplication)
-            modules(listOf(networkModule, databaseModule))
+            val listOfModule: List<Module> = listOf(networkModule, databaseModule, glideModule)
+            modules(listOfModule)
         }
     }
 
@@ -51,6 +54,14 @@ class NasaApplication: Application() {
             }
             single {
                 get<PhotoDatabase>().photoDao()
+            }
+        }
+    }
+
+    private fun buildGlideModule(): Module {
+        return module {
+            factory {
+                Glide.with(androidContext())
             }
         }
     }

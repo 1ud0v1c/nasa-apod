@@ -23,11 +23,16 @@ data class Photo(val title: String,
 				 val copyright: String?) {
 	companion object {
 		const val DETAIL_DATE_FORMAT = "dd MMMM yyyy"
+		const val IMAGE_MEDIA_TYPE = "image"
 		const val VIDEO_MEDIA_TYPE = "video"
 	}
 
 	@PrimaryKey(autoGenerate = true)
 	var photoId: Int = 0
+
+	fun isMediaImage(): Boolean {
+		return mediaType == IMAGE_MEDIA_TYPE
+	}
 
 	fun isMediaVideo(): Boolean {
 		return mediaType == VIDEO_MEDIA_TYPE
