@@ -43,12 +43,13 @@ class ZoomActivity : AppCompatActivity() {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun loadVideo(mediaURL: String) {
-        binding.photoViewHd.visibility = View.GONE
-        val videoWebView: WebView = binding.webViewVideo
-        videoWebView.visibility = View.VISIBLE
-        videoWebView.settings.javaScriptEnabled = true
-        videoWebView.loadUrl(mediaURL)
-        videoWebView.webChromeClient = WebChromeClient()
+        with(binding) {
+            photoViewHd.visibility = View.GONE
+            webViewVideo.visibility = View.VISIBLE
+            webViewVideo.settings.javaScriptEnabled = true
+            webViewVideo.loadUrl(mediaURL)
+            webViewVideo.webChromeClient = WebChromeClient()
+        }
     }
 
     private fun loadImage(mediaURL: String) {

@@ -80,51 +80,57 @@ class HomeActivity: AppCompatActivity() {
     }
 
     private fun showLoadingStatus() {
-        ViewHelper.fadeOutAnimation(binding.recyclerViewPhotos, {
-            binding.recyclerViewPhotos.visibility = View.GONE
-        })
-        ViewHelper.fadeInAnimation(binding.linearLayoutStateContainer, {
-            binding.linearLayoutStateContainer.visibility = View.VISIBLE
-        })
-        binding.imageViewState.setImageResource(R.drawable.state_loading)
-        binding.textViewStateTitle.text = getString(R.string.home_activity_loading_title)
-        binding.textViewStateDescription.text = getString(R.string.home_activity_loading_description)
-        binding.buttonStateAction.visibility = View.GONE
+        with(binding) {
+            ViewHelper.fadeOutAnimation(recyclerViewPhotos, {
+                recyclerViewPhotos.visibility = View.GONE
+            })
+            ViewHelper.fadeInAnimation(linearLayoutStateContainer, {
+                linearLayoutStateContainer.visibility = View.VISIBLE
+            })
+            imageViewState.setImageResource(R.drawable.state_loading)
+            textViewStateTitle.text = getString(R.string.home_activity_loading_title)
+            textViewStateDescription.text = getString(R.string.home_activity_loading_description)
+            buttonStateAction.visibility = View.GONE
+        }
     }
 
     private fun showSuccessStatus(stateData: StateData<List<Photo>>) {
-        ViewHelper.fadeOutAnimation(binding.linearLayoutStateContainer, {
-            binding.linearLayoutStateContainer.visibility = View.GONE
-        })
-        ViewHelper.fadeInAnimation(binding.recyclerViewPhotos, {
-            binding.recyclerViewPhotos.visibility = View.VISIBLE
-        })
-        stateData.data?.let { photos: List<Photo> ->
-            photoAdapter.addItems(photos)
+        with(binding) {
+            ViewHelper.fadeOutAnimation(linearLayoutStateContainer, {
+                linearLayoutStateContainer.visibility = View.GONE
+            })
+            ViewHelper.fadeInAnimation(recyclerViewPhotos, {
+                recyclerViewPhotos.visibility = View.VISIBLE
+            })
+            stateData.data?.let { photos: List<Photo> ->
+                photoAdapter.addItems(photos)
+            }
         }
     }
 
     private fun showErrorStatus(stateData: StateData<List<Photo>>, hasInternet: Boolean) {
-        ViewHelper.fadeOutAnimation(binding.recyclerViewPhotos, {
-            binding.recyclerViewPhotos.visibility = View.GONE
-        })
-        ViewHelper.fadeInAnimation(binding.linearLayoutStateContainer, {
-            binding.linearLayoutStateContainer.visibility = View.VISIBLE
-        })
-        if (hasInternet) {
-            binding.imageViewState.setImageResource(R.drawable.state_request_error)
-            binding.textViewStateTitle.text = getString(R.string.home_activity_error_title)
-            binding.textViewStateDescription.text = stateData.errorMessage
-        } else {
-            binding.imageViewState.setImageResource(R.drawable.state_error_no_internet)
-            binding.textViewStateTitle.text = getString(R.string.home_activity_no_internet_title)
-            binding.textViewStateDescription.text = getString(R.string.home_activity_no_internet_description)
-        }
-        val buttonState: Button = binding.buttonStateAction
-        buttonState.text = getString(R.string.action_retry)
-        buttonState.visibility = View.VISIBLE
-        buttonState.setOnClickListener {
-            viewModel.loadNasaPhotos()
+        with(binding) {
+            ViewHelper.fadeOutAnimation(recyclerViewPhotos, {
+                recyclerViewPhotos.visibility = View.GONE
+            })
+            ViewHelper.fadeInAnimation(linearLayoutStateContainer, {
+                linearLayoutStateContainer.visibility = View.VISIBLE
+            })
+            if (hasInternet) {
+                imageViewState.setImageResource(R.drawable.state_request_error)
+                textViewStateTitle.text = getString(R.string.home_activity_error_title)
+                textViewStateDescription.text = stateData.errorMessage
+            } else {
+                imageViewState.setImageResource(R.drawable.state_error_no_internet)
+                textViewStateTitle.text = getString(R.string.home_activity_no_internet_title)
+                textViewStateDescription.text = getString(R.string.home_activity_no_internet_description)
+            }
+            val buttonState: Button = buttonStateAction
+            buttonState.text = getString(R.string.action_retry)
+            buttonState.visibility = View.VISIBLE
+            buttonState.setOnClickListener {
+                viewModel.loadNasaPhotos()
+            }
         }
     }
 }

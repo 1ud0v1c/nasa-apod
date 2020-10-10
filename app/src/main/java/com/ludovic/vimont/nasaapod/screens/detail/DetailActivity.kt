@@ -63,37 +63,39 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun updateUI(photo: Photo) {
-        Glide.with(applicationContext)
-            .load(photo.getImageURL())
-            .placeholder(R.drawable.photo_placeholder)
-            .transition(DrawableTransitionOptions.withCrossFade(ViewHelper.GLIDE_FADE_IN_DURATION))
-            .into(binding.imageViewPhoto)
+        with(binding) {
+            Glide.with(applicationContext)
+                .load(photo.getImageURL())
+                .placeholder(R.drawable.photo_placeholder)
+                .transition(DrawableTransitionOptions.withCrossFade(ViewHelper.GLIDE_FADE_IN_DURATION))
+                .into(imageViewPhoto)
 
-        binding.imageViewPhoto.setOnClickListener {
-            val mediaURL: String? = if (photo.isMediaVideo()) photo.url else photo.hdurl ?: ""
-            val intent = Intent(applicationContext, ZoomActivity::class.java)
-            intent.putExtra(KEY_MEDIA_URL, mediaURL)
-            intent.putExtra(KEY_MEDIA_IS_A_VIDEO, photo.isMediaVideo())
-            startActivity(intent)
-        }
+            imageViewPhoto.setOnClickListener {
+                val mediaURL: String? = if (photo.isMediaVideo()) photo.url else photo.hdurl ?: ""
+                val intent = Intent(applicationContext, ZoomActivity::class.java)
+                intent.putExtra(KEY_MEDIA_URL, mediaURL)
+                intent.putExtra(KEY_MEDIA_IS_A_VIDEO, photo.isMediaVideo())
+                startActivity(intent)
+            }
 
-        val formattedDate: String = photo.getFormattedDate()
-        binding.textViewPhotoDate.text = getString(R.string.detail_activity_photo_date, formattedDate)
-        binding.textViewPhotoExplanation.text = getString(R.string.detail_activity_explanation, photo.explanation)
-        photo.copyright?.let { copyright: String ->
-            binding.textViewCopyright.text = getString(
-                R.string.detail_activity_copyright,
-                copyright
-            )
-        }
+            val formattedDate: String = photo.getFormattedDate()
+            textViewPhotoDate.text = getString(R.string.detail_activity_photo_date, formattedDate)
+            textViewPhotoExplanation.text = getString(R.string.detail_activity_explanation, photo.explanation)
+            photo.copyright?.let { copyright: String ->
+                textViewCopyright.text = getString(
+                    R.string.detail_activity_copyright,
+                    copyright
+                )
+            }
 
-        binding.imageViewWallpaper.setOnClickListener {
-            setAsWallpaper(photo)
-        }
+            imageViewWallpaper.setOnClickListener {
+                setAsWallpaper(photo)
+            }
 
-        binding.imageViewShare.setOnClickListener {
-            val subject: String = getString(R.string.detail_activity_share_subject, formattedDate)
-            IntentHelper.shareLink(applicationContext, photo.getApodLink(), subject, photo.title)
+            imageViewShare.setOnClickListener {
+                val subject: String = getString(R.string.detail_activity_share_subject, formattedDate)
+                IntentHelper.shareLink(applicationContext, photo.getApodLink(), subject, photo.title)
+            }
         }
     }
 

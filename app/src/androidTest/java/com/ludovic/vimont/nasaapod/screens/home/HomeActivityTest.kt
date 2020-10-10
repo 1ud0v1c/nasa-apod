@@ -1,11 +1,8 @@
 package com.ludovic.vimont.nasaapod.screens.home
 
-import android.content.Context
-import android.net.wifi.WifiManager
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewParent
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewInteraction
@@ -19,6 +16,7 @@ import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
 import com.ludovic.vimont.nasaapod.R
+import com.ludovic.vimont.nasaapod.RecyclerViewItemCountAssertion
 import com.ludovic.vimont.nasaapod.screens.detail.DetailActivity
 import org.hamcrest.Description
 import org.hamcrest.Matcher
@@ -45,6 +43,8 @@ class HomeActivityTest {
         onView(withId(R.id.recycler_view_photos)).check(matches(not(isDisplayed())))
 
         Thread.sleep(5_000)
+
+        onView(withId(R.id.recycler_view_photos)).check(RecyclerViewItemCountAssertion(30))
 
         val recyclerView: ViewInteraction = onView(
             allOf(
