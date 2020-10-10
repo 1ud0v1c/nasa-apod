@@ -25,6 +25,61 @@ I wanted to thank, those two applications which give me inspiration for design o
 - [APODWallpaper](https://github.com/JakeSteam/APODWallpaper): An application which consumes the APOD API. 
 
 
+## HomeActivity
+
+> L’écran d’accueil listera les photos (présentation libre)
+
+For the HomeActivity, I tried to provide a nice & efficient user experience, thanks to different state. If you launch the application without having internet, you will have a screen which gives you a way to relaunch 
+the request, In the same spirit, if you have a timeout or a server issue, you will ended with a different screen. 
+
+![Home no internet](https://github.com/1ud0v1c/nasa-apod/blob/main/data/home/home_no_internet.png)
+![Home network error](https://github.com/1ud0v1c/nasa-apod/blob/main/data/home/home_network_error.png)
+
+If everything is ok, you will first end up with a loading screen to help the user be patient, then you will have with a fadeOut animation the list of images displayed. 
+
+![Home loading screen](https://github.com/1ud0v1c/nasa-apod/blob/main/data/home/home_loading.png)
+![Home listing](https://github.com/1ud0v1c/nasa-apod/blob/main/data/home/home_listing.png)
+
+The next time, you will launch the application, the data will be loaded from the database, thus you will end directly on the list.
+
+
+## DetailActivity
+
+> Tandis qu’un écran de détail affichera la photo ainsi que sa description et les informations relatives. 
+
+After a click on an item from the HomeActivity, you will enter in the DetailActivity, which list every information about the photo of the day.
+
+![DetailActivity screen](https://github.com/1ud0v1c/nasa-apod/blob/main/data/detail/detail_display.png)
+
+You will also be able to do two actions. Share the URL to the website of the Nasa about the current photo 
+
+![DetailActivity share action](https://github.com/1ud0v1c/nasa-apod/blob/main/data/detail/detail_share_action.png)
+
+Use the HD version of the image as wallpaper for your smartphone. 
+
+![DetailActivity wallpaper download](https://github.com/1ud0v1c/nasa-apod/blob/main/data/detail/detail_wallpaper_progress.png)
+![DetailActivity wallpaper error](https://github.com/1ud0v1c/nasa-apod/blob/main/data/detail/detail_wallpaper_error.png)
+![DetailActivity wallpaper result](https://github.com/1ud0v1c/nasa-apod/blob/main/data/detail/detail_wallpaper_result.png)
+
+
+## ZoomActivity
+
+> Enfin, un troisième écran permettra de visualiser la photo en haute résolution.
+
+Last, but not least, the ZoomActivity, entered after a click on the photo from the DetailActivity, allow an user to access the HD version of the image and can zoom on it.
+
+![ZoomActivity loading](https://github.com/1ud0v1c/nasa-apod/blob/main/data/detail/zoom_loading.png)
+![ZoomActivity loaded](https://github.com/1ud0v1c/nasa-apod/blob/main/data/detail/zoom_loaded.png)
+
+You will enter in an interactive mode and will be able to zoom or move on the photo.
+
+![ZoomActivity zoom interaction](https://github.com/1ud0v1c/nasa-apod/blob/main/data/detail/zoom_interaction.png)
+
+A landscape experience will be better because the majority of the photo are well suited for landscape.
+
+![ZoomActivity landscape](https://github.com/1ud0v1c/nasa-apod/blob/main/data/detail/zoom_landscape.png)
+
+
 ## Architecture 
 
 For this test, I used an [MVVM architecture](https://developer.android.com/jetpack/guide).
