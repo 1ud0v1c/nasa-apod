@@ -29,7 +29,7 @@ I wanted to thank, those two applications which give me inspiration for design o
 
 For this test, I used an [MVVM architecture](https://developer.android.com/jetpack/guide).
 
-![MVVM architecture](https://github.com/1ud0v1c/nasa-apod/raw/master/data/mvvm-architecture.png)
+![MVVM architecture](https://github.com/1ud0v1c/nasa-apod/blob/main/data/mvvm-architecture.png)
 
 We can check the HomeActivity implementation :
 - HomeActivity, it is the View himself, which can interact with the user

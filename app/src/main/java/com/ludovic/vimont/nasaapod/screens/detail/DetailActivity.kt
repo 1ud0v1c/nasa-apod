@@ -96,6 +96,9 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * We only set Wallpaper with HD images. So we cannot do it for thumbnail of videos
+     */
     private fun setAsWallpaper(photo: Photo) {
         if (photo.isMediaImage() && photo.hdurl != null) {
             val downloadText: String = getString(R.string.detail_activity_download_in_progress)
