@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.room.Room
 import com.bumptech.glide.Glide
 import com.ludovic.vimont.nasaapod.api.NasaAPI
+import com.ludovic.vimont.nasaapod.api.VimeoAPI
 import com.ludovic.vimont.nasaapod.db.PhotoDatabase
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -40,6 +41,9 @@ class NasaApplication: Application() {
 
             single {
                 buildRetrofitForAPI(NasaAPI.BASE_URL, NasaAPI::class.java)
+            }
+            single {
+                buildRetrofitForAPI(VimeoAPI.BASE_URL, VimeoAPI::class.java)
             }
         }
     }

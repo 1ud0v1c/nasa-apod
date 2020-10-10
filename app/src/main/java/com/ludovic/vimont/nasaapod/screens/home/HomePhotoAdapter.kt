@@ -32,7 +32,7 @@ class HomePhotoAdapter(private val photos: ArrayList<Photo>): RecyclerView.Adapt
         val photo: Photo = photos[position]
         loadPhoto(holder, photo)
         holder.textViewPhotoTitle.text = photo.title
-        holder.textViewPhotoDate.text = photo.date
+        holder.textViewPhotoDate.text = photo.getReversedDate()
         holder.itemView.setOnClickListener {
             onItemClick?.invoke(photo)
         }
