@@ -1,6 +1,7 @@
 package com.ludovic.vimont.nasaapod.helper
 
 import com.ludovic.vimont.nasaapod.api.NasaAPI
+import com.ludovic.vimont.nasaapod.api.NasaAPI.Companion.API_DATE_FORMAT
 import com.ludovic.vimont.nasaapod.model.Photo
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -21,11 +22,7 @@ object TimeHelper {
         return null
     }
 
-    fun getToday(): String {
-        val today = Date()
-        val dateFormat = SimpleDateFormat(NasaAPI.API_DATE_FORMAT, Locale.getDefault())
-        return dateFormat.format(today.time)
-    }
+    fun getToday(): String = SimpleDateFormat(API_DATE_FORMAT, Locale.getDefault()).format(Date().time)
 
     /**
      * Help us to determine the start_date of the request used in the NasaAPI given an interval of day.
@@ -33,7 +30,7 @@ object TimeHelper {
      */
     fun getSpecificDay(numberOfDaysToFetch: Int = NasaAPI.NUMBER_OF_DAY_TO_FETCH): String {
         val today = Date()
-        val dateFormat = SimpleDateFormat(NasaAPI.API_DATE_FORMAT, Locale.getDefault())
+        val dateFormat = SimpleDateFormat(API_DATE_FORMAT, Locale.getDefault())
         val calendar: Calendar = GregorianCalendar()
         calendar.time = today
         calendar.add(Calendar.DAY_OF_MONTH, -(numberOfDaysToFetch - 1))

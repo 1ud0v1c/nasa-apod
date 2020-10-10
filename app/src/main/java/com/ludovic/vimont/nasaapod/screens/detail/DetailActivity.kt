@@ -45,17 +45,19 @@ class DetailActivity : AppCompatActivity() {
                 })
 
                 viewModel.bitmap.observe(this, { stateData: StateData<Bitmap> ->
-                    if (stateData.status == DataStatus.SUCCESS) {
-                        stateData.data?.let { bitmap: Bitmap ->
-                            WallpaperHelper.setWallpaper(applicationContext, bitmap)
-                        }
-                        snackBar.dismiss()
-                    }
-                    else if (stateData.status == DataStatus.ERROR_NETWORK) {
-                        snackBar.setText(stateData.errorMessage)
-                            .setAction(getString(R.string.action_ok)) {
-                                snackBar.dismiss()
+                    when (stateData.status) {
+                        DataStatus.SUCCESS -> {
+                            stateData.data?.let { bitmap: Bitmap ->
+                                WallpaperHelper.setWallpaper(applicationContext, bitmap)
                             }
+                            snackBar.dismiss()
+                        }
+                        DataStatus.ERROR_NETWORK -> {
+                            snackBar.setText(stateData.errorMessage)
+                                .setAction(getString(R.string.action_ok)) {
+                                    snackBar.dismiss()
+                                }
+                        }
                     }
                 })
             }
@@ -71,10 +73,12 @@ class DetailActivity : AppCompatActivity() {
 
         binding.imageViewPhoto.setOnClickListener {
             val mediaURL: String? = if (photo.isMediaVideo()) photo.url else photo.hdurl ?: ""
-            val intent = Intent(applicationContext, ZoomActivity::class.java)
-            intent.putExtra(KEY_MEDIA_URL, mediaURL)
-            intent.putExtra(KEY_MEDIA_IS_A_VIDEO, photo.isMediaVideo())
-            startActivity(intent)
+            startActivity(
+                Intent(applicationContext, ZoomActivity::class.java).apply {
+                    putExtra(KEY_MEDIA_URL, mediaURL)
+                    putExtra(KEY_MEDIA_IS_A_VIDEO, photo.isMediaVideo())
+                }
+            )
         }
 
         val formattedDate: String = photo.getFormattedDate()

@@ -15,6 +15,7 @@ import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
 import com.ludovic.vimont.nasaapod.R
 import com.ludovic.vimont.nasaapod.helper.ViewHelper
 import com.ludovic.vimont.nasaapod.model.Photo
+import kotlinx.android.synthetic.main.item_photo.view.*
 
 class HomePhotoAdapter(private val photos: ArrayList<Photo>): RecyclerView.Adapter<HomePhotoAdapter.PhotoViewHolder>() {
     var onItemClick: ((Photo) -> Unit)? = null
@@ -68,8 +69,8 @@ class HomePhotoAdapter(private val photos: ArrayList<Photo>): RecyclerView.Adapt
     }
 
     class PhotoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val imageViewPhoto: ImageView = itemView.findViewById(R.id.image_view_photo)
-        val textViewPhotoTitle: TextView = itemView.findViewById(R.id.text_view_photo_title)
-        val textViewPhotoDate: TextView = itemView.findViewById(R.id.text_view_photo_date)
+        val imageViewPhoto: ImageView = itemView.image_view_photo
+        val textViewPhotoTitle: TextView = itemView.text_view_photo_title
+        val textViewPhotoDate: TextView = itemView.text_view_photo_date
     }
 }

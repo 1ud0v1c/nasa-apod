@@ -14,6 +14,10 @@ import com.ludovic.vimont.nasaapod.helper.ViewHelper
 import com.ludovic.vimont.nasaapod.helper.network.ConnectionLiveData
 import com.ludovic.vimont.nasaapod.helper.network.NetworkHelper
 import com.ludovic.vimont.nasaapod.helper.viewmodel.DataStatus
+import com.ludovic.vimont.nasaapod.helper.viewmodel.DataStatus.LOADING
+import com.ludovic.vimont.nasaapod.helper.viewmodel.DataStatus.SUCCESS
+import com.ludovic.vimont.nasaapod.helper.viewmodel.DataStatus.ERROR_NO_INTERNET
+import com.ludovic.vimont.nasaapod.helper.viewmodel.DataStatus.ERROR_NETWORK
 import com.ludovic.vimont.nasaapod.helper.viewmodel.StateData
 import com.ludovic.vimont.nasaapod.model.Photo
 import com.ludovic.vimont.nasaapod.screens.detail.DetailActivity
@@ -38,20 +42,12 @@ class HomeActivity: AppCompatActivity() {
         handleNetworkAvailability()
         viewModel.loadNasaPhotos()
 
-        viewModel.photosState.observe(this, { stateData: StateData<List<Photo>> ->
+        viewModel.photosState.observe(this, { stateData ->
             when (stateData.status) {
-                DataStatus.LOADING -> {
-                    showLoadingStatus()
-                }
-                DataStatus.SUCCESS -> {
-                    showSuccessStatus(stateData)
-                }
-                DataStatus.ERROR_NO_INTERNET -> {
-                    showErrorStatus(stateData, false)
-                }
-                DataStatus.ERROR_NETWORK -> {
-                    showErrorStatus(stateData, true)
-                }
+                LOADING -> showLoadingStatus()
+                SUCCESS -> showSuccessStatus(stateData)
+                ERROR_NO_INTERNET -> showErrorStatus(stateData, false)
+                ERROR_NETWORK -> showErrorStatus(stateData, true)
             }
         })
     }
@@ -105,26 +101,29 @@ class HomeActivity: AppCompatActivity() {
     }
 
     private fun showErrorStatus(stateData: StateData<List<Photo>>, hasInternet: Boolean) {
-        ViewHelper.fadeOutAnimation(binding.recyclerViewPhotos, {
-            binding.recyclerViewPhotos.visibility = View.GONE
-        })
-        ViewHelper.fadeInAnimation(binding.linearLayoutStateContainer, {
-            binding.linearLayoutStateContainer.visibility = View.VISIBLE
-        })
-        if (hasInternet) {
-            binding.imageViewState.setImageResource(R.drawable.state_request_error)
-            binding.textViewStateTitle.text = getString(R.string.home_activity_error_title)
-            binding.textViewStateDescription.text = stateData.errorMessage
-        } else {
-            binding.imageViewState.setImageResource(R.drawable.state_error_no_internet)
-            binding.textViewStateTitle.text = getString(R.string.home_activity_no_internet_title)
-            binding.textViewStateDescription.text = getString(R.string.home_activity_no_internet_description)
-        }
-        val buttonState: Button = binding.buttonStateAction
-        buttonState.text = getString(R.string.action_retry)
-        buttonState.visibility = View.VISIBLE
-        buttonState.setOnClickListener {
-            viewModel.loadNasaPhotos()
+        with(binding) {
+            ViewHelper.fadeOutAnimation(binding.recyclerViewPhotos, {
+                recyclerViewPhotos.visibility = View.GONE
+            })
+            ViewHelper.fadeInAnimation(binding.linearLayoutStateContainer, {
+                linearLayoutStateContainer.visibility = View.VISIBLE
+            })
+            if (hasInternet) {
+                imageViewState.setImageResource(R.drawable.state_request_error)
+                textViewStateTitle.text = getString(R.string.home_activity_error_title)
+                textViewStateDescription.text = stateData.errorMessage
+            } else {
+                imageViewState.setImageResource(R.drawable.state_error_no_internet)
+                textViewStateTitle.text = getString(R.string.home_activity_no_internet_title)
+                textViewStateDescription.text = getString(R.string.home_activity_no_internet_description)
+            }
+            buttonStateAction.apply {
+                text = getString(R.string.action_retry)
+                visibility = View.VISIBLE
+                setOnClickListener {
+                    viewModel.loadNasaPhotos()
+                }
+            }
         }
     }
 }
