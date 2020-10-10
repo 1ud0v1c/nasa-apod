@@ -8,7 +8,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -41,12 +40,16 @@ class HomePhotoAdapter(private val photos: ArrayList<Photo>): RecyclerView.Adapt
 
     private fun loadPhoto(holder: PhotoViewHolder, photo: Photo) {
         val applicationContext: Context = holder.itemView.context
+
         val cornersRadiusSize: Int = applicationContext.resources.getDimension(R.dimen.item_photo_corners_radius).toInt()
+        val factory: DrawableCrossFadeFactory = DrawableCrossFadeFactory.Builder(ViewHelper.GLIDE_FADE_IN_DURATION)
+            .setCrossFadeEnabled(true)
+            .build()
 
         Glide.with(applicationContext)
             .load(photo.getImageURL())
             .placeholder(R.drawable.photo_placeholder)
-            .transition(DrawableTransitionOptions.withCrossFade(ViewHelper.GLIDE_FADE_IN_DURATION))
+            .transition(DrawableTransitionOptions.withCrossFade(factory))
             .transform(CenterCrop(), RoundedCorners(cornersRadiusSize))
             .into(holder.imageViewPhoto)
     }

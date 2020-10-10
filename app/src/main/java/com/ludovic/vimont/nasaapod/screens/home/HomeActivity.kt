@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ludovic.vimont.nasaapod.R
-import com.ludovic.vimont.nasaapod.databinding.ActivityMainBinding
+import com.ludovic.vimont.nasaapod.databinding.ActivityHomeBinding
 import com.ludovic.vimont.nasaapod.helper.ViewHelper
 import com.ludovic.vimont.nasaapod.helper.network.ConnectionLiveData
 import com.ludovic.vimont.nasaapod.helper.network.NetworkHelper
@@ -25,12 +25,12 @@ class HomeActivity: AppCompatActivity() {
     }
     private val photoAdapter = HomePhotoAdapter(ArrayList())
     private val viewModel: HomeViewModel by viewModels()
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityHomeBinding
     private lateinit var connectionLiveData: ConnectionLiveData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         title = getString(R.string.home_activity_title)
 

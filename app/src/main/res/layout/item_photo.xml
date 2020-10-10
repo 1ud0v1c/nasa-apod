@@ -38,10 +38,10 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_photo_height"
         android:layout_marginTop="@dimen/activity_vertical_little_margin"
+        android:contentDescription="@string/home_activity_photo_content_description"
         android:scaleType="centerCrop"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linear_layout_content"
-        android:contentDescription="@string/home_activity_photo_content_description" />
+        app:layout_constraintTop_toBottomOf="@id/linear_layout_content" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

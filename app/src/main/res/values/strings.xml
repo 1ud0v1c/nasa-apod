@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NasaApod</string>
+    <string name="app_name">Nasa APOD</string>
 
     <!-- Common action -->
     <string name="action_ok">OK</string>
