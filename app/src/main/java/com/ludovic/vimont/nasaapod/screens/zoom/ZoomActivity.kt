@@ -13,6 +13,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.ludovic.vimont.nasaapod.R
 import com.ludovic.vimont.nasaapod.databinding.ActivityZoomBinding
 import com.ludovic.vimont.nasaapod.helper.ViewHelper
+import com.ludovic.vimont.nasaapod.helper.WindowHelper
 import com.ludovic.vimont.nasaapod.screens.detail.DetailActivity
 import com.ludovic.vimont.nasaapod.ui.BitmapRequestListener
 import com.ludovic.vimont.nasaapod.ui.DrawableRequestListener
@@ -22,7 +23,7 @@ class ZoomActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        useImmersiveActivity()
+        WindowHelper.useImmersiveActivity(this)
         binding = ActivityZoomBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -38,18 +39,6 @@ class ZoomActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    /**
-     * Use to enable immersive mode: https://developer.android.com/training/system-ui/immersive.
-     */
-    private fun useImmersiveActivity() {
-        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_FULLSCREEN
-                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
     }
 
     @SuppressLint("SetJavaScriptEnabled")

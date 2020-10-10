@@ -14,6 +14,7 @@ import com.ludovic.vimont.nasaapod.R
 import com.ludovic.vimont.nasaapod.databinding.ActivityDetailBinding
 import com.ludovic.vimont.nasaapod.helper.IntentHelper
 import com.ludovic.vimont.nasaapod.helper.ViewHelper
+import com.ludovic.vimont.nasaapod.helper.WallpaperHelper
 import com.ludovic.vimont.nasaapod.helper.viewmodel.DataStatus
 import com.ludovic.vimont.nasaapod.helper.viewmodel.StateData
 import com.ludovic.vimont.nasaapod.model.Photo
@@ -46,7 +47,7 @@ class DetailActivity : AppCompatActivity() {
                 viewModel.bitmap.observe(this, { stateData: StateData<Bitmap> ->
                     if (stateData.status == DataStatus.SUCCESS) {
                         stateData.data?.let { bitmap: Bitmap ->
-                            ViewHelper.setWallpaper(applicationContext, bitmap)
+                            WallpaperHelper.setWallpaper(applicationContext, bitmap)
                         }
                         snackBar.dismiss()
                     }
