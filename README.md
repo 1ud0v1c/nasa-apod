@@ -48,7 +48,13 @@ If everything is ok, you will first end up with a loading screen to help the use
 
 </div>
 
-The next time, you will launch the application, the data will be loaded from the database, thus you will end directly on the list.
+The next time, you will launch the application, the data will be loaded from the database, thus you will end directly on the list. Some days, the API gives us some video instead of a classical image, 
+to be able to offer a thumbnail in this case, I work on a solution : 
+- For Youtube video, it is pretty easy, the website offer us a practical solution, based on the ID of the video, we can directly retrieve the thumbnail of it. So for example, in the flux, we can find something like 
+this: https://www.youtube.com/embed/ictZttw3c98?rel=0. The ID here, is ictZttw3c98, so we can find the thumbnail using this url: https://img.youtube.com/vi/ictZttw3c98/0.jpg. Like propose on this 
+useful [stackoverflow post](https://stackoverflow.com/questions/8841159/how-to-make-youtube-video-thumbnails-in-android/8842839#8842839).
+- For vimeo, it is a bit more complicated. To be able to recover the thumbnail, we need to make an API call. The API can give us, url like this: https://player.vimeo.com/video/438799770. The ID here is 438799770. So 
+with the ID, we can interrogate the following API: https://vimeo.com/api/v2/video/438799770.json, we will receive in the flux, the desired thumbnail. Again, thank you [stackoverflow](https://stackoverflow.com/questions/1361149/get-img-thumbnails-from-vimeo).
 
 
 ## DetailActivity
