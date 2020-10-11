@@ -11,7 +11,8 @@ import com.squareup.moshi.Json
  */
 @Entity
 data class Photo(val title: String,
-				 val date: String,
+                 @PrimaryKey
+                 val date: String,
 				 val url: String,
 				 val hdurl: String?,
 				 val explanation: String,
@@ -27,9 +28,6 @@ data class Photo(val title: String,
         const val YOUTUBE_NAME = "youtube"
         const val VIMEO_NAME = "vimeo"
     }
-
-    @PrimaryKey(autoGenerate = true)
-    var photoId: Int = 0
     var videoThumbnail: String? = null
 
     fun isMediaImage(): Boolean {

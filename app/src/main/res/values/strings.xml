@@ -5,6 +5,7 @@
     <string name="action_ok">OK</string>
     <string name="action_launch">Launch</string>
     <string name="action_retry">Retry</string>
+    <string name="action_refresh">Refresh</string>
 
     <!-- HomeActivity -->
     <string name="home_activity_title">Last 30 astronomical photos</string>

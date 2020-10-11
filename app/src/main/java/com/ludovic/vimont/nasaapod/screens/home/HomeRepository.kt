@@ -26,9 +26,9 @@ class HomeRepository: KoinComponent {
         return photoDao.count() <= 0
     }
 
-    suspend fun retrievedNasaPhotos(): StateData<List<Photo>> {
+    suspend fun retrievedNasaPhotos(isRefreshNeeded: Boolean = false): StateData<List<Photo>> {
         val cachedPhotos: List<Photo> = photoDao.getAll()
-        if (cachedPhotos.isNotEmpty()) {
+        if (cachedPhotos.isNotEmpty() && !isRefreshNeeded) {
             return StateData.success(cachedPhotos)
         }
         return fetchNasaPhotos()

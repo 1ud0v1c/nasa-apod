@@ -21,9 +21,7 @@ class HomePhotoAdapter(private val photos: ArrayList<Photo>): RecyclerView.Adapt
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
         val itemView: View = LayoutInflater.from(parent.context).inflate(
-            R.layout.item_photo,
-            parent,
-            false
+            R.layout.item_photo, parent, false
         )
         return PhotoViewHolder(itemView)
     }
@@ -58,13 +56,10 @@ class HomePhotoAdapter(private val photos: ArrayList<Photo>): RecyclerView.Adapt
         return photos.size
     }
 
-    fun addItems(newPhotos: List<Photo>) {
-        val lastPhotosSize: Int = photos.size
+    fun setItems(newPhotos: List<Photo>) {
+        photos.clear()
         photos.addAll(newPhotos)
-        val newPhotosSize: Int = photos.size
-        if (newPhotosSize > lastPhotosSize) {
-            notifyItemRangeChanged(lastPhotosSize, newPhotosSize)
-        }
+        notifyDataSetChanged()
     }
 
     class PhotoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

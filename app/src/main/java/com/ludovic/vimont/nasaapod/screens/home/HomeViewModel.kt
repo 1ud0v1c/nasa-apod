@@ -14,7 +14,7 @@ class HomeViewModel: ViewModel() {
     private val isNetworkAvailable = MutableLiveData<Boolean>()
     val photosState = MutableLiveData<StateData<List<Photo>>>()
 
-    fun loadNasaPhotos() {
+    fun loadNasaPhotos(isRefreshNeeded: Boolean = false) {
         viewModelScope.launch(Dispatchers.Default) {
             val isConnected: Boolean = isNetworkAvailable.value ?: false
             val isDatabaseEmpty: Boolean = homeRepository.isDatabaseEmpty()
@@ -24,10 +24,10 @@ class HomeViewModel: ViewModel() {
                 return@launch
             }
 
-            if (isDatabaseEmpty) {
+            if (isDatabaseEmpty || isRefreshNeeded) {
                 photosState.postValue(StateData.loading())
             }
-            val stateData: StateData<List<Photo>> = homeRepository.retrievedNasaPhotos()
+            val stateData: StateData<List<Photo>> = homeRepository.retrievedNasaPhotos(isRefreshNeeded)
             photosState.postValue(stateData)
         }
     }
