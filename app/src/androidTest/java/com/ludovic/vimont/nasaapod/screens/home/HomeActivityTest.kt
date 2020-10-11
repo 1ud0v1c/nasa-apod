@@ -66,6 +66,34 @@ class HomeActivityTest {
         Intents.release()
     }
 
+    @Test
+    fun homeActivityTestRefreshAction() {
+        Thread.sleep(100)
+
+        val actionMenuItemView = onView(
+            allOf(
+                withId(R.id.menu_item_refresh), withContentDescription("Refresh"),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.action_bar),
+                        1
+                    ),
+                    0
+                ),
+                isDisplayed()
+            )
+        )
+        actionMenuItemView.perform(click())
+
+        Thread.sleep(50)
+        onView(withId(R.id.linear_layout_state_container)).check(matches(isDisplayed()))
+        onView(withId(R.id.recycler_view_photos)).check(matches(not(isDisplayed())))
+
+
+        Thread.sleep(5_000)
+        onView(withId(R.id.recycler_view_photos)).check(RecyclerViewItemCountAssertion(30))
+    }
+
     private fun childAtPosition(parentMatcher: Matcher<View>, position: Int): Matcher<View> {
         return object : TypeSafeMatcher<View>() {
             override fun describeTo(description: Description) {

@@ -4,7 +4,7 @@
   <a href="https://android-arsenal.com/api?level=21"><img alt="API" src="https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat"/></a>
 </p>
 
-Android application which list the last 30 photos of the [NASA's API](https://github.com/1ud0v1c/nasa-apod/blob/main/data/mvvm-architecture.png): [Astronomy Picture of the Day](https://github.com/nasa/apod-api#docs-).
+Android application which list the last 30 photos of the [NASA's API](https://api.nasa.gov/): [Astronomy Picture of the Day](https://github.com/nasa/apod-api#docs-).
 
 
 ## Design
@@ -56,6 +56,7 @@ useful [stackoverflow post](https://stackoverflow.com/questions/8841159/how-to-m
 - For vimeo, it is a bit more complicated. To be able to recover the thumbnail, we need to make an API call. The API can give us, url like this: https://player.vimeo.com/video/438799770. The ID here is 438799770. So 
 with the ID, we can interrogate the following API: https://vimeo.com/api/v2/video/438799770.json, we will receive in the flux, the desired thumbnail. Again, thank you [stackoverflow](https://stackoverflow.com/questions/1361149/get-img-thumbnails-from-vimeo).
 
+Finally, I added a refresh button, to give the user the possibility to get the last photos given by the API.
 
 ## DetailActivity
 
