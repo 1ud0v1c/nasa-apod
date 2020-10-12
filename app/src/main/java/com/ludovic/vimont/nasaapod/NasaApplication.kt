@@ -6,6 +6,7 @@ import com.bumptech.glide.Glide
 import com.ludovic.vimont.nasaapod.api.NasaAPI
 import com.ludovic.vimont.nasaapod.api.VimeoAPI
 import com.ludovic.vimont.nasaapod.db.PhotoDatabase
+import com.ludovic.vimont.nasaapod.preferences.DataHolder
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
@@ -21,10 +22,11 @@ class NasaApplication: Application() {
         val networkModule: Module = buildNetworkModule()
         val databaseModule: Module = buildDatabaseModule()
         val glideModule: Module = buildGlideModule()
+        val dataHolderModule: Module = buildDataHolder()
 
         startKoin {
             androidContext(this@NasaApplication)
-            val listOfModule: List<Module> = listOf(networkModule, databaseModule, glideModule)
+            val listOfModule: List<Module> = listOf(networkModule, databaseModule, glideModule, dataHolderModule)
             modules(listOfModule)
         }
     }
@@ -66,6 +68,14 @@ class NasaApplication: Application() {
         return module {
             factory {
                 Glide.with(androidContext())
+            }
+        }
+    }
+
+    private fun buildDataHolder(): Module {
+        return module {
+            single {
+                DataHolder.init(androidContext())
             }
         }
     }

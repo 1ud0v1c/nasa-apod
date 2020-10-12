@@ -1,26 +1,28 @@
 package com.ludovic.vimont.nasaapod.screens.home
 
 import android.util.Log
-import androidx.annotation.VisibleForTesting
 import com.ludovic.vimont.nasaapod.api.NasaAPI
 import com.ludovic.vimont.nasaapod.api.VimeoAPI
 import com.ludovic.vimont.nasaapod.db.PhotoDao
-import com.ludovic.vimont.nasaapod.helper.viewmodel.StateData
 import com.ludovic.vimont.nasaapod.helper.TimeHelper
+import com.ludovic.vimont.nasaapod.helper.viewmodel.StateData
 import com.ludovic.vimont.nasaapod.model.Photo
 import com.ludovic.vimont.nasaapod.model.VimeoData
+import com.ludovic.vimont.nasaapod.preferences.DataHolder
+import com.ludovic.vimont.nasaapod.preferences.UserPreferences
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import retrofit2.Response
-import java.lang.Exception
 
-class HomeRepository: KoinComponent {
+class HomeRepository : KoinComponent {
     companion object {
         val TAG: String = HomeRepository::class.java.simpleName
     }
+
     private val nasaAPI: NasaAPI by inject()
     private val vimeoAPI: VimeoAPI by inject()
     private val photoDao: PhotoDao by inject()
+    private val preferencesHelper: DataHolder by inject()
 
     suspend fun isDatabaseEmpty(): Boolean {
         return photoDao.count() <= 0
@@ -49,6 +51,7 @@ class HomeRepository: KoinComponent {
                     }
                 }
             }
+            readHeadersResponse(responsePhoto)
             responsePhoto.body()?.let { receivedPhotos: List<Photo> ->
                 val newPhotos: List<Photo> = receivedPhotos.reversed()
                 updateVideoThumbnails(newPhotos)
@@ -61,6 +64,17 @@ class HomeRepository: KoinComponent {
         }
     }
 
+    private fun readHeadersResponse(responsePhoto: Response<List<Photo>>) {
+        val quotaLimit: Int =
+            responsePhoto.headers().get(NasaAPI.HEADER_RATE_LIMIT)?.toIntOrNull()
+                ?: NasaAPI.DEFAULT_RATE_LIMIT_PER_HOUR
+        val remainingQuota: Int =
+            responsePhoto.headers().get(NasaAPI.HEADER_REMAINING_RATE_LIMIT)?.toIntOrNull()
+                ?: NasaAPI.DEFAULT_RATE_LIMIT_PER_HOUR - 1
+        preferencesHelper[UserPreferences.KEY_RATE_LIMIT] = quotaLimit
+        preferencesHelper[UserPreferences.KEY_REMAINING_RATE_LIMIT] = remainingQuota
+    }
+
     /**
      * Allow us to retrieve thumbnail for media of video type.
      */
@@ -71,7 +85,8 @@ class HomeRepository: KoinComponent {
             }
             if (photo.isVimeoVideo()) {
                 try {
-                    val vimeoResponse: Response<List<VimeoData>> = vimeoAPI.getVideoInformation(photo.getVimeoID())
+                    val vimeoResponse: Response<List<VimeoData>> =
+                        vimeoAPI.getVideoInformation(photo.getVimeoID())
                     vimeoResponse.body()?.let { vimeoData: List<VimeoData> ->
                         photo.videoThumbnail = vimeoData[0].thumbnailLarge
                     }
@@ -80,5 +95,11 @@ class HomeRepository: KoinComponent {
                 }
             }
         }
+    }
+
+    fun getQuota(): String {
+        val remainingQuota: Int = preferencesHelper[UserPreferences.KEY_REMAINING_RATE_LIMIT, NasaAPI.DEFAULT_RATE_LIMIT_PER_HOUR]
+        val rateLimit: Int = preferencesHelper[UserPreferences.KEY_RATE_LIMIT, NasaAPI.DEFAULT_RATE_LIMIT_PER_HOUR]
+        return "$remainingQuota/$rateLimit"
     }
 }

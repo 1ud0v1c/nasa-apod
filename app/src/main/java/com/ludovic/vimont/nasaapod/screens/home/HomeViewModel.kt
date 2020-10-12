@@ -13,6 +13,7 @@ class HomeViewModel: ViewModel() {
     private val homeRepository = HomeRepository()
     private val isNetworkAvailable = MutableLiveData<Boolean>()
     val photosState = MutableLiveData<StateData<List<Photo>>>()
+    val quota = MutableLiveData<String>()
 
     fun loadNasaPhotos(isRefreshNeeded: Boolean = false) {
         viewModelScope.launch(Dispatchers.Default) {
@@ -34,5 +35,12 @@ class HomeViewModel: ViewModel() {
 
     fun setNetworkAvailability(isConnected: Boolean) {
         isNetworkAvailable.value = isConnected
+    }
+
+    fun loadQuota() {
+        viewModelScope.launch(Dispatchers.Default) {
+            val remainingQuota: String = homeRepository.getQuota()
+            quota.postValue(remainingQuota)
+        }
     }
 }

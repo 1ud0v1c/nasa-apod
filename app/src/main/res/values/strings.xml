@@ -6,9 +6,10 @@
     <string name="action_launch">Launch</string>
     <string name="action_retry">Retry</string>
     <string name="action_refresh">Refresh</string>
+    <string name="action_see_quota">See API Quota</string>
 
     <!-- HomeActivity -->
-    <string name="home_activity_title">Last 30 astronomical photos</string>
+    <string name="home_activity_title">APOD: Last 30 photos</string>
     <string name="home_activity_photo_content_description">Nasa photo of the day</string>
     <string name="home_activity_image_view_state_content_description">Home Activity ImageView current state</string>
     <string name="home_activity_no_data_title">No data</string>
@@ -18,6 +19,7 @@
     <string name="home_activity_no_internet_title">Connection Failed</string>
     <string name="home_activity_no_internet_description">Could not connect to the network.\nPlease check and try again.</string>
     <string name="home_activity_error_title">An error occurred</string>
+    <string name="home_activity_display_quota">You still have: %s available requests for the next hour.</string>
 
     <!-- DetailActivity -->
     <string name="detail_activity_explanation_title">Explanation</string>

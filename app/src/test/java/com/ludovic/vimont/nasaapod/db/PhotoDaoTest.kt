@@ -21,10 +21,10 @@ class PhotoDaoTest : AutoCloseKoinTest() {
 
     @Before
     fun setUp() {
-        photos.add(MockModel.buildPhoto("https://google.fr/test.png"))
-        photos.add(MockModel.buildPhoto("https://google.fr/test.png"))
-        photos.add(MockModel.buildPhoto("https://google.fr/test.png"))
-        photos.add(MockModel.buildPhoto("https://google.fr/test.png"))
+        photos.add(MockModel.buildPhoto("https://google.fr/test.png", Photo.IMAGE_MEDIA_TYPE, "2020-10-10"))
+        photos.add(MockModel.buildPhoto("https://google.fr/test.png", Photo.IMAGE_MEDIA_TYPE, "2020-10-09"))
+        photos.add(MockModel.buildPhoto("https://google.fr/test.png", Photo.VIDEO_MEDIA_TYPE, "2020-10-08"))
+        photos.add(MockModel.buildPhoto("https://google.fr/test.png", Photo.IMAGE_MEDIA_TYPE, "2020-10-07"))
     }
 
     @Test

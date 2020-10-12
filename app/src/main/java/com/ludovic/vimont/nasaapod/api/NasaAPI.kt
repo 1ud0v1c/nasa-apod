@@ -17,6 +17,10 @@ interface NasaAPI {
         private const val API_KEY = "jUgv6lDgN4nlkzKZLgruWbzSNOvZLLiisjCc29fz"
 
         const val BASE_URL = "https://api.nasa.gov/planetary/"
+        const val HEADER_RATE_LIMIT = "X-RateLimit-Limit"
+        const val HEADER_REMAINING_RATE_LIMIT = "X-RateLimit-Remaining"
+        const val DEFAULT_RATE_LIMIT_PER_HOUR = 1_000
+
         const val NUMBER_OF_DAY_TO_FETCH = 30
         const val API_DATE_FORMAT = "yyyy-MM-dd"
     }

@@ -6,10 +6,12 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.ludovic.vimont.nasaapod.R
 import com.ludovic.vimont.nasaapod.databinding.ActivityHomeBinding
 import com.ludovic.vimont.nasaapod.helper.ViewHelper
@@ -55,6 +57,18 @@ class HomeActivity: AppCompatActivity() {
                     showErrorStatus(stateData, true)
                 }
             }
+        })
+
+        viewModel.quota.observe(this, { remainingQuota: String ->
+            val quotaInformation: String = getString(R.string.home_activity_display_quota, remainingQuota)
+            val snackBar: Snackbar = Snackbar.make(binding.root, quotaInformation, Snackbar.LENGTH_INDEFINITE)
+            snackBar.setAction(getString(R.string.action_ok)) {
+                snackBar.dismiss()
+            }
+            val snackBarView: View = snackBar.view
+            val snackBarTextView: TextView = snackBarView.findViewById(com.google.android.material.R.id.snackbar_text)
+            snackBarTextView.maxLines = 3
+            snackBar.show()
         })
     }
 
@@ -145,6 +159,9 @@ class HomeActivity: AppCompatActivity() {
         when (item.itemId) {
             R.id.menu_item_refresh -> {
                 viewModel.loadNasaPhotos(true)
+            }
+            R.id.menu_item_see_quota -> {
+                viewModel.loadQuota()
             }
         }
         return true
