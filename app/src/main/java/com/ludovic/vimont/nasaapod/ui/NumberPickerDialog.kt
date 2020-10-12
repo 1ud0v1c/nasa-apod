@@ -11,7 +11,7 @@ class NumberPickerDialog(activity: Activity,
                          private val lastNumberOfDaysToFetch: Int): Dialog(activity, R.style.NumberPickerDialog) {
     companion object {
         const val NUMBER_PICKER_MIN_VALUE = 15
-        const val NUMBER_PICKER_MAX_VALUE = 150
+        const val NUMBER_PICKER_MAX_VALUE = 180
         const val NUMBER_PICKER_STEP = 15
     }
 

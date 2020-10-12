@@ -56,7 +56,20 @@ useful [stackoverflow post](https://stackoverflow.com/questions/8841159/how-to-m
 - For vimeo, it is a bit more complicated. To be able to recover the thumbnail, we need to make an API call. The API can give us, url like this: https://player.vimeo.com/video/438799770. The ID here is 438799770. So 
 with the ID, we can interrogate the following API: https://vimeo.com/api/v2/video/438799770.json, we will receive in the flux, the desired thumbnail. Again, thank you [stackoverflow](https://stackoverflow.com/questions/1361149/get-img-thumbnails-from-vimeo).
 
-Finally, I added a refresh button, to give the user the possibility to get the last photos given by the API.
+Finally, I added 3 actions available in the action bar: 
+- As, I use a database to avoid to always request the NASA API, you need to be able to request it anew to be up to date. That is why, I provided a refresh action button which gives the user the possibility to relaunch 
+a request.
+- I found it a bit frustrating to not be able to request more days to display. So, in order to increase the application life duration. I added a number picker, to choose the number of days to request. As soon as the 
+user validated the new number of days, we launch a new request.
+- The last action is very simple, but is still useful. It is the possibility to see the remaining quota for our API Key.
+
+<div align="center">
+
+![Home number picker](https://github.com/1ud0v1c/nasa-apod/blob/main/data/home/home_number_of_days_to_fetch.png)
+![Home quota](https://github.com/1ud0v1c/nasa-apod/blob/main/data/home/home_quota.png)
+
+</div>
+
 
 ## DetailActivity
 
