@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.ludovic.vimont.nasaapod.R
+import com.ludovic.vimont.nasaapod.api.NasaAPI
 import com.ludovic.vimont.nasaapod.databinding.ActivityHomeBinding
 import com.ludovic.vimont.nasaapod.helper.ViewHelper
 import com.ludovic.vimont.nasaapod.helper.network.ConnectionLiveData
@@ -30,6 +31,7 @@ class HomeActivity: AppCompatActivity() {
     }
     private val photoAdapter = HomePhotoAdapter(ArrayList())
     private val viewModel: HomeViewModel by viewModels()
+    private var numberOfDaysToFetch: Int = NasaAPI.NUMBER_OF_DAY_TO_FETCH
     private lateinit var binding: ActivityHomeBinding
     private lateinit var connectionLiveData: ConnectionLiveData
 
@@ -37,11 +39,18 @@ class HomeActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        title = getString(R.string.home_activity_title)
+        title = getString(R.string.home_activity_title, NasaAPI.NUMBER_OF_DAY_TO_FETCH)
 
         configureRecyclerView()
         handleNetworkAvailability()
+
         viewModel.loadNasaPhotos()
+        viewModel.loadNumberOfDaysToFetchPreference()
+
+        viewModel.numberOfDaysToFetch.observe(this, { lastDesiredRange: Int ->
+            numberOfDaysToFetch = lastDesiredRange
+            title = getString(R.string.home_activity_title, numberOfDaysToFetch)
+        })
 
         viewModel.photosState.observe(this, { stateData: StateData<List<Photo>> ->
             when (stateData.status) {
@@ -165,8 +174,12 @@ class HomeActivity: AppCompatActivity() {
                 viewModel.loadQuota()
             }
             R.id.menu_item_number_picker -> {
-                val numberPickerDialog = NumberPickerDialog(this)
+                val numberPickerDialog = NumberPickerDialog(this, numberOfDaysToFetch)
                 numberPickerDialog.show()
+                numberPickerDialog.onValidateClick = { rangeOfDays: Int ->
+                    viewModel.saveNumberOfDaysToFetchPreference(rangeOfDays)
+                    viewModel.loadNasaPhotos(true)
+                }
             }
         }
         return true

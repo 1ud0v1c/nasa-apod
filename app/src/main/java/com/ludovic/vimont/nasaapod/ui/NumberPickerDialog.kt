@@ -7,12 +7,14 @@ import android.view.Window
 import com.ludovic.vimont.nasaapod.R
 import com.ludovic.vimont.nasaapod.databinding.DialogNumberPickerBinding
 
-class NumberPickerDialog(activity: Activity): Dialog(activity, R.style.NumberPickerDialog) {
+class NumberPickerDialog(activity: Activity,
+                         private val lastNumberOfDaysToFetch: Int): Dialog(activity, R.style.NumberPickerDialog) {
     companion object {
         const val NUMBER_PICKER_MIN_VALUE = 15
         const val NUMBER_PICKER_MAX_VALUE = 150
         const val NUMBER_PICKER_STEP = 15
     }
+
     private lateinit var binding: DialogNumberPickerBinding
     var onValidateClick: ((rangeOfDays: Int) -> Unit)? = null
 
@@ -21,8 +23,19 @@ class NumberPickerDialog(activity: Activity): Dialog(activity, R.style.NumberPic
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         binding = DialogNumberPickerBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        updateNumberPicker()
+        updateNumberPicker(lastNumberOfDaysToFetch)
         setButtonActions()
+    }
+
+    private fun updateNumberPicker(numberOfDaysToFetch: Int) {
+        with(binding) {
+            val displayedValues: Array<String> = getDisplayedValues()
+            numberPicker.minValue = 0
+            numberPicker.maxValue = displayedValues.size - 1
+            numberPicker.displayedValues = displayedValues
+            numberPicker.value = displayedValues.indexOf("$numberOfDaysToFetch")
+            numberPicker.wrapSelectorWheel = false
+        }
     }
 
     private fun setButtonActions() {
@@ -30,19 +43,9 @@ class NumberPickerDialog(activity: Activity): Dialog(activity, R.style.NumberPic
             dismiss()
         }
         binding.buttonValidate.setOnClickListener {
-            onValidateClick?.invoke(binding.numberPicker.value)
+            val rangeOfDays: Int = (binding.numberPicker.value + 1) * NUMBER_PICKER_STEP
+            onValidateClick?.invoke(rangeOfDays)
             dismiss()
-        }
-    }
-
-    private fun updateNumberPicker() {
-        with(binding) {
-            val displayedValues: Array<String> = getDisplayedValues()
-            numberPicker.minValue = 0
-            numberPicker.maxValue = displayedValues.size - 1
-            numberPicker.displayedValues = displayedValues
-            numberPicker.value = 1
-            numberPicker.wrapSelectorWheel = false
         }
     }
 

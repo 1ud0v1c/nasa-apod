@@ -1,6 +1,9 @@
 package com.ludovic.vimont.nasaapod.db
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.ludovic.vimont.nasaapod.model.Photo
 
 /**
@@ -12,7 +15,7 @@ interface PhotoDao {
     @Query("SELECT count(date) FROM photo")
     suspend fun count(): Int
 
-    @Query("SELECT * FROM photo")
+    @Query("SELECT * FROM photo ORDER BY date DESC")
     suspend fun getAll(): List<Photo>
 
     @Query("SELECT * FROM photo WHERE date=:date")
@@ -20,4 +23,7 @@ interface PhotoDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(photos: List<Photo>)
+
+    @Query("DELETE FROM photo")
+    suspend fun drop()
 }

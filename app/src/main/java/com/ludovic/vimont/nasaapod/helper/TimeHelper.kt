@@ -32,6 +32,7 @@ object TimeHelper {
      * We subtract 1 to this interval to exclude the end_date, which is today.
      */
     fun getSpecificDay(numberOfDaysToFetch: Int = NasaAPI.NUMBER_OF_DAY_TO_FETCH): String {
+        println("getSpecificDay] numberOfDaysToFetch: $numberOfDaysToFetch")
         val today = Date()
         val dateFormat = SimpleDateFormat(NasaAPI.API_DATE_FORMAT, Locale.getDefault())
         val calendar: Calendar = GregorianCalendar()

@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 class HomeViewModel: ViewModel() {
     private val homeRepository = HomeRepository()
     private val isNetworkAvailable = MutableLiveData<Boolean>()
+    val numberOfDaysToFetch = MutableLiveData<Int>()
     val photosState = MutableLiveData<StateData<List<Photo>>>()
     val quota = MutableLiveData<String>()
 
@@ -41,6 +42,20 @@ class HomeViewModel: ViewModel() {
         viewModelScope.launch(Dispatchers.Default) {
             val remainingQuota: String = homeRepository.getQuota()
             quota.postValue(remainingQuota)
+        }
+    }
+
+    fun loadNumberOfDaysToFetchPreference() {
+        viewModelScope.launch(Dispatchers.Default) {
+            val rangeOfDaysToFetch: Int = homeRepository.getNumberOfDaysToFetch()
+            numberOfDaysToFetch.postValue(rangeOfDaysToFetch)
+        }
+    }
+
+    fun saveNumberOfDaysToFetchPreference(rangeOfDays: Int) {
+        viewModelScope.launch(Dispatchers.Default) {
+            homeRepository.setNumberOfDaysToFetch(rangeOfDays)
+            numberOfDaysToFetch.postValue(rangeOfDays)
         }
     }
 }

@@ -22,7 +22,7 @@ class HomeRepository : KoinComponent {
     private val nasaAPI: NasaAPI by inject()
     private val vimeoAPI: VimeoAPI by inject()
     private val photoDao: PhotoDao by inject()
-    private val preferencesHelper: DataHolder by inject()
+    private val dataHolder: DataHolder by inject()
 
     suspend fun isDatabaseEmpty(): Boolean {
         return photoDao.count() <= 0
@@ -38,7 +38,8 @@ class HomeRepository : KoinComponent {
 
     private suspend fun fetchNasaPhotos(): StateData<List<Photo>> {
         val photos = ArrayList<Photo>()
-        val startDate: String = TimeHelper.getSpecificDay()
+        val rangeOfDaysToFetch: Int = getNumberOfDaysToFetch()
+        val startDate: String = TimeHelper.getSpecificDay(rangeOfDaysToFetch)
         try {
             val responsePhoto: Response<List<Photo>> = nasaAPI.getPhotos(startDate)
             if (!responsePhoto.isSuccessful) {
@@ -56,6 +57,7 @@ class HomeRepository : KoinComponent {
                 val newPhotos: List<Photo> = receivedPhotos.reversed()
                 updateVideoThumbnails(newPhotos)
                 photos.addAll(newPhotos)
+                photoDao.drop()
                 photoDao.insert(newPhotos)
             }
             return StateData.success(photos)
@@ -71,8 +73,8 @@ class HomeRepository : KoinComponent {
         val remainingQuota: Int =
             responsePhoto.headers().get(NasaAPI.HEADER_REMAINING_RATE_LIMIT)?.toIntOrNull()
                 ?: NasaAPI.DEFAULT_RATE_LIMIT_PER_HOUR - 1
-        preferencesHelper[UserPreferences.KEY_RATE_LIMIT] = quotaLimit
-        preferencesHelper[UserPreferences.KEY_REMAINING_RATE_LIMIT] = remainingQuota
+        dataHolder[UserPreferences.KEY_RATE_LIMIT] = quotaLimit
+        dataHolder[UserPreferences.KEY_REMAINING_RATE_LIMIT] = remainingQuota
     }
 
     /**
@@ -98,8 +100,16 @@ class HomeRepository : KoinComponent {
     }
 
     fun getQuota(): String {
-        val remainingQuota: Int = preferencesHelper[UserPreferences.KEY_REMAINING_RATE_LIMIT, NasaAPI.DEFAULT_RATE_LIMIT_PER_HOUR]
-        val rateLimit: Int = preferencesHelper[UserPreferences.KEY_RATE_LIMIT, NasaAPI.DEFAULT_RATE_LIMIT_PER_HOUR]
+        val remainingQuota: Int = dataHolder[UserPreferences.KEY_REMAINING_RATE_LIMIT, NasaAPI.DEFAULT_RATE_LIMIT_PER_HOUR]
+        val rateLimit: Int = dataHolder[UserPreferences.KEY_RATE_LIMIT, NasaAPI.DEFAULT_RATE_LIMIT_PER_HOUR]
         return "$remainingQuota/$rateLimit"
+    }
+
+    fun getNumberOfDaysToFetch(): Int {
+        return dataHolder[UserPreferences.KEY_RANGE_OF_DAYS_TO_FETCH, NasaAPI.NUMBER_OF_DAY_TO_FETCH]
+    }
+
+    fun setNumberOfDaysToFetch(rangeOfDays: Int) {
+        dataHolder[UserPreferences.KEY_RANGE_OF_DAYS_TO_FETCH] = rangeOfDays
     }
 }

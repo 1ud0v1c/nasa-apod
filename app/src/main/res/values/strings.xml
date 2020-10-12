@@ -12,7 +12,7 @@
     <string name="action_range_date">Choose range date</string>
 
     <!-- HomeActivity -->
-    <string name="home_activity_title">APOD: Last 30 photos</string>
+    <string name="home_activity_title">APOD: Last %d photos</string>
     <string name="home_activity_photo_content_description">Nasa photo of the day</string>
     <string name="home_activity_image_view_state_content_description">Home Activity ImageView current state</string>
     <string name="home_activity_no_data_title">No data</string>
