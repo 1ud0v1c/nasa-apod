@@ -62,4 +62,17 @@ class HomeRepositoryTest : AutoCloseKoinTest() {
             }
         }
     }
+
+    @Test
+    fun testSetNumberOfDaysToFetch(): Unit = runBlocking {
+        val numberOfDays: Int = homeRepository.getNumberOfDaysToFetch()
+        Assert.assertEquals(NasaAPI.NUMBER_OF_DAY_TO_FETCH, numberOfDays)
+        homeRepository.setNumberOfDaysToFetch(90)
+        Assert.assertEquals(90, homeRepository.getNumberOfDaysToFetch())
+
+        homeRepository.retrievedNasaPhotos().data?.let { photos: List<Photo> ->
+            Assert.assertTrue(photos.isNotEmpty())
+            Assert.assertEquals(90, photos.size)
+        }
+    }
 }
