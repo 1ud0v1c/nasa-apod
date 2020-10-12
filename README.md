@@ -6,6 +6,11 @@
 
 Android application which list the last 30 photos of the [NASA's API](https://api.nasa.gov/): [Astronomy Picture of the Day](https://github.com/nasa/apod-api#docs-).
 
+<div align="center">
+
+![Application launcher](https://github.com/1ud0v1c/nasa-apod/blob/main/data/launcher.png)
+
+</div>
 
 ## Design
 
@@ -150,3 +155,14 @@ than Jackson.
 Easy to use and easily configurable, it was the perfect library for this test.
 - [Koin](https://github.com/InsertKoinIO/koin): I used Koin for dependency injection.
 - [PhotoView](https://github.com/chrisbanes/PhotoView): A wrapper of an ImageView which supports a zooming experience. Very appropriate to display HD images.
+
+
+## What can be improved
+
+- I really liked the appearance of the Resplash application, they used a grid to display the image gallery. I wanted to implement a similar solution using a [StaggeredGridLayoutManager](https://developer.android.com/reference/androidx/recyclerview/widget/StaggeredGridLayoutManager).
+And then provide a simple solution to switch between the two styles, for example by adding another menu item inside the ActionBar.
+- I encountered an issue, when testing the application near midnight. Indeed, in my local hour, it was already midnight, but in the server timezone I suppose it was not. It could be a great idea to monitor the server current 
+date and base our request on it, instead of using our timezone. Maybe a marginal case, but definitely something worth investigation.
+- Last but not least, the application allows a user to use the HD version of a photo as a wallpaper. It is handy, but as the photos are very heavy, we should display the current progress of the download to improve the 
+user experience. I succeed to make it work thanks to [this post](https://gist.github.com/fbis251/cfa169fd9e1e142e042c) and I used [this library](https://github.com/tingyik90/snackprogressbar) to display the progression. 
+But, I was not satisfied with this solution, it was a bit hacky. With more time, we could probably do a better implementation based on a Dialog for example. 
