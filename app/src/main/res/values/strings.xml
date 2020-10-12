@@ -3,10 +3,13 @@
 
     <!-- Common action -->
     <string name="action_ok">OK</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_validate">Validate</string>
     <string name="action_launch">Launch</string>
     <string name="action_retry">Retry</string>
     <string name="action_refresh">Refresh</string>
     <string name="action_see_quota">See API Quota</string>
+    <string name="action_range_date">Choose range date</string>
 
     <!-- HomeActivity -->
     <string name="home_activity_title">APOD: Last 30 photos</string>
@@ -20,6 +23,9 @@
     <string name="home_activity_no_internet_description">Could not connect to the network.\nPlease check and try again.</string>
     <string name="home_activity_error_title">An error occurred</string>
     <string name="home_activity_display_quota">You still have: %s available requests for the next hour.</string>
+
+    <!-- NumberPicker Dialog -->
+    <string name="number_picker_title">Choose a range of days to fetch</string>
 
     <!-- DetailActivity -->
     <string name="detail_activity_explanation_title">Explanation</string>
