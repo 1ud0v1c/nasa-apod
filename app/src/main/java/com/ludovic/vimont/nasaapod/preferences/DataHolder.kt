@@ -41,7 +41,7 @@ object DataHolder {
         }
     }
 
-    inline operator fun <reified T : Any> get(key: String, defaultValue: T): T {
+    inline operator fun <reified T : Any> get(key: String, defaultValue: T? = null): T {
         return when (T::class) {
             String::class -> preferences.getString(key, defaultValue as? String ?: "") as T
             Int::class -> preferences.getInt(key, defaultValue as? Int ?: -1) as T
