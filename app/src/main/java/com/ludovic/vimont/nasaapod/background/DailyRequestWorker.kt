@@ -29,7 +29,7 @@ class DailyRequestWorker(context: Context,
                     .load(newPhoto.getImageURL())
                     .into(object: CustomTarget<Bitmap>(){
                         override fun onResourceReady(largeIcon: Bitmap, transition: Transition<in Bitmap>?) {
-                            notificationBuilder.showdNotification(applicationContext, newPhoto, largeIcon)
+                            notificationBuilder.showNotification(applicationContext, newPhoto, largeIcon)
                         }
                         override fun onLoadCleared(placeholder: Drawable?) {
 

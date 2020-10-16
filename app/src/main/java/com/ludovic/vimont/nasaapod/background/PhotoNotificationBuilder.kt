@@ -30,7 +30,7 @@ class PhotoNotificationBuilder {
         private const val CHANNEL_DESCRIPTION = "Daily display the astronomical photo of the day from the NASA API."
     }
 
-    fun showdNotification(context: Context, photo: Photo, largeIcon: Bitmap) {
+    fun showNotification(context: Context, photo: Photo, largeIcon: Bitmap) {
         val notificationManager: NotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationChannel(notificationManager)

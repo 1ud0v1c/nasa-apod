@@ -21,7 +21,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
 @Suppress("unused")
-class NasaApplication: Application() {
+class NasaApplication: Application(), Configuration.Provider {
     override fun onCreate() {
         super.onCreate()
 
@@ -87,5 +87,10 @@ class NasaApplication: Application() {
                 DataHolder.init(androidContext())
             }
         }
+    }
+
+    override fun getWorkManagerConfiguration(): Configuration {
+        return Configuration.Builder()
+            .build()
     }
 }
