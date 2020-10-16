@@ -80,6 +80,10 @@ dependencies {
     implementation "org.koin:koin-core:2.1.6"
     implementation "org.koin:koin-android:2.1.6"
 
+    // WorkerManager with coroutine support
+    implementation 'androidx.work:work-runtime:2.4.0'
+    implementation "androidx.work:work-runtime-ktx:2.4.0"
+
     // PhotoView
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
 

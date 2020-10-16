@@ -44,9 +44,6 @@ class HomeActivity: AppCompatActivity() {
         configureRecyclerView()
         handleNetworkAvailability()
 
-        viewModel.loadNasaPhotos()
-        viewModel.loadNumberOfDaysToFetchPreference()
-
         viewModel.numberOfDaysToFetch.observe(this, { lastDesiredRange: Int ->
             numberOfDaysToFetch = lastDesiredRange
             title = getString(R.string.home_activity_title, numberOfDaysToFetch)
@@ -80,6 +77,12 @@ class HomeActivity: AppCompatActivity() {
             snackBarTextView.maxLines = 3
             snackBar.show()
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadNasaPhotos()
+        viewModel.loadNumberOfDaysToFetchPreference()
     }
 
     private fun configureRecyclerView() {

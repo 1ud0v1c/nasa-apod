@@ -7,11 +7,14 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object TimeHelper {
-    fun getFormattedDate(dateValue: String,): String? {
+    fun getFormattedDate(dateValue: String): String? {
         val apiFormat = SimpleDateFormat(NasaAPI.API_DATE_FORMAT, Locale.getDefault())
         try {
             apiFormat.parse(dateValue)?.let { date: Date ->
-                val desiredDateFormat = SimpleDateFormat(Photo.DETAIL_DATE_FORMAT, Locale.getDefault())
+                val desiredDateFormat = SimpleDateFormat(
+                    Photo.DETAIL_DATE_FORMAT,
+                    Locale.getDefault()
+                )
                 return desiredDateFormat.format(date)
 
             }
@@ -32,12 +35,28 @@ object TimeHelper {
      * We subtract 1 to this interval to exclude the end_date, which is today.
      */
     fun getSpecificDay(numberOfDaysToFetch: Int = NasaAPI.NUMBER_OF_DAY_TO_FETCH): String {
-        println("getSpecificDay] numberOfDaysToFetch: $numberOfDaysToFetch")
         val today = Date()
         val dateFormat = SimpleDateFormat(NasaAPI.API_DATE_FORMAT, Locale.getDefault())
         val calendar: Calendar = GregorianCalendar()
         calendar.time = today
         calendar.add(Calendar.DAY_OF_MONTH, -(numberOfDaysToFetch - 1))
         return dateFormat.format(calendar.time)
+    }
+
+    fun computeInitialDelay(hour: Int, minute: Int): Long {
+        val calendar: Calendar = Calendar.getInstance()
+        val nowMillis: Long = calendar.timeInMillis
+
+        if (calendar[Calendar.HOUR_OF_DAY] > hour ||
+            calendar[Calendar.HOUR_OF_DAY] == hour && calendar[Calendar.MINUTE] + 1 >= minute) {
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
+        }
+
+        calendar[Calendar.HOUR_OF_DAY] = hour
+        calendar[Calendar.MINUTE] = minute
+        calendar[Calendar.SECOND] = 0
+        calendar[Calendar.MILLISECOND] = 0
+
+        return calendar.timeInMillis - nowMillis
     }
 }
