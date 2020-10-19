@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.os.Build
 import android.service.notification.StatusBarNotification
 import androidx.test.core.app.ApplicationProvider
+import com.ludovic.vimont.nasaapod.BitmapHelper
 import com.ludovic.vimont.nasaapod.MockModel
 import com.ludovic.vimont.nasaapod.model.Photo
 import org.junit.Assert
@@ -24,7 +25,7 @@ class PhotoNotificationBuilderTest : AutoCloseKoinTest() {
 
     @Test
     fun testShowNotification() {
-        photoNotificationBuilder.showNotification(context, photo, emptyBitmap())
+        photoNotificationBuilder.showNotification(context, photo, BitmapHelper.emptyBitmap())
         val notificationManager: NotificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val statusBarNotification: StatusBarNotification =
@@ -35,10 +36,5 @@ class PhotoNotificationBuilderTest : AutoCloseKoinTest() {
         statusBarNotification.notification.extras.getString("android.text")?.let { description: String ->
             Assert.assertEquals(photo.explanation, description)
         }
-    }
-
-    private fun emptyBitmap(): Bitmap {
-        val conf = Bitmap.Config.ARGB_8888
-        return Bitmap.createBitmap(100, 100, conf)
     }
 }

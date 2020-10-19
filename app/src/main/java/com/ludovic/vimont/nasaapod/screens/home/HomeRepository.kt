@@ -87,8 +87,7 @@ class HomeRepository : KoinComponent {
             }
             if (photo.isVimeoVideo()) {
                 try {
-                    val vimeoResponse: Response<List<VimeoData>> =
-                        vimeoAPI.getVideoInformation(photo.getVimeoID())
+                    val vimeoResponse: Response<List<VimeoData>> = vimeoAPI.getVideoInformation(photo.getVimeoID())
                     vimeoResponse.body()?.let { vimeoData: List<VimeoData> ->
                         photo.videoThumbnail = vimeoData[0].thumbnailLarge
                     }
