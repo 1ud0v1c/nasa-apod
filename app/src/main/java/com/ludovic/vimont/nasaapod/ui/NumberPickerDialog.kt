@@ -8,7 +8,7 @@ import com.ludovic.vimont.nasaapod.R
 import com.ludovic.vimont.nasaapod.databinding.DialogNumberPickerBinding
 
 class NumberPickerDialog(activity: Activity,
-                         private val lastNumberOfDaysToFetch: Int): Dialog(activity, R.style.NumberPickerDialog) {
+                         private val lastNumberOfDaysToFetch: Int): Dialog(activity, R.style.NasaApodDialog) {
     companion object {
         const val NUMBER_PICKER_MIN_VALUE = 15
         const val NUMBER_PICKER_MAX_VALUE = 180

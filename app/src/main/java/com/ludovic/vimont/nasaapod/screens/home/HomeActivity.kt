@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
@@ -44,12 +45,12 @@ class HomeActivity: AppCompatActivity() {
         configureRecyclerView()
         handleNetworkAvailability()
 
-        viewModel.numberOfDaysToFetch.observe(this, { lastDesiredRange: Int ->
+        viewModel.numberOfDaysToFetch.observe(this) { lastDesiredRange: Int ->
             numberOfDaysToFetch = lastDesiredRange
             title = getString(R.string.home_activity_title, numberOfDaysToFetch)
-        })
+        }
 
-        viewModel.photosState.observe(this, { stateData: StateData<List<Photo>> ->
+        viewModel.photosState.observe(this) { stateData: StateData<List<Photo>> ->
             when (stateData.status) {
                 DataStatus.LOADING -> {
                     showLoadingStatus()
@@ -64,9 +65,9 @@ class HomeActivity: AppCompatActivity() {
                     showErrorStatus(stateData, true)
                 }
             }
-        })
+        }
 
-        viewModel.quota.observe(this, { remainingQuota: String ->
+        viewModel.quota.observe(this) { remainingQuota: String ->
             val quotaInformation: String = getString(R.string.home_activity_display_quota, remainingQuota)
             val snackBar: Snackbar = Snackbar.make(binding.root, quotaInformation, Snackbar.LENGTH_INDEFINITE)
             snackBar.setAction(getString(R.string.action_ok)) {
@@ -76,7 +77,7 @@ class HomeActivity: AppCompatActivity() {
             val snackBarTextView: TextView = snackBarView.findViewById(com.google.android.material.R.id.snackbar_text)
             snackBarTextView.maxLines = 3
             snackBar.show()
-        })
+        }
     }
 
     override fun onResume() {

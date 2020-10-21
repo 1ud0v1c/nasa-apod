@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.observe
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.material.snackbar.Snackbar
@@ -39,25 +40,24 @@ class DetailActivity : AppCompatActivity() {
             intent.extras?.getString(HomeActivity.KEY_PHOTO_DATE)?.let { photoDate: String ->
                 viewModel.loadPhoto(photoDate)
 
-                viewModel.photo.observe(this, { photo: Photo ->
+                viewModel.photo.observe(this) { photo: Photo ->
                     title = photo.title
                     updateUI(photo)
-                })
+                }
 
-                viewModel.bitmap.observe(this, { stateData: StateData<Bitmap> ->
+                viewModel.bitmap.observe(this) { stateData: StateData<Bitmap> ->
                     if (stateData.status == DataStatus.SUCCESS) {
                         stateData.data?.let { bitmap: Bitmap ->
                             WallpaperHelper.setWallpaper(applicationContext, bitmap)
                         }
                         snackBar.dismiss()
-                    }
-                    else if (stateData.status == DataStatus.ERROR_NETWORK) {
+                    } else if (stateData.status == DataStatus.ERROR_NETWORK) {
                         snackBar.setText(stateData.errorMessage)
                             .setAction(getString(R.string.action_ok)) {
                                 snackBar.dismiss()
                             }
                     }
-                })
+                }
             }
         }
     }
@@ -107,7 +107,7 @@ class DetailActivity : AppCompatActivity() {
             val downloadText: String = getString(R.string.detail_activity_download_in_progress)
             updateSnackBar(downloadText)
             snackBar.show()
-            viewModel.loadImageHD(photo.hdurl)
+            viewModel.downloadImageHD(photo.hdurl)
         } else {
             val errorMessage: String = getString(R.string.detail_activity_cannot_set_wallpaper_for_video)
             updateSnackBar(errorMessage)

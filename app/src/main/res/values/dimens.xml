@@ -23,10 +23,14 @@
     <!-- HomeActivity NumberPicker dialog -->
     <dimen name="dialog_number_picker_min_width">300dp</dimen>
     <dimen name="dialog_number_picker_button_min_width">125dp</dimen>
+    <dimen name="dialog_number_picker_title_text_size">16sp</dimen>
 
     <!-- DetailActivity -->
     <dimen name="detail_activity_featured_image">250dp</dimen>
     <dimen name="detail_activity_explanation_title_size">20sp</dimen>
+
+    <!-- DetailActivity ProgressBar dialog -->
+    <dimen name="dialog_progress_bar_title_text_size">16sp</dimen>
 
     <!-- ZoomActivity -->
     <dimen name="zoom_activity_progress_bar_min_size">75dp</dimen>

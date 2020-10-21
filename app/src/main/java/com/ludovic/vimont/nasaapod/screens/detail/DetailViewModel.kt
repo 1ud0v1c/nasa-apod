@@ -22,7 +22,7 @@ class DetailViewModel: ViewModel() {
         }
     }
 
-    fun loadImageHD(imageURL: String) {
+    fun downloadImageHD(imageURL: String) {
         viewModelScope.launch(Dispatchers.Default) {
             if (bitmap.value?.status != DataStatus.LOADING) {
                 bitmap.postValue(StateData.loading())

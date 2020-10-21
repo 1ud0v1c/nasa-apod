@@ -27,6 +27,10 @@
     <!-- NumberPicker Dialog -->
     <string name="number_picker_title">Choose a range of days to fetch</string>
 
+    <!-- ProgressBar Dialog -->
+    <string name="progress_bar_title">Download in progress</string>
+    <string name="progress_bar_text_progression">0%</string>
+
     <!-- DetailActivity -->
     <string name="detail_activity_explanation_title">Explanation</string>
     <string name="detail_activity_explanation">\t\t%s</string>
