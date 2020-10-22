@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_little_margin"
-        android:text="@string/progress_bar_text_progression"
+        android:text="@string/progress_bar_text_default_progression"
         android:textAlignment="center" />
 
     <ProgressBar

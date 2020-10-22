@@ -21,6 +21,7 @@ import com.ludovic.vimont.nasaapod.helper.viewmodel.StateData
 import com.ludovic.vimont.nasaapod.model.Photo
 import com.ludovic.vimont.nasaapod.screens.home.HomeActivity
 import com.ludovic.vimont.nasaapod.screens.zoom.ZoomActivity
+import com.ludovic.vimont.nasaapod.ui.dialog.ProgressBarDialog
 
 class DetailActivity : AppCompatActivity() {
     companion object {
@@ -28,6 +29,7 @@ class DetailActivity : AppCompatActivity() {
         const val KEY_MEDIA_IS_A_VIDEO = "nasa_apod_photo_media_is_video"
     }
     private val viewModel: DetailViewModel by viewModels()
+    private lateinit var progressBarDialog: ProgressBarDialog
     private lateinit var snackBar: Snackbar
     private lateinit var binding: ActivityDetailBinding
 
@@ -35,6 +37,9 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        snackBar = Snackbar.make(binding.root, "Strange, strange, strange", Snackbar.LENGTH_INDEFINITE)
+        progressBarDialog = ProgressBarDialog(this)
 
         if (intent.hasExtra(HomeActivity.KEY_PHOTO_DATE)) {
             intent.extras?.getString(HomeActivity.KEY_PHOTO_DATE)?.let { photoDate: String ->
@@ -47,16 +52,20 @@ class DetailActivity : AppCompatActivity() {
 
                 viewModel.bitmap.observe(this) { stateData: StateData<Bitmap> ->
                     if (stateData.status == DataStatus.SUCCESS) {
+                        progressBarDialog.dismiss()
                         stateData.data?.let { bitmap: Bitmap ->
                             WallpaperHelper.setWallpaper(applicationContext, bitmap)
                         }
-                        snackBar.dismiss()
                     } else if (stateData.status == DataStatus.ERROR_NETWORK) {
                         snackBar.setText(stateData.errorMessage)
                             .setAction(getString(R.string.action_ok)) {
                                 snackBar.dismiss()
                             }
                     }
+                }
+
+                viewModel.bitmapDownloadProgression.observe(this) { progression: Int ->
+                    progressBarDialog.update(progression)
                 }
             }
         }
@@ -104,9 +113,12 @@ class DetailActivity : AppCompatActivity() {
      */
     private fun setAsWallpaper(photo: Photo) {
         if (photo.isMediaImage() && photo.hdurl != null) {
-            val downloadText: String = getString(R.string.detail_activity_download_in_progress)
-            updateSnackBar(downloadText)
-            snackBar.show()
+            progressBarDialog.show()
+            progressBarDialog.onCancelClick = {
+                viewModel.cancelImageDownload()
+                progressBarDialog.update(0)
+                progressBarDialog.dismiss()
+            }
             viewModel.downloadImageHD(photo.hdurl)
         } else {
             val errorMessage: String = getString(R.string.detail_activity_cannot_set_wallpaper_for_video)

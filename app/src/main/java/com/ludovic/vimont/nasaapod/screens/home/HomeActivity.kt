@@ -178,11 +178,7 @@ class HomeActivity: AppCompatActivity() {
                 viewModel.loadQuota()
             }
             R.id.menu_item_number_picker -> {
-                val numberPickerDialog =
-                    NumberPickerDialog(
-                        this,
-                        numberOfDaysToFetch
-                    )
+                val numberPickerDialog = NumberPickerDialog(this, numberOfDaysToFetch)
                 numberPickerDialog.show()
                 numberPickerDialog.onValidateClick = { rangeOfDays: Int ->
                     viewModel.saveNumberOfDaysToFetchPreference(rangeOfDays)

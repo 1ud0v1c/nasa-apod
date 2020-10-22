@@ -10,8 +10,8 @@ import com.bumptech.glide.module.AppGlideModule
 import okhttp3.*
 import java.io.InputStream
 
-
 /**
+ * We use a custom GlideModule to be able to catch the download of the image through an OkHttp interceptor.
  * @see: https://medium.com/@mr.johnnyne/how-to-use-glide-v4-load-image-with-progress-update-eb02671dac18
  */
 @GlideModule

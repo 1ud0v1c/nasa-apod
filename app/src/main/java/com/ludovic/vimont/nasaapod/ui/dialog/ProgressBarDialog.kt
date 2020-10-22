@@ -18,7 +18,17 @@ class ProgressBarDialog(activity: Activity): Dialog(activity, R.style.NasaApodDi
         setContentView(binding.root)
         binding.buttonCancel.setOnClickListener {
             onCancelClick?.invoke()
-            dismiss()
+        }
+        setOnCancelListener {
+            onCancelClick?.invoke()
+        }
+    }
+
+    fun update(newProgression: Int) {
+        with(binding) {
+            val newText: String = context.getString(R.string.progress_bar_text_dynamic_progression, newProgression)
+            textViewProgression.text = newText
+            progressBar.progress = newProgression
         }
     }
 }

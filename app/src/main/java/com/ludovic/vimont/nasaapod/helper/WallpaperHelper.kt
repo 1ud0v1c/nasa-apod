@@ -16,8 +16,6 @@ object WallpaperHelper {
                 wallpaperManager.setBitmap(bitmap)
             } catch (e: IllegalArgumentException) {
                 Log.d(TAG, "IllegalArgumentException: ${e.message}")
-            } finally {
-                bitmap.recycle()
             }
         }
     }

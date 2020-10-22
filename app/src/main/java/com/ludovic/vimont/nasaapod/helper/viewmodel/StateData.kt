@@ -4,9 +4,9 @@ package com.ludovic.vimont.nasaapod.helper.viewmodel
  * LiveData wrapper to easily handle network issues and display the corresponding state through the
  * Activity.
  */
-class StateData<T>(val status: DataStatus,
-                   val data: T?,
-                   val errorMessage: String) {
+data class StateData<T>(val status: DataStatus,
+                        val data: T?,
+                        val errorMessage: String) {
     companion object {
         fun <T> loading(): StateData<T> {
             return StateData(DataStatus.LOADING, null, "")

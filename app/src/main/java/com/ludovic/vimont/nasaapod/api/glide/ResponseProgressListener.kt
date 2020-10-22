@@ -5,6 +5,6 @@ interface ResponseProgressListener {
         url: String,
         totalBytesRead: Long,
         contentLength: Long,
-        done: Boolean
+        isDone: Boolean
     )
 }

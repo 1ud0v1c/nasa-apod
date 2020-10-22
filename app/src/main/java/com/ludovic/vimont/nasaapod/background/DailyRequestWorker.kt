@@ -13,8 +13,7 @@ import org.koin.core.KoinComponent
 
 class DailyRequestWorker(context: Context,
                          workerParameters: WorkerParameters,
-                         private val bitmapLoader: BitmapLoader
-):
+                         private val bitmapLoader: BitmapLoader):
     CoroutineWorker(context, workerParameters), KoinComponent {
     private val homeRepository = HomeRepository()
     private val notificationBuilder = PhotoNotificationBuilder()
