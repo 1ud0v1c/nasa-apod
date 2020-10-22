@@ -1,4 +1,4 @@
-package com.ludovic.vimont.nasaapod.ui
+package com.ludovic.vimont.nasaapod.ui.dialog
 
 import android.app.Activity
 import android.app.Dialog
