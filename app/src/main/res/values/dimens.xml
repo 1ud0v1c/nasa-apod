@@ -27,6 +27,7 @@
 
     <!-- DetailActivity -->
     <dimen name="detail_activity_featured_image">250dp</dimen>
+    <dimen name="detail_activity_media_type_background_size">32dp</dimen>
     <dimen name="detail_activity_explanation_title_size">20sp</dimen>
 
     <!-- DetailActivity ProgressBar dialog -->

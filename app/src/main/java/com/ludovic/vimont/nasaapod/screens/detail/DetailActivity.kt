@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.observe
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -79,6 +80,10 @@ class DetailActivity : AppCompatActivity() {
                 .transition(DrawableTransitionOptions.withCrossFade(ViewHelper.GLIDE_FADE_IN_DURATION))
                 .into(imageViewPhoto)
 
+            if (photo.isMediaVideo()) {
+                imageViewMediaType.setImageDrawable(ContextCompat.getDrawable(applicationContext, R.drawable.ic_video))
+            }
+            
             imageViewPhoto.setOnClickListener {
                 val mediaURL: String? = if (photo.isMediaVideo()) photo.url else photo.hdurl ?: ""
                 val intent = Intent(applicationContext, ZoomActivity::class.java)
