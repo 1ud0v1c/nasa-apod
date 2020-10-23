@@ -16,7 +16,6 @@ import com.ludovic.vimont.nasaapod.R
 import com.ludovic.vimont.nasaapod.databinding.ActivityDetailBinding
 import com.ludovic.vimont.nasaapod.helper.IntentHelper
 import com.ludovic.vimont.nasaapod.helper.ViewHelper
-import com.ludovic.vimont.nasaapod.helper.WallpaperHelper
 import com.ludovic.vimont.nasaapod.helper.viewmodel.DataStatus
 import com.ludovic.vimont.nasaapod.helper.viewmodel.StateData
 import com.ludovic.vimont.nasaapod.model.Photo
@@ -54,9 +53,6 @@ class DetailActivity : AppCompatActivity() {
                 viewModel.bitmap.observe(this) { stateData: StateData<Bitmap> ->
                     if (stateData.status == DataStatus.SUCCESS) {
                         progressBarDialog.dismiss()
-                        stateData.data?.let { bitmap: Bitmap ->
-                            WallpaperHelper.setWallpaper(applicationContext, bitmap)
-                        }
                     } else if (stateData.status == DataStatus.ERROR_NETWORK) {
                         snackBar.setText(stateData.errorMessage)
                             .setAction(getString(R.string.action_ok)) {
@@ -83,7 +79,7 @@ class DetailActivity : AppCompatActivity() {
             if (photo.isMediaVideo()) {
                 imageViewMediaType.setImageDrawable(ContextCompat.getDrawable(applicationContext, R.drawable.ic_video))
             }
-            
+
             imageViewPhoto.setOnClickListener {
                 val mediaURL: String? = if (photo.isMediaVideo()) photo.url else photo.hdurl ?: ""
                 val intent = Intent(applicationContext, ZoomActivity::class.java)
