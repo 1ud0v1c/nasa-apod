@@ -2,7 +2,7 @@ package com.ludovic.vimont.nasaapod.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.ludovic.vimont.nasaapod.helper.TimeHelper
+import com.ludovic.vimont.nasaapod.helper.time.TimeHelper
 import com.squareup.moshi.Json
 
 /**

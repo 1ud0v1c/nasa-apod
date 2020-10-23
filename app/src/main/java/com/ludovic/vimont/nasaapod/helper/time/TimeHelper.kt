@@ -1,4 +1,4 @@
-package com.ludovic.vimont.nasaapod.helper
+package com.ludovic.vimont.nasaapod.helper.time
 
 import com.ludovic.vimont.nasaapod.api.NasaAPI
 import com.ludovic.vimont.nasaapod.model.Photo
@@ -7,6 +7,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object TimeHelper {
+    var calendarInterface: CalendarInterface = object: CalendarInterface {
+        override fun getCalendar(): Calendar {
+            return Calendar.getInstance()
+        }
+    }
+
     fun getFormattedDate(dateValue: String): String? {
         val apiFormat = SimpleDateFormat(NasaAPI.API_DATE_FORMAT, Locale.getDefault())
         try {
@@ -32,19 +38,19 @@ object TimeHelper {
 
     /**
      * Help us to determine the start_date of the request used in the NasaAPI given an interval of day.
-     * We subtract 1 to this interval to exclude the end_date, which is today.
+     * We subtract 1 to the default interval to exclude the end_date, which is today.
      */
-    fun getSpecificDay(numberOfDaysToFetch: Int = NasaAPI.NUMBER_OF_DAY_TO_FETCH): String {
+    fun getSpecificDay(numberOfDaysToFetch: Int = (NasaAPI.NUMBER_OF_DAY_TO_FETCH-1)): String {
         val today = Date()
         val dateFormat = SimpleDateFormat(NasaAPI.API_DATE_FORMAT, Locale.getDefault())
         val calendar: Calendar = GregorianCalendar()
         calendar.time = today
-        calendar.add(Calendar.DAY_OF_MONTH, -(numberOfDaysToFetch - 1))
+        calendar.add(Calendar.DAY_OF_MONTH, numberOfDaysToFetch)
         return dateFormat.format(calendar.time)
     }
 
-    fun computeInitialDelay(hour: Int, minute: Int): Long {
-        val calendar: Calendar = Calendar.getInstance()
+    fun computeInitialDelay(hour: Int, minute: Int = 0): Long {
+        val calendar: Calendar = calendarInterface.getCalendar()
         val nowMillis: Long = calendar.timeInMillis
 
         if (calendar[Calendar.HOUR_OF_DAY] > hour ||

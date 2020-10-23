@@ -1,6 +1,6 @@
 package com.ludovic.vimont.nasaapod.api
 
-import com.ludovic.vimont.nasaapod.helper.TimeHelper
+import com.ludovic.vimont.nasaapod.helper.time.TimeHelper
 import com.ludovic.vimont.nasaapod.model.Photo
 import retrofit2.Response
 import retrofit2.http.GET

@@ -9,7 +9,7 @@ import com.ludovic.vimont.nasaapod.api.VimeoAPI
 import com.ludovic.vimont.nasaapod.background.DailyRequestWorker
 import com.ludovic.vimont.nasaapod.background.DailyRequestWorkerFactory
 import com.ludovic.vimont.nasaapod.db.PhotoDatabase
-import com.ludovic.vimont.nasaapod.helper.TimeHelper
+import com.ludovic.vimont.nasaapod.helper.time.TimeHelper
 import com.ludovic.vimont.nasaapod.helper.WorkerHelper
 import com.ludovic.vimont.nasaapod.preferences.DataHolder
 import org.koin.android.ext.koin.androidContext

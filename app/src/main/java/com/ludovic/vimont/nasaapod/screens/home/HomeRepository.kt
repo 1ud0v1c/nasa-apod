@@ -4,7 +4,7 @@ import android.util.Log
 import com.ludovic.vimont.nasaapod.api.NasaAPI
 import com.ludovic.vimont.nasaapod.api.VimeoAPI
 import com.ludovic.vimont.nasaapod.db.PhotoDao
-import com.ludovic.vimont.nasaapod.helper.TimeHelper
+import com.ludovic.vimont.nasaapod.helper.time.TimeHelper
 import com.ludovic.vimont.nasaapod.helper.viewmodel.StateData
 import com.ludovic.vimont.nasaapod.model.Photo
 import com.ludovic.vimont.nasaapod.model.VimeoData
@@ -38,8 +38,8 @@ class HomeRepository : KoinComponent {
 
     private suspend fun fetchNasaPhotos(): StateData<List<Photo>> {
         val photos = ArrayList<Photo>()
-        val rangeOfDaysToFetch: Int = getNumberOfDaysToFetch()
-        val startDate: String = TimeHelper.getSpecificDay(rangeOfDaysToFetch)
+        val rangeOfDaysToFetch: Int = getNumberOfDaysToFetch() - 1
+        val startDate: String = TimeHelper.getSpecificDay(-rangeOfDaysToFetch)
         try {
             val responsePhoto: Response<List<Photo>> = nasaAPI.getPhotos(startDate)
             if (!responsePhoto.isSuccessful) {
