@@ -18,6 +18,6 @@ object WorkerHelper {
             .build()
 
         WorkManager.getInstance(context)
-            .enqueueUniquePeriodicWork(T::class.java.simpleName, ExistingPeriodicWorkPolicy.KEEP, dailyRequestWorker)
+            .enqueueUniquePeriodicWork(T::class.java.simpleName, ExistingPeriodicWorkPolicy.REPLACE, dailyRequestWorker)
     }
 }
