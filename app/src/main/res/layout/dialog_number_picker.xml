@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_big_margin"
+        android:padding="@dimen/activity_vertical_little_margin"
         android:text="@string/number_picker_title"
         android:textAlignment="center"
         android:textSize="@dimen/dialog_number_picker_title_text_size"
