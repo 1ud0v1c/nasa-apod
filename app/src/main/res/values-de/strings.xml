@@ -1,0 +1,44 @@
+<resources>
+    <!-- Common action -->
+    <string name="action_ok">OK</string>
+    <string name="action_cancel">Abbrechen</string>
+    <string name="action_validate">Bestätigen</string>
+    <string name="action_launch">Starten</string>
+    <string name="action_retry">Wiederholen</string>
+    <string name="action_refresh">Aktualisieren</string>
+    <string name="action_see_quota">Siehe API-Einschränkung</string>
+    <string name="action_range_date">Wählen Sie das Bereichsdatum</string>
+
+    <!-- HomeActivity -->
+    <string name="home_activity_title">APOD: Letzte %d Fotos</string>
+    <string name="home_activity_photo_content_description">Nasa Foto des Tages</string>
+    <string name="home_activity_image_view_state_content_description">Home Activity ImageView aktuellen Zustand</string>
+    <string name="home_activity_no_data_title">Keinerlei Daten</string>
+    <string name="home_activity_no_data_description">Wir haben keine verfügbare Daten jetzt.\nStarten Sie der Vorgang.</string>
+    <string name="home_activity_loading_title">Laden</string>
+    <string name="home_activity_loading_description">Der Vorgang gestartet wurde. Bitte warten Sie, bis das Prozess abgeschlossen ist.</string>
+    <string name="home_activity_no_internet_title">Verbindung fehlgeschlagen</string>
+    <string name="home_activity_no_internet_description">Es konnte keine Verbindung hergestellt werden.\nBitte, überprüfe die Parameter und versuche es nochmal.</string>
+    <string name="home_activity_error_title">Ein Fehler aufgetreten</string>
+    <string name="home_activity_display_quota">Sie haben noch: %s verfügbare Anfragen für die nächste Stunde.</string>
+
+    <!-- NumberPicker Dialog -->
+    <string name="number_picker_title">Wählen Sie die Anzahl der Tage zum Herunterladen</string>
+
+    <!-- ProgressBar Dialog -->
+    <string name="progress_bar_title">Downloadfortschritt</string>
+    <string name="progress_bar_text_default_progression">0%</string>
+    <string name="progress_bar_text_dynamic_progression">%d%%</string>
+
+    <!-- DetailActivity -->
+    <string name="detail_activity_explanation_title">Erklärung</string>
+    <string name="detail_activity_explanation">\t\t%s</string>
+    <string name="detail_activity_photo_date">Foto aufgenommen: am %s</string>
+    <string name="detail_activity_copyright">Copyright: %s</string>
+    <string name="detail_activity_share_subject">"Freigeben APOD: %s</string>
+    <string name="detail_activity_image_content_description">DetailActivity ausgewähltes Bild</string>
+    <string name="detail_activity_image_media_type_content_description">DetailActivity image media type</string>
+    <string name="detail_activity_wallpaper_content_description">DetailActivity Als Hintergrundbild einstellen button</string>
+    <string name="detail_activity_share_content_description">DetailActivity freigeben button</string>
+    <string name="detail_activity_cannot_set_wallpaper_for_video">Ein Video kann nicht als Hintergrundbild verwendet werden</string>
+</resources>

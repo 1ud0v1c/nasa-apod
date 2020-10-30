@@ -1,0 +1,44 @@
+<resources>
+    <!-- Common action -->
+    <string name="action_ok">OK</string>
+    <string name="action_cancel">Annuler</string>
+    <string name="action_validate">Valider</string>
+    <string name="action_launch">Lancer</string>
+    <string name="action_retry">Réessayer</string>
+    <string name="action_refresh">Rafraîchir</string>
+    <string name="action_see_quota">Voir les quotas d\'API restants</string>
+    <string name="action_range_date">Choisissez le nombre de jours à récupérer</string>
+
+    <!-- HomeActivity -->
+    <string name="home_activity_title">APOD: Les %d dernières photos</string>
+    <string name="home_activity_photo_content_description">Nasa photo du jour</string>
+    <string name="home_activity_image_view_state_content_description">Home Activity ImageView état courant</string>
+    <string name="home_activity_no_data_title">Pas de données</string>
+    <string name="home_activity_no_data_description">Aucune données n\'est disponible pour le moment.\nVeuillez lancer une requête.</string>
+    <string name="home_activity_loading_title">Chargement en cours</string>
+    <string name="home_activity_loading_description">Une requête a été lancée, veuillez patienter jusqu\'à ce qu'elle aboutisse.</string>
+    <string name="home_activity_no_internet_title">La connexion a échouée.</string>
+    <string name="home_activity_no_internet_description">Impossible de se connecter au réseau.\nVeuillez vérifier vos paramètres et réessayer.</string>
+    <string name="home_activity_error_title">Une erreur s\'est produite</string>
+    <string name="home_activity_display_quota">Il reste: %s requêtes de disponible pour la prochaine heure.</string>
+
+    <!-- NumberPicker Dialog -->
+    <string name="number_picker_title">Choisissez le nombre de jours à télécharger</string>
+
+    <!-- ProgressBar Dialog -->
+    <string name="progress_bar_title">Téléchargement en cours</string>
+    <string name="progress_bar_text_default_progression">0%</string>
+    <string name="progress_bar_text_dynamic_progression">%d%%</string>
+
+    <!-- DetailActivity -->
+    <string name="detail_activity_explanation_title">Explication</string>
+    <string name="detail_activity_explanation">\t\t%s</string>
+    <string name="detail_activity_photo_date">Photo prise le: %s</string>
+    <string name="detail_activity_copyright">Copyright: %s</string>
+    <string name="detail_activity_share_subject">"APOD - Partage du: %s</string>
+    <string name="detail_activity_image_content_description">DetailActivity image sélectionnée</string>
+    <string name="detail_activity_image_media_type_content_description">DetailActivity image media type</string>
+    <string name="detail_activity_wallpaper_content_description">DetailActivity bouton mettre en fond d\'écran</string>
+    <string name="detail_activity_share_content_description">DetailActivity bouton de partage</string>
+    <string name="detail_activity_cannot_set_wallpaper_for_video">Une vidéo ne peut pas être utilisée comme fond d\'écran</string>
+</resources>
