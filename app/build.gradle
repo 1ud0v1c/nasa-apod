@@ -94,6 +94,9 @@ dependencies {
     // PhotoView
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
 
+    // RoundedImageView, to help fix an issue with Glide @see: https://github.com/bumptech/glide#compatibility
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+
     // Unit tests
     testImplementation 'junit:junit:4.13'
     testImplementation 'org.robolectric:robolectric:4.3.1'

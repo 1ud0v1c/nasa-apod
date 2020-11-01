@@ -33,12 +33,15 @@
 
     </LinearLayout>
 
-    <ImageView
+    <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/image_view_photo"
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_photo_height"
         android:layout_marginTop="@dimen/activity_vertical_little_margin"
         android:contentDescription="@string/home_activity_photo_content_description"
+        android:scaleType="centerCrop"
+        app:riv_corner_radius="@dimen/item_photo_corners_radius"
+        app:riv_mutate_background="true"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/linear_layout_content" />

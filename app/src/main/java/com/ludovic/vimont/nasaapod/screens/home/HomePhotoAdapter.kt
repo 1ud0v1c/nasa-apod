@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
 import com.ludovic.vimont.nasaapod.R
 import com.ludovic.vimont.nasaapod.helper.ViewHelper
@@ -47,7 +48,7 @@ class HomePhotoAdapter(private val photos: ArrayList<Photo>): RecyclerView.Adapt
         Glide.with(applicationContext)
             .load(photo.getImageURL())
             .placeholder(R.drawable.photo_placeholder)
-            .transition(DrawableTransitionOptions.withCrossFade(factory))
+            .transition(withCrossFade(factory))
             .transform(CenterCrop(), RoundedCorners(cornersRadiusSize))
             .into(holder.imageViewPhoto)
     }
