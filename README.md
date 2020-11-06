@@ -10,6 +10,10 @@ Android application which list the last 30 photos of the [NASA's API](https://ap
 
 ![Application launcher](https://github.com/1ud0v1c/nasa-apod/blob/main/data/launcher.png)
 
+<a href='https://play.google.com/store/apps/details?id=com.ludovic.vimont.nasaapod'>
+	<img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height=90px/>
+</a>
+
 </div>
 
 ## Design
@@ -163,6 +167,4 @@ Easy to use and easily configurable, it was the perfect library for this test.
 And then provide a simple solution to switch between the two styles, for example by adding another menu item inside the ActionBar.
 - I encountered an issue, when testing the application near midnight. Indeed, in my local hour, it was already midnight, but in the server timezone I suppose it was not. It could be a great idea to monitor the server current 
 date and base our request on it, instead of using our timezone. Maybe a marginal case, but definitely something worth investigation.
-- Last but not least, the application allows a user to use the HD version of a photo as a wallpaper. It is handy, but as the photos are very heavy, we should display the current progress of the download to improve the 
-user experience. I succeed to make it work thanks to [this post](https://gist.github.com/fbis251/cfa169fd9e1e142e042c) and I used [this library](https://github.com/tingyik90/snackprogressbar) to display the progression. 
-But, I was not satisfied with this solution, it was a bit hacky. With more time, we could probably do a better implementation based on a Dialog for example. 
+

@@ -12,7 +12,7 @@ android {
         applicationId "com.ludovic.vimont.nasaapod"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 1
+        versionCode 4
         versionName "1.1.1"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
