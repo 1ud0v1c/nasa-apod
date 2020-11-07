@@ -49,4 +49,9 @@
     <string name="settings_cache_size">Taille du cache: %d MO</string>
     <string name="settings_quota_title">API Quotas</string>
     <string name="settings_quota_summary">Voir les quotas d\'API restants</string>
+    <string name="settings_theme_title">Thème</string>
+    <string name="settings_theme_light">Clair</string>
+    <string name="settings_theme_dark">Sombre</string>
+    <string name="settings_theme_battery">Mis-à-jour avec le mode économie d\'énergie</string>
+    <string name="settings_theme_default">Système par défaut</string>
 </resources>

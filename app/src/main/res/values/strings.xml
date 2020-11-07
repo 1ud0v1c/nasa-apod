@@ -51,4 +51,9 @@
     <string name="settings_cache_size">Cache size: %d MB</string>
     <string name="settings_quota_title">API Quota</string>
     <string name="settings_quota_summary">View current API Quota</string>
+    <string name="settings_theme_title">Theme</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_theme_battery">Set by Battery Saver</string>
+    <string name="settings_theme_default">System default</string>
 </resources>

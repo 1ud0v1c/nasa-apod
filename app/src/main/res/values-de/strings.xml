@@ -49,4 +49,9 @@
     <string name="settings_cache_size">Bildercache-Size: %d MB</string>
     <string name="settings_quota_title">API-Einschränkung</string>
     <string name="settings_quota_summary">Siehe API-Einschränkung</string>
+    <string name="settings_theme_title">Darstellung</string>
+    <string name="settings_theme_light">Hell</string>
+    <string name="settings_theme_dark">Dunkel</string>
+    <string name="settings_theme_battery">Vom Batteriesparmodus eingestellt</string>
+    <string name="settings_theme_default">Systemeinstellung</string>
 </resources>

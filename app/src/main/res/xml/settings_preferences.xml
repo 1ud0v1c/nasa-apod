@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory app:title="@string/settings_category_general">
-        <Preference
-            app:icon="@drawable/ic_trash"
-            app:key="clear_cache"
-            app:summary="@string/settings_cache_size"
-            app:title="@string/settings_clear_cache_title" />
-
+        <ListPreference
+            app:defaultValue="@string/default_theme_value"
+            app:entries="@array/theme_options"
+            app:entryValues="@array/theme_values"
+            app:icon="@drawable/ic_theme"
+            app:key="change_theme"
+            app:title="@string/settings_theme_title"
+            app:useSimpleSummaryProvider="true" />
         <Preference
             app:icon="@drawable/ic_quota"
             app:key="view_quota"
             app:summary="@string/settings_quota_summary"
             app:title="@string/settings_quota_title" />
+
+        <Preference
+            app:icon="@drawable/ic_trash"
+            app:key="clear_cache"
+            app:summary="@string/settings_cache_size"
+            app:title="@string/settings_clear_cache_title" />
     </PreferenceCategory>
 </PreferenceScreen>
