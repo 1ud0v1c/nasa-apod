@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="itemPhotoTitle">#DDEEEEEE</color>
+    <color name="itemPhotoDate">#FFB1B1B2</color>
+</resources>
