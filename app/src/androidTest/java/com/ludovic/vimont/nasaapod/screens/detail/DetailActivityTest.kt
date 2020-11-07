@@ -34,7 +34,7 @@ class DetailActivityTest {
     var activityRule: ActivityTestRule<HomeActivity> = ActivityTestRule(HomeActivity::class.java)
 
     @Test
-    fun homeActivityTestInsideDetailActivity() {
+    fun detailActivityTestInsideZoomActivity() {
         Intents.init()
 
         Thread.sleep(3_000)
