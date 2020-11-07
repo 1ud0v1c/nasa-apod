@@ -6,8 +6,8 @@
     <string name="action_launch">Lancer</string>
     <string name="action_retry">Réessayer</string>
     <string name="action_refresh">Rafraîchir</string>
-    <string name="action_see_quota">Voir les quotas d\'API restants</string>
     <string name="action_range_date">Choisissez le nombre de jours à récupérer</string>
+    <string name="action_goto_settings">Aller aux paramètres</string>
 
     <!-- HomeActivity -->
     <string name="home_activity_title">APOD: Les %d dernières photos</string>
@@ -41,4 +41,12 @@
     <string name="detail_activity_wallpaper_content_description">DetailActivity bouton mettre en fond d\'écran</string>
     <string name="detail_activity_share_content_description">DetailActivity bouton de partage</string>
     <string name="detail_activity_cannot_set_wallpaper_for_video">Une vidéo ne peut pas être utilisée comme fond d\'écran</string>
+
+    <!-- SettingsActivity -->
+    <string name="settings_activity_title">Paramètres</string>
+    <string name="settings_category_general">Général</string>
+    <string name="settings_clear_cache_title">Supprimer le cache pour les images</string>
+    <string name="settings_cache_size">Taille du cache: %d MO</string>
+    <string name="settings_quota_title">API Quotas</string>
+    <string name="settings_quota_summary">Voir les quotas d\'API restants</string>
 </resources>

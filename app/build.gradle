@@ -13,7 +13,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 4
-        versionName "1.1.1"
+        versionName "1.2.0"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
@@ -57,6 +57,9 @@ dependencies {
 
     // SnackBar
     implementation 'com.google.android.material:material:1.2.1'
+
+    // Preferences
+    implementation 'androidx.preference:preference-ktx:1.1.1'
 
     // ViewModel
     implementation 'androidx.fragment:fragment-ktx:1.2.5'

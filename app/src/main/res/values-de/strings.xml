@@ -6,8 +6,8 @@
     <string name="action_launch">Starten</string>
     <string name="action_retry">Wiederholen</string>
     <string name="action_refresh">Aktualisieren</string>
-    <string name="action_see_quota">Siehe API-Einschränkung</string>
     <string name="action_range_date">Wählen Sie das Bereichsdatum</string>
+    <string name="action_goto_settings">Wechseln sie zum Fenster Einstellungen</string>
 
     <!-- HomeActivity -->
     <string name="home_activity_title">APOD: Letzte %d Fotos</string>
@@ -41,4 +41,12 @@
     <string name="detail_activity_wallpaper_content_description">DetailActivity Als Hintergrundbild einstellen button</string>
     <string name="detail_activity_share_content_description">DetailActivity freigeben button</string>
     <string name="detail_activity_cannot_set_wallpaper_for_video">Ein Video kann nicht als Hintergrundbild verwendet werden</string>
+
+    <!-- SettingsActivity -->
+    <string name="settings_activity_title">Einstellungen</string>
+    <string name="settings_category_general">Allgemein</string>
+    <string name="settings_clear_cache_title">Löschen Sie den Bildercache</string>
+    <string name="settings_cache_size">Bildercache-Size: %d MB</string>
+    <string name="settings_quota_title">API-Einschränkung</string>
+    <string name="settings_quota_summary">Siehe API-Einschränkung</string>
 </resources>

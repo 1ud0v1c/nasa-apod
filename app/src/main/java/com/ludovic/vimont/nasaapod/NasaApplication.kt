@@ -77,6 +77,9 @@ class NasaApplication: Application(), Configuration.Provider {
             factory {
                 Glide.with(androidContext())
             }
+            single {
+                Glide.get(androidContext())
+            }
         }
     }
 

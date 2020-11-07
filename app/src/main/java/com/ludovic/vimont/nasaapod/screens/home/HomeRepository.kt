@@ -98,12 +98,6 @@ class HomeRepository : KoinComponent {
         }
     }
 
-    fun getQuota(): String {
-        val remainingQuota: Int = dataHolder[UserPreferences.KEY_REMAINING_RATE_LIMIT, NasaAPI.DEFAULT_RATE_LIMIT_PER_HOUR]
-        val rateLimit: Int = dataHolder[UserPreferences.KEY_RATE_LIMIT, NasaAPI.DEFAULT_RATE_LIMIT_PER_HOUR]
-        return "$remainingQuota/$rateLimit"
-    }
-
     fun getNumberOfDaysToFetch(): Int {
         return dataHolder[UserPreferences.KEY_RANGE_OF_DAYS_TO_FETCH, NasaAPI.NUMBER_OF_DAY_TO_FETCH]
     }

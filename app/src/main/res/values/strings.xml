@@ -8,8 +8,8 @@
     <string name="action_launch">Launch</string>
     <string name="action_retry">Retry</string>
     <string name="action_refresh">Refresh</string>
-    <string name="action_see_quota">See API Quota</string>
     <string name="action_range_date">Choose range date</string>
+    <string name="action_goto_settings">Go to settings screen</string>
 
     <!-- HomeActivity -->
     <string name="home_activity_title">APOD: Last %d photos</string>
@@ -43,4 +43,12 @@
     <string name="detail_activity_wallpaper_content_description">DetailActivity set as wallpaper button</string>
     <string name="detail_activity_share_content_description">DetailActivity share button</string>
     <string name="detail_activity_cannot_set_wallpaper_for_video">We cannot set a video as a Wallpaper</string>
+
+    <!-- SettingsActivity -->
+    <string name="settings_activity_title">Settings</string>
+    <string name="settings_category_general">General</string>
+    <string name="settings_clear_cache_title">Clear image cache</string>
+    <string name="settings_cache_size">Cache size: %d MB</string>
+    <string name="settings_quota_title">API Quota</string>
+    <string name="settings_quota_summary">View current API Quota</string>
 </resources>
