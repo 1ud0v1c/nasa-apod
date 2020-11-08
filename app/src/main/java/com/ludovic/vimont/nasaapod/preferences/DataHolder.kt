@@ -2,12 +2,13 @@ package com.ludovic.vimont.nasaapod.preferences
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.preference.PreferenceManager
 
 object DataHolder {
     lateinit var preferences: SharedPreferences
 
-    fun init(context: Context, name: String = "nasaapod.preferences"): DataHolder {
-        preferences = context.getSharedPreferences(name, Context.MODE_PRIVATE)
+    fun init(context: Context): DataHolder {
+        preferences = PreferenceManager.getDefaultSharedPreferences(context)
         return this
     }
 

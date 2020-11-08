@@ -10,14 +10,9 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.google.android.material.snackbar.Snackbar
 import com.ludovic.vimont.nasaapod.R
+import com.ludovic.vimont.nasaapod.preferences.UserPreferences
 
 class SettingsFragment: PreferenceFragmentCompat() {
-    companion object {
-        private const val LIGHT = "light"
-        private const val DARK = "dark"
-        private const val BATTERY = "battery"
-        private const val DEFAULT = "default"
-    }
     private val viewModel: SettingsViewModel by viewModels()
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -26,19 +21,28 @@ class SettingsFragment: PreferenceFragmentCompat() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        handleCache()
-        handleQuota()
         handleThemeModification()
+        handleQuota()
+        handleCache()
     }
 
-    private fun handleCache() {
-        val clearCachePreference: Preference? = findPreference("clear_cache")
-        viewModel.getGlideCacheSize()
-        viewModel.glideCacheSize.observe(viewLifecycleOwner) { cacheSize: Long ->
-            clearCachePreference?.summary = getString(R.string.settings_cache_size, cacheSize)
-        }
-        clearCachePreference?.setOnPreferenceClickListener {
-            viewModel.launchClearCache()
+    private fun handleThemeModification() {
+        val themePreference: ListPreference? = findPreference("current_theme")
+        themePreference?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _: Preference, newValue: Any ->
+            when (newValue) {
+                UserPreferences.THEME_LIGHT -> {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                }
+                UserPreferences.THEME_DARK -> {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                }
+                UserPreferences.THEME_BATTERY -> {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY)
+                }
+                UserPreferences.THEME_DEFAULT -> {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                }
+            }
             true
         }
     }
@@ -71,23 +75,14 @@ class SettingsFragment: PreferenceFragmentCompat() {
         }
     }
 
-    private fun handleThemeModification() {
-        val themePreference: ListPreference? = findPreference("change_theme")
-        themePreference?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _: Preference, newValue: Any ->
-            when (newValue) {
-                LIGHT -> {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                }
-                DARK -> {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                }
-                BATTERY -> {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY)
-                }
-                DEFAULT -> {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-                }
-            }
+    private fun handleCache() {
+        val clearCachePreference: Preference? = findPreference("clear_cache")
+        viewModel.getGlideCacheSize()
+        viewModel.glideCacheSize.observe(viewLifecycleOwner) { cacheSize: Long ->
+            clearCachePreference?.summary = getString(R.string.settings_cache_size, cacheSize)
+        }
+        clearCachePreference?.setOnPreferenceClickListener {
+            viewModel.launchClearCache()
             true
         }
     }

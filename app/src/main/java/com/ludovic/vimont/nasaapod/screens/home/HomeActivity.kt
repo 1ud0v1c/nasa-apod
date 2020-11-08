@@ -11,17 +11,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.ludovic.vimont.nasaapod.R
 import com.ludovic.vimont.nasaapod.api.NasaAPI
 import com.ludovic.vimont.nasaapod.databinding.ActivityHomeBinding
+import com.ludovic.vimont.nasaapod.ext.clearDecorations
 import com.ludovic.vimont.nasaapod.helper.ViewHelper
 import com.ludovic.vimont.nasaapod.helper.network.ConnectionLiveData
 import com.ludovic.vimont.nasaapod.helper.network.NetworkHelper
 import com.ludovic.vimont.nasaapod.helper.viewmodel.DataStatus
 import com.ludovic.vimont.nasaapod.helper.viewmodel.StateData
 import com.ludovic.vimont.nasaapod.model.Photo
+import com.ludovic.vimont.nasaapod.preferences.UserPreferences
 import com.ludovic.vimont.nasaapod.screens.detail.DetailActivity
 import com.ludovic.vimont.nasaapod.screens.settings.SettingsActivity
+import com.ludovic.vimont.nasaapod.ui.GridItemOffsetDecoration
 import com.ludovic.vimont.nasaapod.ui.dialog.NumberPickerDialog
 import kotlin.collections.ArrayList
 
@@ -41,13 +45,19 @@ class HomeActivity: AppCompatActivity() {
         setContentView(binding.root)
         title = getString(R.string.home_activity_title, NasaAPI.NUMBER_OF_DAY_TO_FETCH)
 
-        configureRecyclerView()
         handleNetworkAvailability()
 
         viewModel.numberOfDaysToFetch.observe(this) { lastDesiredRange: Int ->
             numberOfDaysToFetch = lastDesiredRange
             title = getString(R.string.home_activity_title, numberOfDaysToFetch)
         }
+
+        viewModel.layout.observe(this, { newLayout: String ->
+            if (photoAdapter.layout != newLayout) {
+                photoAdapter.layout = newLayout
+                configureRecyclerView()
+            }
+        })
 
         viewModel.photosState.observe(this) { stateData: StateData<List<Photo>> ->
             when (stateData.status) {
@@ -69,14 +79,26 @@ class HomeActivity: AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        viewModel.loadLayout()
         viewModel.loadNasaPhotos()
         viewModel.loadNumberOfDaysToFetchPreference()
     }
 
+    /**
+     * Configure the recyclerView based on the layout chosen by the user. By default, it is a list.
+     * @see: UserPreferences
+     */
     private fun configureRecyclerView() {
         val recyclerView: RecyclerView = binding.recyclerViewPhotos
         recyclerView.adapter = photoAdapter
-        recyclerView.layoutManager = LinearLayoutManager(applicationContext, RecyclerView.VERTICAL, false)
+        recyclerView.clearDecorations()
+        if (photoAdapter.layout == UserPreferences.LAYOUT_LIST) {
+            recyclerView.layoutManager = LinearLayoutManager(applicationContext, RecyclerView.VERTICAL, false)
+        } else {
+            recyclerView.layoutManager = StaggeredGridLayoutManager(UserPreferences.GRID_SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL)
+            val gridSpaceDimension: Int = resources.getDimension(R.dimen.item_photo_padding_size).toInt()
+            recyclerView.addItemDecoration(GridItemOffsetDecoration(UserPreferences.GRID_SPAN_COUNT, gridSpaceDimension))
+        }
         photoAdapter.onItemClick = { photo: Photo ->
             val intent = Intent(applicationContext, DetailActivity::class.java)
             intent.putExtra(KEY_PHOTO_DATE, photo.date)

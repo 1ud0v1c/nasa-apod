@@ -105,4 +105,8 @@ class HomeRepository : KoinComponent {
     fun setNumberOfDaysToFetch(rangeOfDays: Int) {
         dataHolder[UserPreferences.KEY_RANGE_OF_DAYS_TO_FETCH] = rangeOfDays
     }
+
+    fun getCurrentLayout(): String {
+        return dataHolder[UserPreferences.KEY_CURRENT_LAYOUT, UserPreferences.DEFAULT_LAYOUT]
+    }
 }

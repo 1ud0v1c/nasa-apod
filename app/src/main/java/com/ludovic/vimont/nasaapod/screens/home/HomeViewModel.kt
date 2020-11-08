@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 class HomeViewModel: ViewModel() {
     private val homeRepository = HomeRepository()
     private val isNetworkAvailable = MutableLiveData<Boolean>()
+    val layout = MutableLiveData<String>()
     val numberOfDaysToFetch = MutableLiveData<Int>()
     val photosState = MutableLiveData<StateData<List<Photo>>>()
 
@@ -48,6 +49,13 @@ class HomeViewModel: ViewModel() {
         viewModelScope.launch(Dispatchers.Default) {
             homeRepository.setNumberOfDaysToFetch(rangeOfDays)
             numberOfDaysToFetch.postValue(rangeOfDays)
+        }
+    }
+
+    fun loadLayout() {
+        viewModelScope.launch(Dispatchers.Default) {
+            val currentLayout: String = homeRepository.getCurrentLayout()
+            layout.postValue(currentLayout)
         }
     }
 }

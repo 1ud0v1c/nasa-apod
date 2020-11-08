@@ -56,4 +56,7 @@
     <string name="settings_theme_dark">Dark</string>
     <string name="settings_theme_battery">Set by Battery Saver</string>
     <string name="settings_theme_default">System default</string>
+    <string name="settings_layout_title">Layout</string>
+    <string name="settings_layout_list">List</string>
+    <string name="settings_layout_grid">Grid</string>
 </resources>
