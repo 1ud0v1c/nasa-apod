@@ -40,7 +40,7 @@
             android:layout_marginTop="@dimen/activity_vertical_big_margin"
             android:text="@string/home_activity_no_data_title"
             android:textAlignment="center"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/textStateTitle"
             android:textSize="@dimen/home_activity_error_information_title_size"
             android:textStyle="bold" />
 
