@@ -6,7 +6,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,13 +27,14 @@ import com.ludovic.vimont.nasaapod.screens.settings.SettingsActivity
 import com.ludovic.vimont.nasaapod.ui.GridItemOffsetDecoration
 import com.ludovic.vimont.nasaapod.ui.dialog.NumberPickerDialog
 import kotlin.collections.ArrayList
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeActivity: AppCompatActivity() {
     companion object {
         const val KEY_PHOTO_DATE = "nasa_apod_photo_date"
     }
     private val photoAdapter = HomePhotoAdapter(ArrayList())
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by viewModel()
     private var numberOfDaysToFetch: Int = NasaAPI.NUMBER_OF_DAY_TO_FETCH
     private lateinit var binding: ActivityHomeBinding
     private lateinit var connectionLiveData: ConnectionLiveData

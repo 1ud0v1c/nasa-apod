@@ -10,11 +10,13 @@ import com.ludovic.vimont.nasaapod.model.Photo
 import com.ludovic.vimont.nasaapod.model.VimeoData
 import com.ludovic.vimont.nasaapod.preferences.DataHolder
 import com.ludovic.vimont.nasaapod.preferences.UserPreferences
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinApiExtension
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import retrofit2.Response
 
-class HomeRepository : KoinComponent {
+@KoinApiExtension
+class HomeRepository: KoinComponent {
     companion object {
         val TAG: String = HomeRepository::class.java.simpleName
     }

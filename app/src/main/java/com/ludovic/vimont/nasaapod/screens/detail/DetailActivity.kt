@@ -5,7 +5,6 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.observe
@@ -22,13 +21,14 @@ import com.ludovic.vimont.nasaapod.model.Photo
 import com.ludovic.vimont.nasaapod.screens.home.HomeActivity
 import com.ludovic.vimont.nasaapod.screens.zoom.ZoomActivity
 import com.ludovic.vimont.nasaapod.ui.dialog.ProgressBarDialog
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailActivity : AppCompatActivity() {
     companion object {
         const val KEY_MEDIA_URL = "nasa_apod_photo_media_url"
         const val KEY_MEDIA_IS_A_VIDEO = "nasa_apod_photo_media_is_video"
     }
-    private val viewModel: DetailViewModel by viewModels()
+    private val viewModel: DetailViewModel by viewModel()
     private lateinit var progressBarDialog: ProgressBarDialog
     private lateinit var snackBar: Snackbar
     private lateinit var binding: ActivityDetailBinding

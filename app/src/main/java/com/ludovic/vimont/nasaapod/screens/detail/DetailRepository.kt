@@ -8,10 +8,12 @@ import com.ludovic.vimont.nasaapod.db.PhotoDao
 import com.ludovic.vimont.nasaapod.helper.viewmodel.StateData
 import com.ludovic.vimont.nasaapod.model.Photo
 import com.ludovic.vimont.nasaapod.ui.BitmapRequestListener
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinApiExtension
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.lang.Exception
 
+@KoinApiExtension
 class DetailRepository: KoinComponent {
     private val photoDao: PhotoDao by inject()
     private val glide: RequestManager by inject()

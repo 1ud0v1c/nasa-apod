@@ -5,10 +5,12 @@ import com.bumptech.glide.load.engine.cache.DiskCache
 import com.ludovic.vimont.nasaapod.api.NasaAPI
 import com.ludovic.vimont.nasaapod.preferences.DataHolder
 import com.ludovic.vimont.nasaapod.preferences.UserPreferences
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinApiExtension
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.io.File
 
+@KoinApiExtension
 class SettingsRepository : KoinComponent {
     private val glide: Glide by inject()
     private val dataHolder: DataHolder by inject()
