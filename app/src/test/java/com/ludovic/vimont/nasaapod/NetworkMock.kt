@@ -25,7 +25,7 @@ object NetworkMock {
             NetworkInfo.DetailedState.CONNECTED,
             ConnectivityManager.TYPE_WIFI,
             0,
-            true,
+            false,
             NetworkInfo.State.CONNECTED
         )
         val network: Network = ShadowNetwork.newInstance(1)
