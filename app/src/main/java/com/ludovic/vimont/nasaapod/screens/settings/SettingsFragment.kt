@@ -17,10 +17,15 @@ class SettingsFragment: PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings_preferences, rootKey)
+        setHasOptionsMenu(true)
+        activity?.let {
+            it.title = getString(R.string.settings_activity_title)
+            it.actionBar?.setDisplayHomeAsUpEnabled(true)
+        }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         handleThemeModification()
         handleQuota()
         handleCache()

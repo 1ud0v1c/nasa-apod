@@ -23,7 +23,7 @@ import com.ludovic.vimont.nasaapod.model.Photo
 import com.ludovic.vimont.nasaapod.preferences.UserPreferences
 
 class HomePhotoAdapter(private val photos: ArrayList<Photo>): RecyclerView.Adapter<HomePhotoAdapter.PhotoViewHolder>() {
-    var layout: String = ""
+    var layout: String = UserPreferences.DEFAULT_LAYOUT
     var onItemClick: ((Photo) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {

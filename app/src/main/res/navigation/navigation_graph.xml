@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.ludovic.vimont.nasaapod.screens.home.HomeFragment">
+        <action
+            android:id="@+id/action_homeFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.ludovic.vimont.nasaapod.screens.detail.DetailFragment">
+        <argument
+            android:name="photoDate"
+            android:defaultValue="2015-01-01"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_detailFragment_to_zoomFragment"
+            app:destination="@id/zoomFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/zoomFragment"
+        android:name="com.ludovic.vimont.nasaapod.screens.zoom.ZoomFragment"
+        tools:layout="@layout/fragment_zoom">
+        <argument
+            android:name="isMediaVideo"
+            android:defaultValue="false"
+            app:argType="boolean" />
+        <argument
+            android:name="media_url"
+            android:defaultValue="https://apod.nasa.gov/apod/image/1501/VelaSNR-3_bigCedic1024.jpg"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.ludovic.vimont.nasaapod.screens.settings.SettingsFragment" />
+
+</navigation>

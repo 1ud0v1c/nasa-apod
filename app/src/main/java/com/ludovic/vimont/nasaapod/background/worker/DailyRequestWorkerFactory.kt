@@ -1,4 +1,4 @@
-package com.ludovic.vimont.nasaapod.background
+package com.ludovic.vimont.nasaapod.background.worker
 
 import android.content.Context
 import androidx.work.ListenableWorker

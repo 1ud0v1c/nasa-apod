@@ -13,8 +13,7 @@ import androidx.core.app.NotificationCompat
 import com.ludovic.vimont.nasaapod.BuildConfig
 import com.ludovic.vimont.nasaapod.R
 import com.ludovic.vimont.nasaapod.model.Photo
-import com.ludovic.vimont.nasaapod.screens.detail.DetailActivity
-import com.ludovic.vimont.nasaapod.screens.home.HomeActivity
+import com.ludovic.vimont.nasaapod.screens.MainActivity
 
 /**
  * Used to display a media friendly notification to allow the user to interact with the current
@@ -66,8 +65,9 @@ class PhotoNotificationBuilder {
     }
 
     private fun getContentIntent(context: Context, photo: Photo): PendingIntent {
-        val intent = Intent(context, DetailActivity::class.java)
-        intent.putExtra(HomeActivity.KEY_PHOTO_DATE, photo.date)
+        val intent = Intent(context, MainActivity::class.java)
+        intent.putExtra(MainActivity.KEY_PHOTO_DATE, photo.date)
+        intent.putExtra(MainActivity.KEY_OPEN_DETAIL_FRAGMENT, true)
         return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
     }
 }

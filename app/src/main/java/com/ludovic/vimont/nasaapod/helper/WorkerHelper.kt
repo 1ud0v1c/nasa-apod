@@ -8,7 +8,6 @@ object WorkerHelper {
     inline fun <reified T: CoroutineWorker> launchDailyWorker(context: Context, initialDelayInMs: Long) {
         val constraints: Constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
-            .setRequiresBatteryNotLow(true)
             .setRequiresStorageNotLow(true)
             .build()
 

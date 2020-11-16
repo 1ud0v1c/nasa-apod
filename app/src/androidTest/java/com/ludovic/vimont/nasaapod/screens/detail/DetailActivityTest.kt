@@ -6,18 +6,16 @@ import android.view.ViewParent
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
-import androidx.test.runner.AndroidJUnit4
 import com.ludovic.vimont.nasaapod.R
 import com.ludovic.vimont.nasaapod.RecyclerViewItemCountAssertion
-import com.ludovic.vimont.nasaapod.screens.home.HomeActivity
-import com.ludovic.vimont.nasaapod.screens.zoom.ZoomActivity
+import com.ludovic.vimont.nasaapod.screens.MainActivity
+import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.*
@@ -31,7 +29,7 @@ import org.junit.runner.RunWith
 class DetailActivityTest {
     @Rule
     @JvmField
-    var activityRule: ActivityTestRule<HomeActivity> = ActivityTestRule(HomeActivity::class.java)
+    var activityRule: ActivityTestRule<MainActivity> = ActivityTestRule(MainActivity::class.java)
 
     @Test
     fun detailActivityTestInsideZoomActivity() {
@@ -57,13 +55,13 @@ class DetailActivityTest {
             )
         )
 
-        Intents.intended(hasComponent(DetailActivity::class.java.name))
+        BaristaVisibilityAssertions.assertDisplayed(R.id.image_view_photo)
+        BaristaVisibilityAssertions.assertDisplayed(R.id.image_view_media_type)
+        BaristaVisibilityAssertions.assertDisplayed(R.id.linear_layout_action_container)
 
         onView(withId(R.id.image_view_photo)).perform(click())
 
-        Intents.intended(hasComponent(ZoomActivity::class.java.name))
-
-        Intents.release()
+        BaristaVisibilityAssertions.assertDisplayed(R.id.constraint_layout_zoom_container)
     }
 
     private fun childAtPosition(parentMatcher: Matcher<View>, position: Int): Matcher<View> {

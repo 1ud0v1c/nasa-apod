@@ -1,19 +1,18 @@
 package com.ludovic.vimont.nasaapod.screens.home
 
-import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.widget.Button
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.observe
+import androidx.fragment.app.Fragment
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.ludovic.vimont.nasaapod.R
 import com.ludovic.vimont.nasaapod.api.NasaAPI
-import com.ludovic.vimont.nasaapod.databinding.ActivityHomeBinding
+import com.ludovic.vimont.nasaapod.databinding.FragmentHomeBinding
 import com.ludovic.vimont.nasaapod.ext.clearDecorations
 import com.ludovic.vimont.nasaapod.helper.ViewHelper
 import com.ludovic.vimont.nasaapod.helper.network.ConnectionLiveData
@@ -22,44 +21,55 @@ import com.ludovic.vimont.nasaapod.helper.viewmodel.DataStatus
 import com.ludovic.vimont.nasaapod.helper.viewmodel.StateData
 import com.ludovic.vimont.nasaapod.model.Photo
 import com.ludovic.vimont.nasaapod.preferences.UserPreferences
-import com.ludovic.vimont.nasaapod.screens.detail.DetailActivity
-import com.ludovic.vimont.nasaapod.screens.settings.SettingsActivity
 import com.ludovic.vimont.nasaapod.ui.GridItemOffsetDecoration
 import com.ludovic.vimont.nasaapod.ui.dialog.NumberPickerDialog
-import kotlin.collections.ArrayList
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeActivity: AppCompatActivity() {
-    companion object {
-        const val KEY_PHOTO_DATE = "nasa_apod_photo_date"
-    }
+class HomeFragment: Fragment() {
     private val photoAdapter = HomePhotoAdapter(ArrayList())
     private val viewModel: HomeViewModel by viewModel()
     private var numberOfDaysToFetch: Int = NasaAPI.NUMBER_OF_DAY_TO_FETCH
-    private lateinit var binding: ActivityHomeBinding
+    private lateinit var binding: FragmentHomeBinding
     private lateinit var connectionLiveData: ConnectionLiveData
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityHomeBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        title = getString(R.string.home_activity_title, NasaAPI.NUMBER_OF_DAY_TO_FETCH)
-
-        handleNetworkAvailability()
-
-        viewModel.numberOfDaysToFetch.observe(this) { lastDesiredRange: Int ->
-            numberOfDaysToFetch = lastDesiredRange
-            title = getString(R.string.home_activity_title, numberOfDaysToFetch)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        activity?.let {
+            it.title = getString(R.string.home_activity_title, NasaAPI.NUMBER_OF_DAY_TO_FETCH)
         }
+        setHasOptionsMenu(true)
+        return binding.root
+    }
 
-        viewModel.layout.observe(this, { newLayout: String ->
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        handleNetworkAvailability()
+        configureRecyclerView()
+        setNumberOfDaysToFetchObserver()
+        setLayoutObserver()
+        setPhotosObserver()
+    }
+
+    private fun setNumberOfDaysToFetchObserver() {
+        viewModel.numberOfDaysToFetch.observe(viewLifecycleOwner) { lastDesiredRange: Int ->
+            numberOfDaysToFetch = lastDesiredRange
+            activity?.let {
+                it.title = getString(R.string.home_activity_title, numberOfDaysToFetch)
+            }
+        }
+    }
+
+    private fun setLayoutObserver() {
+        viewModel.layout.observe(viewLifecycleOwner, { newLayout: String ->
             if (photoAdapter.layout != newLayout) {
                 photoAdapter.layout = newLayout
                 configureRecyclerView()
             }
         })
+    }
 
-        viewModel.photosState.observe(this) { stateData: StateData<List<Photo>> ->
+    private fun setPhotosObserver() {
+        viewModel.photosState.observe(viewLifecycleOwner) { stateData: StateData<List<Photo>> ->
             when (stateData.status) {
                 DataStatus.LOADING -> {
                     showLoadingStatus()
@@ -93,16 +103,15 @@ class HomeActivity: AppCompatActivity() {
         recyclerView.adapter = photoAdapter
         recyclerView.clearDecorations()
         if (photoAdapter.layout == UserPreferences.LAYOUT_LIST) {
-            recyclerView.layoutManager = LinearLayoutManager(applicationContext, RecyclerView.VERTICAL, false)
+            recyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         } else {
             recyclerView.layoutManager = StaggeredGridLayoutManager(UserPreferences.GRID_SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL)
             val gridSpaceDimension: Int = resources.getDimension(R.dimen.item_photo_padding_size).toInt()
             recyclerView.addItemDecoration(GridItemOffsetDecoration(UserPreferences.GRID_SPAN_COUNT, gridSpaceDimension))
         }
         photoAdapter.onItemClick = { photo: Photo ->
-            val intent = Intent(applicationContext, DetailActivity::class.java)
-            intent.putExtra(KEY_PHOTO_DATE, photo.date)
-            startActivity(intent)
+            val action: NavDirections = HomeFragmentDirections.actionHomeFragmentToDetailFragment(photo.date)
+            findNavController().navigate(action)
         }
     }
 
@@ -111,11 +120,13 @@ class HomeActivity: AppCompatActivity() {
      * listen to network modification.
      */
     private fun handleNetworkAvailability() {
-        connectionLiveData = ConnectionLiveData(applicationContext)
-        connectionLiveData.observe(this) { hasNetworkAccess: Boolean ->
-            viewModel.setNetworkAvailability(hasNetworkAccess)
+        activity?.let {
+            connectionLiveData = ConnectionLiveData(it)
+            connectionLiveData.observe(viewLifecycleOwner) { hasNetworkAccess: Boolean ->
+                viewModel.setNetworkAvailability(hasNetworkAccess)
+            }
+            viewModel.setNetworkAvailability(NetworkHelper.isOnline(it))
         }
-        viewModel.setNetworkAvailability(NetworkHelper.isOnline(applicationContext))
     }
 
     private fun showLoadingStatus() {
@@ -173,9 +184,9 @@ class HomeActivity: AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.action_bar_menu, menu)
-        return true
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.action_bar_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -184,16 +195,18 @@ class HomeActivity: AppCompatActivity() {
                 viewModel.loadNasaPhotos(true)
             }
             R.id.menu_item_number_picker -> {
-                val numberPickerDialog = NumberPickerDialog(this, numberOfDaysToFetch)
-                numberPickerDialog.show()
-                numberPickerDialog.onValidateClick = { rangeOfDays: Int ->
-                    viewModel.saveNumberOfDaysToFetchPreference(rangeOfDays)
-                    viewModel.loadNasaPhotos(true)
+                activity?.let {
+                    val numberPickerDialog = NumberPickerDialog(it, numberOfDaysToFetch)
+                    numberPickerDialog.show()
+                    numberPickerDialog.onValidateClick = { rangeOfDays: Int ->
+                        viewModel.saveNumberOfDaysToFetchPreference(rangeOfDays)
+                        viewModel.loadNasaPhotos(true)
+                    }
                 }
             }
             R.id.menu_item_settings -> {
-                val intent = Intent(this, SettingsActivity::class.java)
-                startActivity(intent)
+                val action: NavDirections = HomeFragmentDirections.actionHomeFragmentToSettingsFragment()
+                findNavController().navigate(action)
             }
         }
         return true

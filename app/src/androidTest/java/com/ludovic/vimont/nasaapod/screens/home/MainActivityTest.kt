@@ -5,19 +5,17 @@ import android.view.ViewGroup
 import android.view.ViewParent
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
-import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
-import androidx.test.runner.AndroidJUnit4
 import com.ludovic.vimont.nasaapod.R
 import com.ludovic.vimont.nasaapod.RecyclerViewItemCountAssertion
-import com.ludovic.vimont.nasaapod.screens.detail.DetailActivity
+import com.ludovic.vimont.nasaapod.screens.MainActivity
+import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.*
@@ -28,15 +26,13 @@ import org.junit.runner.RunWith
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class HomeActivityTest {
+class MainActivityTest {
     @Rule
     @JvmField
-    var activityRule: ActivityTestRule<HomeActivity> = ActivityTestRule(HomeActivity::class.java)
+    val activityRule: ActivityTestRule<MainActivity> = ActivityTestRule(MainActivity::class.java)
 
     @Test
     fun homeActivityTestInsideDetailActivity() {
-        Intents.init()
-
         Thread.sleep(3_000)
 
         onView(withId(R.id.recycler_view_photos)).check(RecyclerViewItemCountAssertion(30))
@@ -57,8 +53,9 @@ class HomeActivityTest {
             )
         )
 
-        Intents.intended(hasComponent(DetailActivity::class.java.name))
-        Intents.release()
+        BaristaVisibilityAssertions.assertDisplayed(R.id.image_view_photo)
+        BaristaVisibilityAssertions.assertDisplayed(R.id.image_view_media_type)
+        BaristaVisibilityAssertions.assertDisplayed(R.id.linear_layout_action_container)
     }
 
     @Test
@@ -83,7 +80,6 @@ class HomeActivityTest {
         Thread.sleep(50)
         onView(withId(R.id.linear_layout_state_container)).check(matches(isDisplayed()))
         onView(withId(R.id.recycler_view_photos)).check(matches(not(isDisplayed())))
-
 
         Thread.sleep(5_000)
         onView(withId(R.id.recycler_view_photos)).check(RecyclerViewItemCountAssertion(30))

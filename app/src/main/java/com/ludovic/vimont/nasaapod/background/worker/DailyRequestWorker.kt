@@ -1,9 +1,10 @@
-package com.ludovic.vimont.nasaapod.background
+package com.ludovic.vimont.nasaapod.background.worker
 
 import android.content.Context
 import android.graphics.Bitmap
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.ludovic.vimont.nasaapod.background.PhotoNotificationBuilder
 import com.ludovic.vimont.nasaapod.background.image.BitmapLoader
 import com.ludovic.vimont.nasaapod.helper.viewmodel.DataStatus
 import com.ludovic.vimont.nasaapod.helper.viewmodel.StateData
