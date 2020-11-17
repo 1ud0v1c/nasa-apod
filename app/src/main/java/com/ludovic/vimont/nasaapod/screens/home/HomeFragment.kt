@@ -4,8 +4,11 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.*
 import android.widget.Button
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
+import androidx.navigation.fragment.FragmentNavigator
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -109,9 +112,17 @@ class HomeFragment: Fragment() {
             val gridSpaceDimension: Int = resources.getDimension(R.dimen.item_photo_padding_size).toInt()
             recyclerView.addItemDecoration(GridItemOffsetDecoration(UserPreferences.GRID_SPAN_COUNT, gridSpaceDimension))
         }
-        photoAdapter.onItemClick = { photo: Photo ->
+        postponeEnterTransition()
+        recyclerView.viewTreeObserver.addOnPreDrawListener {
+            startPostponedEnterTransition()
+            true
+        }
+        photoAdapter.onItemClick = { imageView: ImageView, photo: Photo ->
+            val extras: FragmentNavigator.Extras = FragmentNavigatorExtras(
+                imageView to photo.url
+            )
             val action: NavDirections = HomeFragmentDirections.actionHomeFragmentToDetailFragment(photo.date)
-            findNavController().navigate(action)
+            findNavController().navigate(action, extras)
         }
     }
 

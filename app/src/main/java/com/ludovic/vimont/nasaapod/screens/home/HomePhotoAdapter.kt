@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
@@ -24,7 +25,7 @@ import com.ludovic.vimont.nasaapod.preferences.UserPreferences
 
 class HomePhotoAdapter(private val photos: ArrayList<Photo>): RecyclerView.Adapter<HomePhotoAdapter.PhotoViewHolder>() {
     var layout: String = UserPreferences.DEFAULT_LAYOUT
-    var onItemClick: ((Photo) -> Unit)? = null
+    var onItemClick: ((ImageView, Photo) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
         val itemView: View = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
@@ -70,13 +71,14 @@ class HomePhotoAdapter(private val photos: ArrayList<Photo>): RecyclerView.Adapt
         private val textViewPhotoTitle: TextView = itemView.findViewById(R.id.text_view_photo_title)
         private val textViewPhotoDate: TextView = itemView.findViewById(R.id.text_view_photo_date)
 
-        fun bind(photo: Photo, onItemClick: ((Photo) -> Unit)?) {
+        fun bind(photo: Photo, onItemClick: ((ImageView, Photo) -> Unit)?) {
             loadPhoto(photo)
             textViewPhotoTitle.text = photo.title
             textViewPhotoDate.text = photo.getReversedDate()
             itemView.setOnClickListener {
-                onItemClick?.invoke(photo)
+                onItemClick?.invoke(imageViewPhoto, photo)
             }
+            ViewCompat.setTransitionName(imageViewPhoto, photo.url)
         }
 
         private fun loadPhoto(photo: Photo) {
@@ -98,11 +100,12 @@ class HomePhotoAdapter(private val photos: ArrayList<Photo>): RecyclerView.Adapt
     class GridPhotoViewHolder(itemView: View): PhotoViewHolder(itemView) {
         private val imageViewPhoto: ImageView = itemView.findViewById(R.id.image_view_photo)
 
-        fun bind(photo: Photo, onItemClick: ((Photo) -> Unit)?) {
+        fun bind(photo: Photo, onItemClick: ((ImageView, Photo) -> Unit)?) {
             loadPhoto(photo)
             imageViewPhoto.setOnClickListener {
-                onItemClick?.invoke(photo)
+                onItemClick?.invoke(imageViewPhoto, photo)
             }
+            ViewCompat.setTransitionName(imageViewPhoto, photo.url)
         }
 
         private fun loadPhoto(photo: Photo) {

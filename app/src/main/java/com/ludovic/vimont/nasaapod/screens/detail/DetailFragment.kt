@@ -13,6 +13,7 @@ import androidx.lifecycle.observe
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.transition.TransitionInflater
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.material.snackbar.Snackbar
@@ -36,6 +37,8 @@ class DetailFragment: Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val transitionResource: Int = android.R.transition.move
+        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(transitionResource)
         setHasOptionsMenu(false)
     }
 
@@ -48,6 +51,7 @@ class DetailFragment: Fragment() {
         activity?.let {
             it.title = getString(R.string.home_activity_title, NasaAPI.NUMBER_OF_DAY_TO_FETCH)
         }
+        postponeEnterTransition()
         return binding.root
     }
 
@@ -110,6 +114,8 @@ class DetailFragment: Fragment() {
                     )
                     findNavController().navigate(action)
                 }
+                imageViewPhoto.transitionName = photo.url
+                startPostponedEnterTransition()
 
                 val formattedDate: String = photo.getFormattedDate()
                 textViewPhotoDate.text = getString(
