@@ -10,10 +10,6 @@ object WindowHelper {
      * Use to enable sticky immersive mode: https://developer.android.com/training/system-ui/immersive.
      */
     fun useImmersiveActivity(activity: Activity) {
-        activity.window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
         activity.window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         activity.window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
