@@ -1,7 +1,12 @@
 <h1 align="center">NASA - Astronomy Picture of the Day</h1>
 
 <p align="center">
-  <a href="https://android-arsenal.com/api?level=21"><img alt="API" src="https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat"/></a>
+  <a href="https://android-arsenal.com/api?level=21">
+	<img alt="API" src="https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat"/>
+  </a>
+  <a href="https://github.com/1ud0v1c/nasa-apod/workflows/Android%20-%20Run%20Unit%20Tests/badge.svg?event=push">
+	<img alt="Android Run - Unit Tests" src="https://github.com/1ud0v1c/nasa-apod/workflows/Android%20-%20Run%20Unit%20Tests/badge.svg?event=push"/>
+  </a>
 </p>
 
 Android application which list the last 30 photos of the [NASA's API](https://api.nasa.gov/): [Astronomy Picture of the Day](https://github.com/nasa/apod-api#docs-).
