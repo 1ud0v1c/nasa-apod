@@ -4,8 +4,8 @@
   <a href="https://android-arsenal.com/api?level=21">
 	<img alt="API" src="https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat"/>
   </a>
-  <a href="https://github.com/1ud0v1c/nasa-apod/workflows/Android%20-%20Run%20Unit%20Tests/badge.svg?event=push">
-	<img alt="Android Run - Unit Tests" src="https://github.com/1ud0v1c/nasa-apod/workflows/Android%20-%20Run%20Unit%20Tests/badge.svg?event=push"/>
+  <a href="https://github.com/1ud0v1c/nasa-apod/workflows/Unit%20Tests/badge.svg?event=push">
+	<img alt="Unit Tests" src="https://github.com/1ud0v1c/nasa-apod/workflows/Unit%20Tests/badge.svg?event=push"/>
   </a>
 </p>
 
