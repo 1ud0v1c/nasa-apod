@@ -15,14 +15,14 @@
             android:id="@+id/action_homeFragment_to_settingsFragment"
             app:destination="@id/settingsFragment"
             app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
 
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.ludovic.vimont.nasaapod.screens.detail.DetailFragment">
         <argument
-            android:name="photoDate"
+            android:name="photo_date"
             android:defaultValue="2015-01-01"
             app:argType="string" />
         <action
@@ -35,7 +35,7 @@
         android:name="com.ludovic.vimont.nasaapod.screens.zoom.ZoomFragment"
         tools:layout="@layout/fragment_zoom">
         <argument
-            android:name="isMediaVideo"
+            android:name="is_media_video"
             android:defaultValue="false"
             app:argType="boolean" />
         <argument
