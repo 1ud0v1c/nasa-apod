@@ -10,15 +10,11 @@ import com.ludovic.vimont.nasaapod.helper.viewmodel.DataStatus
 import com.ludovic.vimont.nasaapod.helper.viewmodel.StateData
 import com.ludovic.vimont.nasaapod.model.Photo
 import com.ludovic.vimont.nasaapod.screens.home.HomeRepository
-import org.koin.core.component.KoinApiExtension
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
-@KoinApiExtension
 class DailyRequestWorker(context: Context,
                          workerParameters: WorkerParameters,
-                         private val bitmapLoader: BitmapLoader): CoroutineWorker(context, workerParameters), KoinComponent {
-    private val homeRepository: HomeRepository by inject()
+                         private val homeRepository: HomeRepository,
+                         private val bitmapLoader: BitmapLoader): CoroutineWorker(context, workerParameters) {
     private val notificationBuilder = PhotoNotificationBuilder()
 
     override suspend fun doWork(): Result {

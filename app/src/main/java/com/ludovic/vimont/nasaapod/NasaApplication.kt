@@ -9,12 +9,15 @@ import com.ludovic.vimont.nasaapod.di.DataSourceModule
 import com.ludovic.vimont.nasaapod.di.ViewModelModule
 import com.ludovic.vimont.nasaapod.helper.time.TimeHelper
 import com.ludovic.vimont.nasaapod.helper.WorkerHelper
+import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 
 @Suppress("unused")
 class NasaApplication: Application(), Configuration.Provider {
+    private val dailyRequestWorkerFactory: DailyRequestWorkerFactory by inject()
+
     override fun onCreate() {
         super.onCreate()
 
@@ -43,7 +46,7 @@ class NasaApplication: Application(), Configuration.Provider {
 
     override fun getWorkManagerConfiguration(): Configuration {
         val delegatingWorkerFactory = DelegatingWorkerFactory()
-        delegatingWorkerFactory.addFactory(DailyRequestWorkerFactory())
+        delegatingWorkerFactory.addFactory(dailyRequestWorkerFactory)
 
         return Configuration.Builder()
             .setWorkerFactory(delegatingWorkerFactory)

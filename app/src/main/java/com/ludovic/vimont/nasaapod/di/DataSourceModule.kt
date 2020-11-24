@@ -5,6 +5,8 @@ import com.bumptech.glide.Glide
 import com.ludovic.vimont.nasaapod.api.NasaAPI
 import com.ludovic.vimont.nasaapod.api.RetrofitBuilder
 import com.ludovic.vimont.nasaapod.api.VimeoAPI
+import com.ludovic.vimont.nasaapod.background.image.GlideBitmapLoader
+import com.ludovic.vimont.nasaapod.background.worker.DailyRequestWorkerFactory
 import com.ludovic.vimont.nasaapod.db.PhotoDatabase
 import com.ludovic.vimont.nasaapod.preferences.DataHolder
 import com.ludovic.vimont.nasaapod.screens.detail.DetailRepository
@@ -16,15 +18,19 @@ import org.koin.dsl.module
 
 object DataSourceModule {
     val repositoriesModule: Module = module {
-        // APIs
+        buildNetworkEntities()
+        buildDatabaseEntities()
+        buildGlideEntities()
         single {
-            RetrofitBuilder.buildRetrofitForAPI(NasaAPI.BASE_URL, NasaAPI::class.java)
+            DataHolder.init(androidContext())
         }
-        single {
-            RetrofitBuilder.buildRetrofitForAPI(VimeoAPI.BASE_URL, VimeoAPI::class.java)
+        buildRepositoriesEntities()
+        factory {
+            DailyRequestWorkerFactory(get(), get<GlideBitmapLoader>())
         }
+    }
 
-        // Database
+    private fun Module.buildDatabaseEntities() {
         single {
             val databaseName: String = PhotoDatabase.DATABASE_NAME
             Room.databaseBuilder(androidContext(), PhotoDatabase::class.java, databaseName)
@@ -34,21 +40,30 @@ object DataSourceModule {
         single {
             get<PhotoDatabase>().photoDao()
         }
+    }
 
-        // Glide
+    private fun Module.buildNetworkEntities() {
+        single {
+            RetrofitBuilder.buildRetrofitForAPI(NasaAPI.BASE_URL, NasaAPI::class.java)
+        }
+        single {
+            RetrofitBuilder.buildRetrofitForAPI(VimeoAPI.BASE_URL, VimeoAPI::class.java)
+        }
+    }
+
+    private fun Module.buildGlideEntities() {
         factory {
             Glide.with(androidContext())
         }
         single {
             Glide.get(androidContext())
         }
-
-        // DataHolder
-        single {
-            DataHolder.init(androidContext())
+        factory {
+            GlideBitmapLoader(get())
         }
+    }
 
-        // Repositories
+    private fun Module.buildRepositoriesEntities() {
         factory {
             HomeRepository(get(), get(), get(), get())
         }
