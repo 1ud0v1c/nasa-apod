@@ -9,8 +9,7 @@ import com.ludovic.vimont.nasaapod.model.Photo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class HomeViewModel: ViewModel() {
-    private val homeRepository = HomeRepository()
+class HomeViewModel(private val homeRepository: HomeRepository): ViewModel() {
     private val isNetworkAvailable = MutableLiveData<Boolean>()
     val layout = MutableLiveData<String>()
     val numberOfDaysToFetch = MutableLiveData<Int>()

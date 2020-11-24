@@ -6,8 +6,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class SettingsViewModel: ViewModel() {
-    private val settingsRepository = SettingsRepository()
+class SettingsViewModel(private val settingsRepository: SettingsRepository): ViewModel() {
     val glideCacheSize = MutableLiveData<Long>()
     val quota = MutableLiveData<String>()
 

@@ -10,21 +10,15 @@ import com.ludovic.vimont.nasaapod.model.Photo
 import com.ludovic.vimont.nasaapod.model.VimeoData
 import com.ludovic.vimont.nasaapod.preferences.DataHolder
 import com.ludovic.vimont.nasaapod.preferences.UserPreferences
-import org.koin.core.component.KoinApiExtension
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import retrofit2.Response
 
-@KoinApiExtension
-class HomeRepository: KoinComponent {
+class HomeRepository(private val nasaAPI: NasaAPI,
+                     private val vimeoAPI: VimeoAPI,
+                     private val photoDao: PhotoDao,
+                     private val dataHolder: DataHolder) {
     companion object {
         val TAG: String = HomeRepository::class.java.simpleName
     }
-
-    private val nasaAPI: NasaAPI by inject()
-    private val vimeoAPI: VimeoAPI by inject()
-    private val photoDao: PhotoDao by inject()
-    private val dataHolder: DataHolder by inject()
 
     suspend fun isDatabaseEmpty(): Boolean {
         return photoDao.count() <= 0

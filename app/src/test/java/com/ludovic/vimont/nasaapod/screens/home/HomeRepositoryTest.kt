@@ -24,12 +24,7 @@ import retrofit2.Response
 class HomeRepositoryTest : AutoCloseKoinTest() {
     private val vimeoAPI: VimeoAPI by inject()
     private val photoDao: PhotoDao by inject()
-    private lateinit var homeRepository: HomeRepository
-
-    @Before
-    fun setUp() {
-        homeRepository = HomeRepository()
-    }
+    private val homeRepository: HomeRepository by inject()
 
     @Test
     fun testRetrievedNasaPhotos(): Unit = runBlocking {

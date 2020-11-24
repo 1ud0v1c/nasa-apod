@@ -21,10 +21,7 @@ class NasaApplication: Application(), Configuration.Provider {
         startKoin {
             androidContext(this@NasaApplication)
             val listOfModule: List<Module> = listOf(
-                DataSourceModule.networkModule,
-                DataSourceModule.databaseModule,
-                DataSourceModule.glideModule,
-                DataSourceModule.dataHolderModule,
+                DataSourceModule.repositoriesModule,
                 ViewModelModule.viewModelModule
             )
             modules(listOfModule)

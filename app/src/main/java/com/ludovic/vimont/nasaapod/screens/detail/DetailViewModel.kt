@@ -14,8 +14,8 @@ import com.ludovic.vimont.nasaapod.model.Photo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class DetailViewModel(application: Application): AndroidViewModel(application), UIDownloadProgressListener {
-    private val detailRepository = DetailRepository()
+class DetailViewModel(private val detailRepository: DetailRepository,
+                      application: Application): AndroidViewModel(application), UIDownloadProgressListener {
     val photo = MutableLiveData<Photo>()
     val bitmap = MutableLiveData<StateData<Bitmap>>()
     val bitmapDownloadProgression = MutableLiveData<Int>()

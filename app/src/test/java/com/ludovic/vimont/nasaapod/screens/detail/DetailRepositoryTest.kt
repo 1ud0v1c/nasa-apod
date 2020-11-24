@@ -5,6 +5,7 @@ import com.ludovic.vimont.nasaapod.MockModel
 import com.ludovic.vimont.nasaapod.db.PhotoDao
 import com.ludovic.vimont.nasaapod.model.Photo
 import kotlinx.coroutines.runBlocking
+import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -26,11 +27,10 @@ class DetailRepositoryTest : AutoCloseKoinTest() {
 
     private val photos = ArrayList<Photo>()
     private val photoDao: PhotoDao by inject()
-    private lateinit var detailRepository: DetailRepository
+    private val detailRepository: DetailRepository by inject()
 
     @Before
     fun setUp() {
-        detailRepository = DetailRepository()
         photos.add(MockModel.buildPhoto(googleURL, imageMediaType, firstDate))
         photos.add(MockModel.buildPhoto(appleURL, videoMediaType, secondDate))
     }

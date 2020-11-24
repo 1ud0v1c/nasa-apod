@@ -6,24 +6,18 @@ import com.ludovic.vimont.nasaapod.model.Photo
 import com.ludovic.vimont.nasaapod.screens.home.HomeRepository
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.test.AutoCloseKoinTest
+import org.koin.test.inject
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @Config(sdk = [Build.VERSION_CODES.P], manifest = Config.NONE)
 @RunWith(RobolectricTestRunner::class)
 class SettingsRepositoryTest : AutoCloseKoinTest() {
-    private lateinit var homeRepository: HomeRepository
-    private lateinit var settingsRepository: SettingsRepository
-
-    @Before
-    fun setUp() {
-        homeRepository = HomeRepository()
-        settingsRepository = SettingsRepository()
-    }
+    private val homeRepository: HomeRepository by inject()
+    private val settingsRepository: SettingsRepository by inject()
 
     @Test
     fun testGetQuota(): Unit = runBlocking {
