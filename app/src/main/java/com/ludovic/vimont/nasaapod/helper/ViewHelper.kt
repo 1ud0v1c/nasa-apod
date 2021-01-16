@@ -21,20 +21,31 @@ object ViewHelper {
                               duration: Long = 300,
                               lambda: (() -> Unit)?,
                               startOffset: Long = 0) {
+        this.fadeAnimation(view, isFadeIn, duration, null, null, lambda, startOffset)
+    }
+
+    private fun fadeAnimation(view: View,
+                              isFadeIn: Boolean,
+                              duration: Long = 300,
+                              onAnimationStart: (() -> Unit)?,
+                              onAnimationRepeat: (() -> Unit)?,
+                              onAnimationEnd: (() -> Unit)?,
+                              startOffset: Long = 0) {
         val fadeAnimation: AlphaAnimation = getAlphaAnimation(isFadeIn)
         fadeAnimation.interpolator = AccelerateInterpolator()
         fadeAnimation.duration = duration
         fadeAnimation.startOffset = startOffset
         fadeAnimation.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation?) {
+                onAnimationStart?.invoke()
             }
 
             override fun onAnimationRepeat(animation: Animation?) {
-
+                onAnimationRepeat?.invoke()
             }
 
             override fun onAnimationEnd(animation: Animation?) {
-                lambda?.invoke()
+                onAnimationEnd?.invoke()
             }
         })
         view.startAnimation(fadeAnimation)

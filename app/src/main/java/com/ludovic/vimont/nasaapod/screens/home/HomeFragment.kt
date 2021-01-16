@@ -1,6 +1,5 @@
 package com.ludovic.vimont.nasaapod.screens.home
 
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.*
 import android.widget.Button

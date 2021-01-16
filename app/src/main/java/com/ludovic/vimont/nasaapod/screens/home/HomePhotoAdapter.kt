@@ -129,8 +129,9 @@ class HomePhotoAdapter(private val photos: ArrayList<Photo>): RecyclerView.Adapt
                         params.height = newHeight
                         imageViewPhoto.setImageBitmap(resource)
                     }
-                    override fun onLoadCleared(placeholder: Drawable?) {
 
+                    override fun onLoadCleared(placeholder: Drawable?) {
+                        // Nothing to clear
                     }
                 })
         }

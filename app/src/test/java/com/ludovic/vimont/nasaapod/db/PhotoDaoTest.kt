@@ -16,15 +16,18 @@ import org.robolectric.annotation.Config
 @Config(sdk = [Build.VERSION_CODES.P], manifest = Config.NONE)
 @RunWith(RobolectricTestRunner::class)
 class PhotoDaoTest : AutoCloseKoinTest() {
+    companion object {
+        const val GOOGLE_URL = "https://google.fr/test.png"
+    }
     private val photos = ArrayList<Photo>()
     private val photoDao: PhotoDao by inject()
 
     @Before
     fun setUp() {
-        photos.add(MockModel.buildPhoto("https://google.fr/test.png", Photo.IMAGE_MEDIA_TYPE, "2020-10-10"))
-        photos.add(MockModel.buildPhoto("https://google.fr/test.png", Photo.IMAGE_MEDIA_TYPE, "2020-10-09"))
-        photos.add(MockModel.buildPhoto("https://google.fr/test.png", Photo.VIDEO_MEDIA_TYPE, "2020-10-08"))
-        photos.add(MockModel.buildPhoto("https://google.fr/test.png", Photo.IMAGE_MEDIA_TYPE, "2020-10-07"))
+        photos.add(MockModel.buildPhoto(GOOGLE_URL, Photo.IMAGE_MEDIA_TYPE, "2020-10-10"))
+        photos.add(MockModel.buildPhoto(GOOGLE_URL, Photo.IMAGE_MEDIA_TYPE, "2020-10-09"))
+        photos.add(MockModel.buildPhoto(GOOGLE_URL, Photo.VIDEO_MEDIA_TYPE, "2020-10-08"))
+        photos.add(MockModel.buildPhoto(GOOGLE_URL, Photo.IMAGE_MEDIA_TYPE, "2020-10-07"))
     }
 
     @Test

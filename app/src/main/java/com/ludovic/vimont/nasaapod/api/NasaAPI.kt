@@ -26,8 +26,8 @@ interface NasaAPI {
     }
 
     @GET("apod")
-    suspend fun getPhotos(@Query("start_date") start_date: String,
-                          @Query("end_date") end_date: String = TimeHelper.getToday(),
+    suspend fun getPhotos(@Query("start_date") startDate: String,
+                          @Query("end_date") endDate: String = TimeHelper.getToday(),
                           @Query("hd") hd: Boolean = true,
-                          @Query("api_key") api_key: String = API_KEY): Response<List<Photo>>
+                          @Query("api_key") apiKey: String = API_KEY): Response<List<Photo>>
 }
