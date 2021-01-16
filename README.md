@@ -7,6 +7,9 @@
   <a href="https://github.com/1ud0v1c/nasa-apod/workflows/Unit%20Tests/badge.svg?event=push">
 	<img alt="Unit Tests" src="https://github.com/1ud0v1c/nasa-apod/workflows/Unit%20Tests/badge.svg?event=push"/>
   </a>
+  <a href="https://sonarcloud.io/dashboard?id=1ud0v1c_nasa-apod">
+	<img alt="Quality Gate Status" src="https://sonarcloud.io/api/project_badges/measure?project=1ud0v1c_nasa-apod&metric=alert_status"/>
+  </a>
 </p>
 
 Android application which list the last 30 photos of the [NASA's API](https://api.nasa.gov/): [Astronomy Picture of the Day](https://github.com/nasa/apod-api#docs-).
