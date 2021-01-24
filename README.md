@@ -175,4 +175,3 @@ Easy to use and easily configurable, it was the perfect library for this test.
 And then provide a simple solution to switch between the two styles, for example by adding another menu item inside the ActionBar.
 - I encountered an issue, when testing the application near midnight. Indeed, in my local hour, it was already midnight, but in the server timezone I suppose it was not. It could be a great idea to monitor the server current 
 date and base our request on it, instead of using our timezone. Maybe a marginal case, but definitely something worth investigation.
-
