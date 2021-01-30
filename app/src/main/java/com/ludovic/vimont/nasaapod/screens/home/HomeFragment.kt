@@ -47,6 +47,7 @@ class HomeFragment: Fragment() {
         super.onActivityCreated(savedInstanceState)
         handleNetworkAvailability()
         configureRecyclerView()
+        configureSwipeToRefreshLayout()
         setNumberOfDaysToFetchObserver()
         setLayoutObserver()
         setPhotosObserver()
@@ -86,6 +87,11 @@ class HomeFragment: Fragment() {
                     showErrorStatus(stateData, true)
                 }
             }
+            with(binding) {
+                if (swipeRefreshLayout.isRefreshing) {
+                    swipeRefreshLayout.isRefreshing = false
+                }
+            }
         }
     }
 
@@ -94,6 +100,13 @@ class HomeFragment: Fragment() {
         viewModel.loadLayout()
         viewModel.loadNasaPhotos()
         viewModel.loadNumberOfDaysToFetchPreference()
+    }
+
+
+    private fun configureSwipeToRefreshLayout() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.loadNasaPhotos(true)
+        }
     }
 
     /**
