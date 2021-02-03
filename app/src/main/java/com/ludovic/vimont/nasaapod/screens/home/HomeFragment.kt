@@ -34,7 +34,7 @@ class HomeFragment: Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var connectionLiveData: ConnectionLiveData
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         activity?.let {
             it.title = getString(R.string.home_activity_title, NasaAPI.NUMBER_OF_DAY_TO_FETCH)
@@ -47,10 +47,59 @@ class HomeFragment: Fragment() {
         super.onActivityCreated(savedInstanceState)
         handleNetworkAvailability()
         configureRecyclerView()
-        configureSwipeToRefreshLayout()
+        configurePullToRefresh()
         setNumberOfDaysToFetchObserver()
         setLayoutObserver()
         setPhotosObserver()
+    }
+
+    /**
+     * Allow us to update the network availability of the HomeViewModel thanks to a live data, which
+     * listen to network modification.
+     */
+    private fun handleNetworkAvailability() {
+        activity?.let {
+            connectionLiveData = ConnectionLiveData(it)
+            connectionLiveData.observe(viewLifecycleOwner) { hasNetworkAccess: Boolean ->
+                viewModel.setNetworkAvailability(hasNetworkAccess)
+            }
+            viewModel.setNetworkAvailability(NetworkHelper.isOnline(it))
+        }
+    }
+
+    /**
+     * Configure the recyclerView based on the layout chosen by the user. By default, it is a list.
+     * @see: UserPreferences
+     */
+    private fun configureRecyclerView() {
+        val recyclerView: RecyclerView = binding.recyclerViewPhotos
+        recyclerView.adapter = photoAdapter
+        recyclerView.clearDecorations()
+        if (photoAdapter.layout == UserPreferences.LAYOUT_LIST) {
+            recyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+        } else {
+            recyclerView.layoutManager = StaggeredGridLayoutManager(UserPreferences.GRID_SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL)
+            val gridSpaceDimension: Int = resources.getDimension(R.dimen.item_photo_padding_size).toInt()
+            recyclerView.addItemDecoration(GridItemOffsetDecoration(UserPreferences.GRID_SPAN_COUNT, gridSpaceDimension))
+        }
+        postponeEnterTransition()
+        recyclerView.viewTreeObserver.addOnPreDrawListener {
+            startPostponedEnterTransition()
+            true
+        }
+        photoAdapter.onItemClick = { imageView: ImageView, photo: Photo ->
+            val extras: FragmentNavigator.Extras = FragmentNavigatorExtras(
+                imageView to photo.url
+            )
+            val action: NavDirections = HomeFragmentDirections.actionHomeFragmentToDetailFragment(photo.date)
+            findNavController().navigate(action, extras)
+        }
+    }
+
+    private fun configurePullToRefresh() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.loadNasaPhotos(true)
+        }
     }
 
     private fun setNumberOfDaysToFetchObserver() {
@@ -100,56 +149,6 @@ class HomeFragment: Fragment() {
         viewModel.loadLayout()
         viewModel.loadNasaPhotos()
         viewModel.loadNumberOfDaysToFetchPreference()
-    }
-
-
-    private fun configureSwipeToRefreshLayout() {
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.loadNasaPhotos(true)
-        }
-    }
-
-    /**
-     * Configure the recyclerView based on the layout chosen by the user. By default, it is a list.
-     * @see: UserPreferences
-     */
-    private fun configureRecyclerView() {
-        val recyclerView: RecyclerView = binding.recyclerViewPhotos
-        recyclerView.adapter = photoAdapter
-        recyclerView.clearDecorations()
-        if (photoAdapter.layout == UserPreferences.LAYOUT_LIST) {
-            recyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-        } else {
-            recyclerView.layoutManager = StaggeredGridLayoutManager(UserPreferences.GRID_SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL)
-            val gridSpaceDimension: Int = resources.getDimension(R.dimen.item_photo_padding_size).toInt()
-            recyclerView.addItemDecoration(GridItemOffsetDecoration(UserPreferences.GRID_SPAN_COUNT, gridSpaceDimension))
-        }
-        postponeEnterTransition()
-        recyclerView.viewTreeObserver.addOnPreDrawListener {
-            startPostponedEnterTransition()
-            true
-        }
-        photoAdapter.onItemClick = { imageView: ImageView, photo: Photo ->
-            val extras: FragmentNavigator.Extras = FragmentNavigatorExtras(
-                imageView to photo.url
-            )
-            val action: NavDirections = HomeFragmentDirections.actionHomeFragmentToDetailFragment(photo.date)
-            findNavController().navigate(action, extras)
-        }
-    }
-
-    /**
-     * Allow us to update the network availability of the HomeViewModel thanks to a live data, which
-     * listen to network modification.
-     */
-    private fun handleNetworkAvailability() {
-        activity?.let {
-            connectionLiveData = ConnectionLiveData(it)
-            connectionLiveData.observe(viewLifecycleOwner) { hasNetworkAccess: Boolean ->
-                viewModel.setNetworkAvailability(hasNetworkAccess)
-            }
-            viewModel.setNetworkAvailability(NetworkHelper.isOnline(it))
-        }
     }
 
     private fun showLoadingStatus() {

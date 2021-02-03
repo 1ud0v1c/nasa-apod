@@ -4,7 +4,7 @@ buildscript {
         kotlin_version = "1.4.21"
         kotlinx_coroutines_version = "1.4.1"
         koin_version = "2.2.1"
-        navigation_version = "2.3.2"
+        navigation_version = "2.3.3"
         retrofit_version = "2.9.0"
         room_version = "2.2.6"
         worker_version = "2.5.0"
