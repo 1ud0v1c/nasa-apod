@@ -1,7 +1,7 @@
 buildscript {
     ext {
         glide_version = "4.11.0"
-        kotlin_version = "1.4.21"
+        kotlin_version = "1.4.30"
         kotlinx_coroutines_version = "1.4.1"
         koin_version = "2.2.1"
         navigation_version = "2.3.3"

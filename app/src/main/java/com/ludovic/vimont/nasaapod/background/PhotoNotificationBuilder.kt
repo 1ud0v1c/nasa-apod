@@ -6,14 +6,14 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import androidx.navigation.NavDeepLinkBuilder
 import com.ludovic.vimont.nasaapod.BuildConfig
 import com.ludovic.vimont.nasaapod.R
 import com.ludovic.vimont.nasaapod.model.Photo
-import com.ludovic.vimont.nasaapod.screens.MainActivity
+import com.ludovic.vimont.nasaapod.screens.detail.DetailFragmentArgs
 
 /**
  * Used to display a media friendly notification to allow the user to interact with the current
@@ -65,9 +65,10 @@ class PhotoNotificationBuilder {
     }
 
     private fun getContentIntent(context: Context, photo: Photo): PendingIntent {
-        val intent = Intent(context, MainActivity::class.java)
-        intent.putExtra(MainActivity.KEY_PHOTO_DATE, photo.date)
-        intent.putExtra(MainActivity.KEY_OPEN_DETAIL_FRAGMENT, true)
-        return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        return NavDeepLinkBuilder(context)
+            .setGraph(R.navigation.navigation_graph)
+            .setDestination(R.id.detailFragment)
+            .setArguments(DetailFragmentArgs(photo.date).toBundle())
+            .createPendingIntent()
     }
 }
