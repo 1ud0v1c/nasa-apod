@@ -41,25 +41,33 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginVertical="@dimen/activity_vertical_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:background="@color/colorGray" />
 
         <LinearLayout
             android:id="@+id/linear_layout_twitter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-            android:orientation="vertical">
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/activity_horizontal_margin"
+            android:paddingVertical="@dimen/activity_vertical_little_margin"
+            tools:ignore="UnusedAttribute">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Twitter" />
+                android:text="@string/about_activity_twitter_title"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/about_activity_title_size" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="You can follow me on Twitter, if you want" />
+                android:text="@string/about_activity_twitter_description"
+                android:textSize="@dimen/about_activity_description_size" />
 
         </LinearLayout>
 
@@ -67,19 +75,26 @@
             android:id="@+id/linear_layout_github"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:orientation="vertical">
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/activity_horizontal_margin"
+            android:paddingVertical="@dimen/activity_vertical_little_margin"
+            tools:ignore="UnusedAttribute">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Github" />
+                android:text="@string/about_activity_github_title"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/about_activity_title_size" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="NasaApod is open-source, check it out on Github" />
+                android:text="@string/about_activity_github_description"
+                android:textSize="@dimen/about_activity_description_size" />
 
         </LinearLayout>
 
@@ -87,19 +102,26 @@
             android:id="@+id/linear_layout_rating"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:orientation="vertical">
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/activity_horizontal_margin"
+            android:paddingVertical="@dimen/activity_vertical_little_margin"
+            tools:ignore="UnusedAttribute">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Rate App" />
+                android:text="@string/about_activity_rate_title"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/about_activity_title_size" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="If you like NasaApod, rate it on the Google Play Store" />
+                android:text="@string/about_activity_rate_description"
+                android:textSize="@dimen/about_activity_description_size" />
 
         </LinearLayout>
 

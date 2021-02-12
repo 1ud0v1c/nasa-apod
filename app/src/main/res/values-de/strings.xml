@@ -61,4 +61,8 @@
 
     <!-- AboutFragment -->
     <string name="about_activity_title">Über mich</string>
+    <string name="about_activity_twitter_description">Sie können mir auf Twitter folgen</string>
+    <string name="about_activity_github_description">Nasa Apod ist ein Open-Source-Projekt, schaue es dir auf Github</string>
+    <string name="about_activity_rate_title">Bewerten</string>
+    <string name="about_activity_rate_description">Dir gefällt Nasa Apod? Dann bewerte die App im Play Store</string>
 </resources>

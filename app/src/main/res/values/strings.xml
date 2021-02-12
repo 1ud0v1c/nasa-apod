@@ -66,4 +66,10 @@
 
     <!-- AboutFragment -->
     <string name="about_activity_title">About me</string>
+    <string name="about_activity_twitter_title" translatable="false">Twitter</string>
+    <string name="about_activity_twitter_description">You can follow me on Twitter</string>
+    <string name="about_activity_github_title" translatable="false">Github</string>
+    <string name="about_activity_github_description">Nasa Apod is open-source, check it out on Github</string>
+    <string name="about_activity_rate_title">Rate App</string>
+    <string name="about_activity_rate_description">If you like Nasa Apod, rate it on the Google Play Store</string>
 </resources>
