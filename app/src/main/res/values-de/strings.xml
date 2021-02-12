@@ -58,4 +58,7 @@
     <string name="settings_layout_list">List</string>
     <string name="settings_layout_grid">Raster</string>
     <string name="settings_about_title">Über mich</string>
+
+    <!-- AboutFragment -->
+    <string name="about_activity_title">Über mich</string>
 </resources>

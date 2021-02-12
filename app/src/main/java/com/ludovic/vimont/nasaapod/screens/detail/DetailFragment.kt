@@ -55,8 +55,8 @@ class DetailFragment: Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         snackBar = Snackbar.make(binding.root, "", Snackbar.LENGTH_INDEFINITE)
         activity?.let {

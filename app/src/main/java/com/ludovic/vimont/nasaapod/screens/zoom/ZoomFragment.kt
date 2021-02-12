@@ -18,7 +18,6 @@ import com.ludovic.vimont.nasaapod.helper.ViewHelper
 import com.ludovic.vimont.nasaapod.helper.WindowHelper
 import com.ludovic.vimont.nasaapod.ui.DrawableRequestListener
 
-
 class ZoomFragment: Fragment() {
     private val zoomFragmentArgs: ZoomFragmentArgs by navArgs()
     private lateinit var binding: FragmentZoomBinding
@@ -40,15 +39,15 @@ class ZoomFragment: Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-         val mediaURL: String = zoomFragmentArgs.mediaUrl
-         if (zoomFragmentArgs.isMediaVideo) {
-             loadVideo(mediaURL)
-         } else {
-             loadImage(mediaURL)
-             showProgressBar()
-         }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val mediaURL: String = zoomFragmentArgs.mediaUrl
+        if (zoomFragmentArgs.isMediaVideo) {
+            loadVideo(mediaURL)
+        } else {
+            loadImage(mediaURL)
+            showProgressBar()
+        }
     }
 
     @SuppressLint("SetJavaScriptEnabled")

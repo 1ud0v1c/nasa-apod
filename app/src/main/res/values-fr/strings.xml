@@ -58,4 +58,7 @@
     <string name="settings_layout_list">Liste</string>
     <string name="settings_layout_grid">Grille</string>
     <string name="settings_about_title">À propos</string>
+
+    <!-- AboutFragment -->
+    <string name="about_activity_title">À propos</string>
 </resources>

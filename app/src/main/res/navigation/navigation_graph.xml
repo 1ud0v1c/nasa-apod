@@ -46,6 +46,14 @@
 
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.ludovic.vimont.nasaapod.screens.settings.SettingsFragment" />
+        android:name="com.ludovic.vimont.nasaapod.screens.settings.SettingsFragment" >
+        <action
+            android:id="@+id/action_settingsFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.ludovic.vimont.nasaapod.screens.about.AboutFragment" />
 
 </navigation>

@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -18,17 +20,20 @@ class SettingsFragment: PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings_preferences, rootKey)
         setHasOptionsMenu(true)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         activity?.let {
             it.title = getString(R.string.settings_activity_title)
             it.actionBar?.setDisplayHomeAsUpEnabled(true)
         }
-    }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         handleThemeModification()
         handleQuota()
         handleCache()
+        handleAboutMe()
     }
 
     private fun handleThemeModification() {
@@ -88,6 +93,15 @@ class SettingsFragment: PreferenceFragmentCompat() {
         }
         clearCachePreference?.setOnPreferenceClickListener {
             viewModel.launchClearCache()
+            true
+        }
+    }
+
+    private fun handleAboutMe() {
+        val aboutMePreference: Preference? = findPreference("about_me")
+        aboutMePreference?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            val action: NavDirections = SettingsFragmentDirections.actionSettingsFragmentToAboutFragment()
+            findNavController().navigate(action)
             true
         }
     }
