@@ -57,4 +57,5 @@
     <string name="settings_layout_title">Layout</string>
     <string name="settings_layout_list">List</string>
     <string name="settings_layout_grid">Raster</string>
+    <string name="settings_about_title">Über mich</string>
 </resources>

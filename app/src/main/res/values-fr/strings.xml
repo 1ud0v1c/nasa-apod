@@ -57,4 +57,5 @@
     <string name="settings_layout_title">Layout</string>
     <string name="settings_layout_list">Liste</string>
     <string name="settings_layout_grid">Grille</string>
+    <string name="settings_about_title">À propos</string>
 </resources>
