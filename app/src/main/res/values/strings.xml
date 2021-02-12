@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name" translatable="false">Nasa APOD</string>
+    <string name="twitter_url" translatable="false">https://twitter.com/1ud0v1c</string>
+    <string name="github_url" translatable="false">https://github.com/1ud0v1c/nasa-apod</string>
+    <string name="play_store_url" translatable="false">https://play.google.com/store/apps/details?id=com.ludovic.vimont.nasaapod</string>
 
     <!-- Common action -->
     <string name="action_ok">OK</string>

@@ -36,4 +36,8 @@
 
     <!-- ZoomActivity -->
     <dimen name="zoom_activity_progress_bar_min_size">75dp</dimen>
+
+    <!-- AboutFragment -->
+    <dimen name="about_activity_app_name_size">22sp</dimen>
+    <dimen name="about_activity_app_icon_size">72dp</dimen>
 </resources>
