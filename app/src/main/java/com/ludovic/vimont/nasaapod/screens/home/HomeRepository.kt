@@ -17,7 +17,8 @@ class HomeRepository(private val nasaAPI: NasaAPI,
                      private val photoDao: PhotoDao,
                      private val dataHolder: DataHolder) {
     companion object {
-        val TAG: String = HomeRepository::class.java.simpleName
+        private val TAG: String = HomeRepository::class.java.simpleName
+        private const val HTTP_ERROR_CODE_TOO_MANY_REQUESTS: Int = 429
     }
 
     suspend fun isDatabaseEmpty(): Boolean {
@@ -40,7 +41,7 @@ class HomeRepository(private val nasaAPI: NasaAPI,
             val responsePhoto: Response<List<Photo>> = nasaAPI.getPhotos(startDate)
             if (!responsePhoto.isSuccessful) {
                 return when (responsePhoto.code()) {
-                    429 -> {
+                    HTTP_ERROR_CODE_TOO_MANY_REQUESTS -> {
                         StateData.error("The user has sent too many requests in a given amount of time.")
                     }
                     else -> {

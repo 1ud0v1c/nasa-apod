@@ -15,6 +15,9 @@ import com.ludovic.vimont.nasaapod.preferences.UserPreferences
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsFragment: PreferenceFragmentCompat() {
+    companion object {
+        private const val SNACK_BAR_MAX_LINES: Int = 3
+    }
     private val viewModel: SettingsViewModel by viewModel()
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -75,7 +78,7 @@ class SettingsFragment: PreferenceFragmentCompat() {
                 }
                 val snackBarView: View = snackBar.view
                 val snackBarTextView: TextView = snackBarView.findViewById(com.google.android.material.R.id.snackbar_text)
-                snackBarTextView.maxLines = 3
+                snackBarTextView.maxLines = SNACK_BAR_MAX_LINES
                 snackBar.show()
             }
         }

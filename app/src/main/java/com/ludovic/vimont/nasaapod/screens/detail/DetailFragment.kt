@@ -29,6 +29,9 @@ import com.ludovic.vimont.nasaapod.ui.dialog.ProgressBarDialog
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailFragment: Fragment() {
+    companion object {
+        private const val SNACK_BAR_MAX_LINES: Int = 3
+    }
     private val detailFragmentArgs: DetailFragmentArgs by navArgs()
     private val viewModel: DetailViewModel by viewModel()
     private lateinit var snackBar: Snackbar
@@ -174,6 +177,6 @@ class DetailFragment: Fragment() {
         snackBar = Snackbar.make(binding.root, text, length)
         val snackBarView: View = snackBar.view
         val snackBarTextView: TextView = snackBarView.findViewById(com.google.android.material.R.id.snackbar_text)
-        snackBarTextView.maxLines = 3
+        snackBarTextView.maxLines = SNACK_BAR_MAX_LINES
     }
 }

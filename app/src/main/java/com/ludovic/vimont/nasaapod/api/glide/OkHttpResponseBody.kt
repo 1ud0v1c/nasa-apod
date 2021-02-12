@@ -3,7 +3,11 @@ package com.ludovic.vimont.nasaapod.api.glide
 import okhttp3.HttpUrl
 import okhttp3.MediaType
 import okhttp3.ResponseBody
-import okio.*
+import okio.Buffer
+import okio.BufferedSource
+import okio.ForwardingSource
+import okio.Okio
+import okio.Source
 
 /**
  * OkHttp interceptor which give us the possibility to track the download and thus be able to

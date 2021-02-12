@@ -6,6 +6,7 @@ package com.ludovic.vimont.nasaapod.api.glide
  */
 class GlideDispatchProgressListener: ResponseProgressListener {
     companion object {
+        private const val HUNDRED_PERCENT: Int = 100
         private val listeners = HashMap<String, UIDownloadProgressListener>()
         private val progresses = HashMap<String, Int>()
 
@@ -20,7 +21,7 @@ class GlideDispatchProgressListener: ResponseProgressListener {
     }
 
     override fun update(url: String, totalBytesRead: Long, contentLength: Long, isDone: Boolean) {
-        val currentProgress: Int = (100 * totalBytesRead / contentLength).toInt()
+        val currentProgress: Int = (HUNDRED_PERCENT * totalBytesRead / contentLength).toInt()
         if (isDispatchNeeded(url, currentProgress)) {
             listeners[url]?.let { uiDownloadProgressListener: UIDownloadProgressListener ->
                 uiDownloadProgressListener.update(currentProgress)

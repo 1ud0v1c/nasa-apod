@@ -11,7 +11,11 @@ import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.module.AppGlideModule
 import com.bumptech.glide.request.RequestOptions
-import okhttp3.*
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
+import okhttp3.ResponseBody
 import java.io.InputStream
 
 /**
@@ -19,7 +23,7 @@ import java.io.InputStream
  * @see: https://medium.com/@mr.johnnyne/how-to-use-glide-v4-load-image-with-progress-update-eb02671dac18
  */
 @GlideModule
-class NasaGlideModule: AppGlideModule() {
+class NasaGlideModule : AppGlideModule() {
     private val dispatchProgressListener = GlideDispatchProgressListener()
 
     override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
@@ -28,11 +32,9 @@ class NasaGlideModule: AppGlideModule() {
                 getNetworkInterceptor(chain)
             }.build()
 
-        registry.replace(
-            GlideUrl::class.java,
-            InputStream::class.java,
-            OkHttpUrlLoader.Factory(client)
-        )
+        val glideClass = GlideUrl::class.java
+        val inputStreamClass = InputStream::class.java
+        registry.replace(glideClass, inputStreamClass, OkHttpUrlLoader.Factory(client))
     }
 
     private fun getNetworkInterceptor(chain: Interceptor.Chain): Response {

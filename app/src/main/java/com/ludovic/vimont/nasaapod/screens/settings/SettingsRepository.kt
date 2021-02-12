@@ -9,6 +9,9 @@ import java.io.File
 
 class SettingsRepository(private val glide: Glide,
                          private val dataHolder: DataHolder) {
+    companion object {
+        private const val ONE_KILO_OCTET: Int = 1024
+    }
 
     // @see: https://bumptech.github.io/glide/doc/configuration.html#disk-cache
     fun getCacheSize(): Long {
@@ -25,7 +28,7 @@ class SettingsRepository(private val glide: Glide,
                     currentFile.length()
                 }
             }
-            return result / 1024 / 1024
+            return result / ONE_KILO_OCTET / ONE_KILO_OCTET
         }
         return 0
     }
