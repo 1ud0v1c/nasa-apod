@@ -59,6 +59,15 @@
                 app:srcCompat="@drawable/ic_wallpaper" />
 
             <ImageView
+                android:id="@+id/image_view_download"
+                style="@style/MaterialImageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:contentDescription="@string/detail_activity_download_content_description"
+                app:srcCompat="@drawable/ic_download" />
+
+            <ImageView
                 android:id="@+id/image_view_share"
                 style="@style/MaterialImageButton"
                 android:layout_width="wrap_content"

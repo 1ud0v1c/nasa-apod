@@ -39,6 +39,7 @@
     <string name="detail_activity_image_content_description">DetailActivity ausgewähltes Bild</string>
     <string name="detail_activity_image_media_type_content_description">DetailActivity image media type</string>
     <string name="detail_activity_wallpaper_content_description">DetailActivity Als Hintergrundbild einstellen button</string>
+    <string name="detail_activity_download_content_description">DetailActivity download button</string>
     <string name="detail_activity_share_content_description">DetailActivity freigeben button</string>
     <string name="detail_activity_cannot_set_wallpaper_for_video">Ein Video kann nicht als Hintergrundbild verwendet werden</string>
 

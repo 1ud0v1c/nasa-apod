@@ -39,6 +39,7 @@
     <string name="detail_activity_image_content_description">DetailActivity image sélectionnée</string>
     <string name="detail_activity_image_media_type_content_description">DetailActivity image media type</string>
     <string name="detail_activity_wallpaper_content_description">DetailActivity bouton mettre en fond d\'écran</string>
+    <string name="detail_activity_download_content_description">DetailActivity bouton de téléchargement</string>
     <string name="detail_activity_share_content_description">DetailActivity bouton de partage</string>
     <string name="detail_activity_cannot_set_wallpaper_for_video">Une vidéo ne peut pas être utilisée comme fond d\'écran</string>
 

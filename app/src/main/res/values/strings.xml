@@ -44,6 +44,7 @@
     <string name="detail_activity_image_content_description">DetailActivity selected image</string>
     <string name="detail_activity_image_media_type_content_description">DetailActivity image media type</string>
     <string name="detail_activity_wallpaper_content_description">DetailActivity set as wallpaper button</string>
+    <string name="detail_activity_download_content_description">DetailActivity download button</string>
     <string name="detail_activity_share_content_description">DetailActivity share button</string>
     <string name="detail_activity_cannot_set_wallpaper_for_video">We cannot set a video as a Wallpaper</string>
 

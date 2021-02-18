@@ -60,10 +60,8 @@ android {
 // https://medium.com/@wasyl/pretty-tests-summary-in-gradle-744804dd676c
 tasks.withType(Test) {
     testLogging {
-        events  TestLogEvent.FAILED,
-                TestLogEvent.PASSED,
-                TestLogEvent.SKIPPED,
-                TestLogEvent.STANDARD_OUT
+        events  TestLogEvent.FAILED, TestLogEvent.PASSED,
+                TestLogEvent.SKIPPED, TestLogEvent.STANDARD_OUT
         exceptionFormat TestExceptionFormat.FULL
         showExceptions true
         showCauses true
@@ -83,9 +81,16 @@ tasks.withType(Test) {
 
         afterSuite { desc, result ->
             if (!desc.parent) {
-                def output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} successes, ${result.failedTestCount} failures, ${result.skippedTestCount} skipped)"
+                def resultType = result.resultType
+                def numberOfTests = result.testCount
+                def succeedTests = result.successfulTestCount
+                def failedTests = result.failedTestCount
+                def skippedTests = result.skippedTestCount
+
+                def output = "Results: $resultType ($numberOfTests tests, $succeedTests successes, $failedTests failures, $skippedTests skipped)"
                 def startItem = '|  ', endItem = '  |'
                 def repeatLength = startItem.length() + output.length() + endItem.length()
+
                 println('\n' + ('-' * repeatLength) + '\n' + startItem + output + endItem + '\n' + ('-' * repeatLength))
             }
         }

@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.observe
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -102,20 +101,12 @@ class DetailFragment: Fragment() {
                     .into(imageViewPhoto)
 
                 if (photo.isMediaVideo()) {
-                    imageViewMediaType.setImageDrawable(
-                        ContextCompat.getDrawable(
-                            activity,
-                            R.drawable.ic_video
-                        )
-                    )
+                    val videoDrawable = ContextCompat.getDrawable(activity, R.drawable.ic_video)
+                    imageViewMediaType.setImageDrawable(videoDrawable)
                 }
 
                 imageViewPhoto.setOnClickListener {
-                    val mediaURL: String = if (photo.isMediaVideo()) photo.url else photo.hdurl ?: ""
-                    val action: NavDirections = DetailFragmentDirections.actionDetailFragmentToZoomFragment(
-                        photo.isMediaVideo(), mediaURL
-                    )
-                    findNavController().navigate(action)
+                    goToZoomFragment(photo)
                 }
                 imageViewPhoto.transitionName = photo.url
                 startPostponedEnterTransition()
@@ -140,6 +131,10 @@ class DetailFragment: Fragment() {
                     setAsWallpaper(photo)
                 }
 
+                imageViewDownload.setOnClickListener {
+                    downloadImage(photo)
+                }
+
                 imageViewShare.setOnClickListener {
                     val subject: String = getString(
                         R.string.detail_activity_share_subject,
@@ -149,6 +144,14 @@ class DetailFragment: Fragment() {
                 }
             }
         }
+    }
+
+    private fun goToZoomFragment(photo: Photo) {
+        val mediaURL: String = if (photo.isMediaVideo()) photo.url else photo.hdurl ?: ""
+        val action: NavDirections = DetailFragmentDirections.actionDetailFragmentToZoomFragment(
+            photo.isMediaVideo(), mediaURL
+        )
+        findNavController().navigate(action)
     }
 
     /**
@@ -178,5 +181,9 @@ class DetailFragment: Fragment() {
         val snackBarView: View = snackBar.view
         val snackBarTextView: TextView = snackBarView.findViewById(com.google.android.material.R.id.snackbar_text)
         snackBarTextView.maxLines = SNACK_BAR_MAX_LINES
+    }
+
+    private fun downloadImage(photo: Photo) {
+
     }
 }
