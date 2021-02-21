@@ -1,5 +1,7 @@
 package com.ludovic.vimont.nasaapod.screens.detail
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,6 +21,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.ludovic.vimont.nasaapod.R
 import com.ludovic.vimont.nasaapod.api.NasaAPI
 import com.ludovic.vimont.nasaapod.databinding.FragmentDetailBinding
+import com.ludovic.vimont.nasaapod.ext.hasWritePermission
+import com.ludovic.vimont.nasaapod.ext.requestPermission
 import com.ludovic.vimont.nasaapod.helper.IntentHelper
 import com.ludovic.vimont.nasaapod.helper.ViewHelper
 import com.ludovic.vimont.nasaapod.helper.viewmodel.DataStatus
@@ -132,7 +136,7 @@ class DetailFragment: Fragment() {
                 }
 
                 imageViewDownload.setOnClickListener {
-                    downloadImage(photo)
+                    launchDownloadImage(photo)
                 }
 
                 imageViewShare.setOnClickListener {
@@ -183,7 +187,28 @@ class DetailFragment: Fragment() {
         snackBarTextView.maxLines = SNACK_BAR_MAX_LINES
     }
 
-    private fun downloadImage(photo: Photo) {
+    private fun launchDownloadImage(photo: Photo) {
+        if (requireContext().hasWritePermission()) {
+            downloadImage(photo)
+        } else {
+            requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, requestCode = 0)
+        }
+    }
 
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<out String>,
+                                            grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 0) {
+            if (permissions[0] == Manifest.permission.WRITE_EXTERNAL_STORAGE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                viewModel.photo.value?.let {
+                    downloadImage(it)
+                }
+            }
+        }
+    }
+
+    private fun downloadImage(photo: Photo) {
+        println("downloadImage: $photo")
     }
 }
