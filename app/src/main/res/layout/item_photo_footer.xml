@@ -17,7 +17,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.7"
-        android:text=""
+        android:text="@string/home_activity_list_footer"
         android:textAlignment="center" />
 
     <View
