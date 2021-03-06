@@ -38,6 +38,10 @@ data class Photo(val title: String,
         return mediaType == VIDEO_MEDIA_TYPE
     }
 
+    fun isImageHDValid(): Boolean {
+        return isMediaImage() && hdurl != null
+    }
+
     /**
      * After analysis, the API, we can have two different type of media:
      * <ul>

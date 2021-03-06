@@ -18,15 +18,22 @@ import org.koin.dsl.module
 
 object DataSourceModule {
     val repositoriesModule: Module = module {
-        buildNetworkEntities()
+        buildAndroidEntities()
         buildDatabaseEntities()
         buildGlideEntities()
-        single {
-            DataHolder.init(androidContext())
-        }
+        buildNetworkEntities()
         buildRepositoriesEntities()
         factory {
             DailyRequestWorkerFactory(get(), get<GlideBitmapLoader>())
+        }
+    }
+
+    private fun Module.buildAndroidEntities() {
+        single {
+            androidContext().contentResolver
+        }
+        single {
+            DataHolder.init(androidContext())
         }
     }
 
@@ -68,7 +75,7 @@ object DataSourceModule {
             HomeRepository(get(), get(), get(), get())
         }
         factory {
-            DetailRepository(get(), get())
+            DetailRepository(get(), get(), get())
         }
         factory {
             SettingsRepository(get(), get())

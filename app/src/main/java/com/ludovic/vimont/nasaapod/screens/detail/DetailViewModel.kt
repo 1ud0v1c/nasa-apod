@@ -16,6 +16,9 @@ import kotlinx.coroutines.launch
 
 class DetailViewModel(private val detailRepository: DetailRepository,
                       application: Application): AndroidViewModel(application), UIDownloadProgressListener {
+    companion object {
+        private const val PICTURES_FOLDERS_NAME = "nasaapod"
+    }
     val photo = MutableLiveData<Photo>()
     val bitmap = MutableLiveData<StateData<Bitmap>>()
     val bitmapDownloadProgression = MutableLiveData<Int>()
@@ -27,7 +30,7 @@ class DetailViewModel(private val detailRepository: DetailRepository,
         }
     }
 
-    fun downloadImageHD(imageURL: String) {
+    fun setImageAsWallpaper(imageURL: String) {
         viewModelScope.launch(Dispatchers.Default) {
             if (bitmap.value?.status != DataStatus.LOADING) {
                 bitmap.postValue(StateData.loading())
@@ -49,5 +52,17 @@ class DetailViewModel(private val detailRepository: DetailRepository,
 
     fun cancelImageDownload() {
         detailRepository.cancelBitmapDownload()
+    }
+
+    fun saveImage(imageURL: String) {
+        viewModelScope.launch(Dispatchers.Default) {
+            val stateData: StateData<Bitmap> = detailRepository.fetchBitmap(imageURL)
+            if (stateData.status == DataStatus.SUCCESS) {
+                stateData.data?.let { bitmap: Bitmap ->
+                    val photoName = imageURL.split("/").last()
+                    detailRepository.saveImage(bitmap, PICTURES_FOLDERS_NAME, photoName)
+                }
+            }
+        }
     }
 }

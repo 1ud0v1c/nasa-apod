@@ -135,8 +135,12 @@ class DetailFragment: Fragment() {
                     setAsWallpaper(photo)
                 }
 
-                imageViewDownload.setOnClickListener {
-                    launchDownloadImage(photo)
+                if (photo.isImageHDValid()) {
+                    imageViewDownload.setOnClickListener {
+                        launchDownloadImage(photo)
+                    }
+                } else {
+                    imageViewDownload.visibility = View.GONE
                 }
 
                 imageViewShare.setOnClickListener {
@@ -169,7 +173,7 @@ class DetailFragment: Fragment() {
                 progressBarDialog.update(0)
                 progressBarDialog.dismiss()
             }
-            viewModel.downloadImageHD(photo.hdurl)
+            viewModel.setImageAsWallpaper(photo.hdurl)
         } else {
             val errorMessage: String = getString(R.string.detail_activity_cannot_set_wallpaper_for_video)
             updateSnackBar(errorMessage)
@@ -200,7 +204,9 @@ class DetailFragment: Fragment() {
                                             grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 0) {
-            if (permissions[0] == Manifest.permission.WRITE_EXTERNAL_STORAGE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            val writePermission = Manifest.permission.WRITE_EXTERNAL_STORAGE
+            val isPermissionGranted = PackageManager.PERMISSION_GRANTED
+            if (permissions[0] == writePermission && grantResults[0] == isPermissionGranted) {
                 viewModel.photo.value?.let {
                     downloadImage(it)
                 }
@@ -209,6 +215,10 @@ class DetailFragment: Fragment() {
     }
 
     private fun downloadImage(photo: Photo) {
-        println("downloadImage: $photo")
+        if (photo.isImageHDValid()) {
+            photo.hdurl?.let {
+                viewModel.saveImage(it)
+            }
+        }
     }
 }
