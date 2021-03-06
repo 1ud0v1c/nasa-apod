@@ -26,6 +26,7 @@
     <string name="home_activity_no_internet_description">Could not connect to the network.\nPlease check and try again.</string>
     <string name="home_activity_error_title">An error occurred</string>
     <string name="home_activity_display_quota">You still have: %s available requests for the next hour.</string>
+    <string name="home_activity_list_footer">You reached the end of the list</string>
 
     <!-- NumberPicker Dialog -->
     <string name="number_picker_title">Choose a range of days to fetch</string>

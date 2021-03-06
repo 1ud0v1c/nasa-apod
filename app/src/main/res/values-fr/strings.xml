@@ -21,6 +21,7 @@
     <string name="home_activity_no_internet_description">Impossible de se connecter au réseau.\nVeuillez vérifier vos paramètres et réessayer.</string>
     <string name="home_activity_error_title">Une erreur s\'est produite</string>
     <string name="home_activity_display_quota">Il reste: %s requêtes de disponible pour la prochaine heure.</string>
+    <string name="home_activity_list_footer">Vous avez atteint la fin de la liste</string>
 
     <!-- NumberPicker Dialog -->
     <string name="number_picker_title">Choisissez le nombre de jours à télécharger</string>

@@ -52,10 +52,8 @@ class DetailRepository(private val photoDao: PhotoDao,
             val contentValues = ContentValues()
             contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, "$name.jpg")
             contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg")
-            contentValues.put(
-                MediaStore.MediaColumns.RELATIVE_PATH,
-                Environment.DIRECTORY_PICTURES + "/$folder/"
-            )
+            val picturesFolder = Environment.DIRECTORY_PICTURES + "/$folder/"
+            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, picturesFolder)
             val imageUri: Uri? = contentResolver.insert(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 contentValues

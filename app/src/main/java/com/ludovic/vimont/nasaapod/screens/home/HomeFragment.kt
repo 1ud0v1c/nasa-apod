@@ -14,6 +14,7 @@ import androidx.navigation.NavDirections
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -78,7 +79,8 @@ class HomeFragment: Fragment() {
      */
     private fun configureRecyclerView() {
         val recyclerView: RecyclerView = binding.recyclerViewPhotos
-        recyclerView.adapter = photoAdapter
+        val concatAdapter = ConcatAdapter(photoAdapter, HomePhotoFooterAdapter())
+        recyclerView.adapter = concatAdapter
         recyclerView.clearDecorations()
         if (photoAdapter.layout == UserPreferences.LAYOUT_LIST) {
             recyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
