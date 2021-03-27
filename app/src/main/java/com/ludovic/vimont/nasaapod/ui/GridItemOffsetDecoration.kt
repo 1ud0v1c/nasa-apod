@@ -3,10 +3,10 @@ package com.ludovic.vimont.nasaapod.ui
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 
 /**
- * Used to have an equals spacing between the items of the StaggeredGridLayout.
+ * Used to have an equals spacing between the items of the GridLayoutManager.
  */
 class GridItemOffsetDecoration(private val spanCount: Int,
                                private val spacing: Int) : RecyclerView.ItemDecoration() {
@@ -14,7 +14,7 @@ class GridItemOffsetDecoration(private val spanCount: Int,
                                 view: View,
                                 parent: RecyclerView,
                                 state: RecyclerView.State) {
-        val params: StaggeredGridLayoutManager.LayoutParams? = view.layoutParams as? StaggeredGridLayoutManager.LayoutParams
+        val params: GridLayoutManager.LayoutParams? = view.layoutParams as? GridLayoutManager.LayoutParams
         val spanIndex: Int = params?.spanIndex ?: 0
         val position: Int = params?.viewAdapterPosition ?: 0
 

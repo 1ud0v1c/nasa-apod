@@ -64,24 +64,8 @@ class HomePhotoAdapter(private val photos: ArrayList<Photo>): RecyclerView.Adapt
         notifyDataSetChanged()
     }
 
-    abstract class PhotoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
-
-    class ListPhotoViewHolder(itemView: View): PhotoViewHolder(itemView) {
-        private val imageViewPhoto: ImageView = itemView.findViewById(R.id.image_view_photo)
-        private val textViewPhotoTitle: TextView = itemView.findViewById(R.id.text_view_photo_title)
-        private val textViewPhotoDate: TextView = itemView.findViewById(R.id.text_view_photo_date)
-
-        fun bind(photo: Photo, onItemClick: ((ImageView, Photo) -> Unit)?) {
-            loadPhoto(photo)
-            textViewPhotoTitle.text = photo.title
-            textViewPhotoDate.text = photo.getReversedDate()
-            itemView.setOnClickListener {
-                onItemClick?.invoke(imageViewPhoto, photo)
-            }
-            ViewCompat.setTransitionName(imageViewPhoto, photo.url)
-        }
-
-        private fun loadPhoto(photo: Photo) {
+    abstract class PhotoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        fun loadPhoto(photo: Photo, imageView: ImageView) {
             val applicationContext: Context = itemView.context
             val cornersRadiusSize: Int = applicationContext.resources.getDimension(R.dimen.item_photo_corners_radius).toInt()
             val factory: DrawableCrossFadeFactory = DrawableCrossFadeFactory.Builder(ViewHelper.GLIDE_FADE_IN_DURATION)
@@ -93,7 +77,23 @@ class HomePhotoAdapter(private val photos: ArrayList<Photo>): RecyclerView.Adapt
                 .placeholder(R.drawable.photo_placeholder)
                 .transition(DrawableTransitionOptions.withCrossFade(factory))
                 .transform(CenterCrop(), RoundedCorners(cornersRadiusSize))
-                .into(imageViewPhoto)
+                .into(imageView)
+        }
+    }
+
+    class ListPhotoViewHolder(itemView: View): PhotoViewHolder(itemView) {
+        private val imageViewPhoto: ImageView = itemView.findViewById(R.id.image_view_photo)
+        private val textViewPhotoTitle: TextView = itemView.findViewById(R.id.text_view_photo_title)
+        private val textViewPhotoDate: TextView = itemView.findViewById(R.id.text_view_photo_date)
+
+        fun bind(photo: Photo, onItemClick: ((ImageView, Photo) -> Unit)?) {
+            loadPhoto(photo, imageViewPhoto)
+            textViewPhotoTitle.text = photo.title
+            textViewPhotoDate.text = photo.getReversedDate()
+            itemView.setOnClickListener {
+                onItemClick?.invoke(imageViewPhoto, photo)
+            }
+            ViewCompat.setTransitionName(imageViewPhoto, photo.url)
         }
     }
 
@@ -101,39 +101,11 @@ class HomePhotoAdapter(private val photos: ArrayList<Photo>): RecyclerView.Adapt
         private val imageViewPhoto: ImageView = itemView.findViewById(R.id.image_view_photo)
 
         fun bind(photo: Photo, onItemClick: ((ImageView, Photo) -> Unit)?) {
-            loadPhoto(photo)
+            loadPhoto(photo, imageViewPhoto)
             imageViewPhoto.setOnClickListener {
                 onItemClick?.invoke(imageViewPhoto, photo)
             }
             ViewCompat.setTransitionName(imageViewPhoto, photo.url)
-        }
-
-        private fun loadPhoto(photo: Photo) {
-            val applicationContext: Context = itemView.context
-            val cornersRadiusSize: Int = applicationContext.resources.getDimension(R.dimen.item_photo_corners_radius).toInt()
-            val factory: DrawableCrossFadeFactory = DrawableCrossFadeFactory.Builder(ViewHelper.GLIDE_FADE_IN_DURATION)
-                .setCrossFadeEnabled(true)
-                .build()
-
-            Glide.with(applicationContext)
-                .asBitmap()
-                .load(photo.getImageURL())
-                .placeholder(R.drawable.photo_placeholder)
-                .transition(BitmapTransitionOptions.withCrossFade(factory))
-                .transform(CenterCrop(), RoundedCorners(cornersRadiusSize))
-                .into(object : CustomTarget<Bitmap>(){
-                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                        val ratio: Double = resource.height.toDouble() / resource.width.toDouble()
-                        val newHeight: Int = (itemView.width / ratio).toInt()
-                        val params: ViewGroup.LayoutParams = imageViewPhoto.layoutParams
-                        params.height = newHeight
-                        imageViewPhoto.setImageBitmap(resource)
-                    }
-
-                    override fun onLoadCleared(placeholder: Drawable?) {
-                        // Nothing to clear
-                    }
-                })
         }
     }
 }

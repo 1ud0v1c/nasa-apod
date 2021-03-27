@@ -1,12 +1,7 @@
 package com.ludovic.vimont.nasaapod.screens.home
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Button
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
@@ -14,10 +9,8 @@ import androidx.navigation.NavDirections
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ConcatAdapter
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.recyclerview.widget.*
+import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.ludovic.vimont.nasaapod.R
 import com.ludovic.vimont.nasaapod.api.NasaAPI
 import com.ludovic.vimont.nasaapod.databinding.FragmentHomeBinding
@@ -33,6 +26,7 @@ import com.ludovic.vimont.nasaapod.ui.GridItemOffsetDecoration
 import com.ludovic.vimont.nasaapod.ui.dialog.NumberPickerDialog
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+
 class HomeFragment: Fragment() {
     private val photoAdapter = HomePhotoAdapter(ArrayList())
     private val viewModel: HomeViewModel by viewModel()
@@ -40,7 +34,11 @@ class HomeFragment: Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var connectionLiveData: ConnectionLiveData
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         activity?.let {
             it.title = getString(R.string.home_activity_title, NasaAPI.NUMBER_OF_DAY_TO_FETCH)
@@ -85,9 +83,24 @@ class HomeFragment: Fragment() {
         if (photoAdapter.layout == UserPreferences.LAYOUT_LIST) {
             recyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         } else {
-            recyclerView.layoutManager = StaggeredGridLayoutManager(UserPreferences.GRID_SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL)
+            val gridLayoutManager = GridLayoutManager(context, UserPreferences.GRID_SPAN_COUNT)
+            gridLayoutManager.spanSizeLookup = object : SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    return if (position == photoAdapter.itemCount) {
+                        UserPreferences.GRID_SPAN_COUNT
+                    } else {
+                        1
+                    }
+                }
+            }
+            recyclerView.layoutManager = gridLayoutManager
             val gridSpaceDimension: Int = resources.getDimension(R.dimen.item_photo_padding_size).toInt()
-            recyclerView.addItemDecoration(GridItemOffsetDecoration(UserPreferences.GRID_SPAN_COUNT, gridSpaceDimension))
+            recyclerView.addItemDecoration(
+                GridItemOffsetDecoration(
+                    UserPreferences.GRID_SPAN_COUNT,
+                    gridSpaceDimension
+                )
+            )
         }
         postponeEnterTransition()
         recyclerView.viewTreeObserver.addOnPreDrawListener {
@@ -98,7 +111,9 @@ class HomeFragment: Fragment() {
             val extras: FragmentNavigator.Extras = FragmentNavigatorExtras(
                 imageView to photo.url
             )
-            val action: NavDirections = HomeFragmentDirections.actionHomeFragmentToDetailFragment(photo.date)
+            val action: NavDirections = HomeFragmentDirections.actionHomeFragmentToDetailFragment(
+                photo.date
+            )
             findNavController().navigate(action, extras)
         }
     }
@@ -234,7 +249,8 @@ class HomeFragment: Fragment() {
                 }
             }
             R.id.menu_item_settings -> {
-                val action: NavDirections = HomeFragmentDirections.actionHomeFragmentToSettingsFragment()
+                val action: NavDirections =
+                    HomeFragmentDirections.actionHomeFragmentToSettingsFragment()
                 findNavController().navigate(action)
             }
         }
