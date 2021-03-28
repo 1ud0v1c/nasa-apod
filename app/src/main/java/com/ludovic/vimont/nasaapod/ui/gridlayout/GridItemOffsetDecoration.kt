@@ -1,4 +1,4 @@
-package com.ludovic.vimont.nasaapod.ui
+package com.ludovic.vimont.nasaapod.ui.gridlayout
 
 import android.graphics.Rect
 import android.view.View

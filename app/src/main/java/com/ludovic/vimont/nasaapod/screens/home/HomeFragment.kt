@@ -10,7 +10,6 @@ import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
-import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.ludovic.vimont.nasaapod.R
 import com.ludovic.vimont.nasaapod.api.NasaAPI
 import com.ludovic.vimont.nasaapod.databinding.FragmentHomeBinding
@@ -22,8 +21,9 @@ import com.ludovic.vimont.nasaapod.helper.viewmodel.DataStatus
 import com.ludovic.vimont.nasaapod.helper.viewmodel.StateData
 import com.ludovic.vimont.nasaapod.model.Photo
 import com.ludovic.vimont.nasaapod.preferences.UserPreferences
-import com.ludovic.vimont.nasaapod.ui.GridItemOffsetDecoration
+import com.ludovic.vimont.nasaapod.ui.gridlayout.GridItemOffsetDecoration
 import com.ludovic.vimont.nasaapod.ui.dialog.NumberPickerDialog
+import com.ludovic.vimont.nasaapod.ui.gridlayout.GridSpanSizeLookup
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -84,15 +84,7 @@ class HomeFragment: Fragment() {
             recyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         } else {
             val gridLayoutManager = GridLayoutManager(context, UserPreferences.GRID_SPAN_COUNT)
-            gridLayoutManager.spanSizeLookup = object : SpanSizeLookup() {
-                override fun getSpanSize(position: Int): Int {
-                    return if (position == photoAdapter.itemCount) {
-                        UserPreferences.GRID_SPAN_COUNT
-                    } else {
-                        1
-                    }
-                }
-            }
+            gridLayoutManager.spanSizeLookup = GridSpanSizeLookup(photoAdapter, UserPreferences.GRID_SPAN_COUNT)
             recyclerView.layoutManager = gridLayoutManager
             val gridSpaceDimension: Int = resources.getDimension(R.dimen.item_photo_padding_size).toInt()
             recyclerView.addItemDecoration(
