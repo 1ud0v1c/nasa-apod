@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/activity_vertical_margin"
     android:orientation="horizontal"
-    android:paddingHorizontal="@dimen/activity_horizontal_margin">
+    android:paddingHorizontal="@dimen/activity_horizontal_little_margin">
 
     <View
         android:layout_width="0dp"
