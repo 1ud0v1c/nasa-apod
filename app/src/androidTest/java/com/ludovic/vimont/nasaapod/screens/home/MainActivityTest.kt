@@ -9,6 +9,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
+import com.ludovic.vimont.nasaapod.AppConstants
 import com.ludovic.vimont.nasaapod.R
 import com.ludovic.vimont.nasaapod.RecyclerViewItemCountAssertion
 import com.ludovic.vimont.nasaapod.ViewMatcher
@@ -30,7 +31,7 @@ class MainActivityTest {
     fun homeActivityTestInsideDetailActivity() {
         Thread.sleep(3_000)
 
-        onView(withId(R.id.recycler_view_photos)).check(RecyclerViewItemCountAssertion(30))
+        onView(withId(R.id.recycler_view_photos)).check(RecyclerViewItemCountAssertion(AppConstants.TOTAL_ITEMS_EXPECTED))
 
         val recyclerView = onView(
             allOf(
@@ -77,7 +78,7 @@ class MainActivityTest {
         onView(withId(R.id.recycler_view_photos)).check(matches(not(isDisplayed())))
 
         Thread.sleep(5_000)
-        onView(withId(R.id.recycler_view_photos)).check(RecyclerViewItemCountAssertion(30))
+        onView(withId(R.id.recycler_view_photos)).check(RecyclerViewItemCountAssertion(AppConstants.TOTAL_ITEMS_EXPECTED))
     }
 
 

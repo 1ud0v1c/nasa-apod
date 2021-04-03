@@ -9,12 +9,11 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
+import com.ludovic.vimont.nasaapod.AppConstants
 import com.ludovic.vimont.nasaapod.R
 import com.ludovic.vimont.nasaapod.RecyclerViewItemCountAssertion
-import com.ludovic.vimont.nasaapod.ViewMatcher
 import com.ludovic.vimont.nasaapod.screens.MainActivity
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions
-import org.hamcrest.Matchers.*
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -22,6 +21,7 @@ import org.junit.runner.RunWith
 @LargeTest
 @RunWith(AndroidJUnit4::class)
 class DetailActivityTest {
+
     @Rule
     @JvmField
     var activityRule: ActivityTestRule<MainActivity> = ActivityTestRule(MainActivity::class.java)
@@ -32,17 +32,8 @@ class DetailActivityTest {
 
         Thread.sleep(3_000)
 
-        onView(withId(R.id.recycler_view_photos)).check(RecyclerViewItemCountAssertion(30))
-
-        val recyclerView = onView(
-            allOf(
-                withId(R.id.recycler_view_photos),
-                ViewMatcher.childAtPosition(
-                    withClassName(`is`("androidx.constraintlayout.widget.ConstraintLayout")),
-                    0
-                )
-            )
-        )
+        val recyclerView = onView(withId(R.id.recycler_view_photos))
+        recyclerView.check(RecyclerViewItemCountAssertion(AppConstants.TOTAL_ITEMS_EXPECTED))
         recyclerView.perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 0,
