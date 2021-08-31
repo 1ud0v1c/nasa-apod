@@ -14,16 +14,15 @@ import com.ludovic.vimont.nasaapod.screens.home.HomeRepository
 class DailyRequestWorker(context: Context,
                          workerParameters: WorkerParameters,
                          private val homeRepository: HomeRepository,
+                         private val notificationBuilder: PhotoNotificationBuilder,
                          private val bitmapLoader: BitmapLoader): CoroutineWorker(context, workerParameters) {
-    private val notificationBuilder = PhotoNotificationBuilder()
-
     override suspend fun doWork(): Result {
         val stateDataPhotos: StateData<List<Photo>> = homeRepository.retrievedNasaPhotos(true)
         if (stateDataPhotos.status == DataStatus.SUCCESS) {
             stateDataPhotos.data?.let { photos: List<Photo> ->
                 val newPhoto: Photo = photos[0]
                 val bitmap: Bitmap = bitmapLoader.loadBitmap(newPhoto.getImageURL())
-                notificationBuilder.showNotification(applicationContext, newPhoto, bitmap)
+                notificationBuilder.showNotification(newPhoto, bitmap)
             }
             return Result.success()
         }

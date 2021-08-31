@@ -4,11 +4,12 @@ import android.content.Context
 import androidx.work.ListenableWorker
 import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
+import com.ludovic.vimont.nasaapod.background.PhotoNotificationBuilder
 import com.ludovic.vimont.nasaapod.background.image.BitmapLoader
-import com.ludovic.vimont.nasaapod.background.image.GlideBitmapLoader
 import com.ludovic.vimont.nasaapod.screens.home.HomeRepository
 
 class DailyRequestWorkerFactory(private val homeRepository: HomeRepository,
+                                private val notificationBuilder: PhotoNotificationBuilder,
                                 private val bitmapLoader: BitmapLoader): WorkerFactory() {
     /**
      * Return null, so that the base class can delegate to the default WorkerFactory.
@@ -19,7 +20,7 @@ class DailyRequestWorkerFactory(private val homeRepository: HomeRepository,
                               workerParameters: WorkerParameters): ListenableWorker? {
         return when(workerClassName) {
             DailyRequestWorker::class.java.name -> {
-                DailyRequestWorker(appContext, workerParameters, homeRepository, bitmapLoader)
+                DailyRequestWorker(appContext, workerParameters, homeRepository, notificationBuilder, bitmapLoader)
             }
             else -> {
                 null

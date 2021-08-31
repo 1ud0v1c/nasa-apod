@@ -20,24 +20,24 @@ import com.ludovic.vimont.nasaapod.screens.detail.DetailFragmentArgs
  * MediaSession.
  * @see: https://stackoverflow.com/questions/21872022/notification-for-android-music-player
  */
-class PhotoNotificationBuilder {
+class PhotoNotificationBuilder(private val notificationManager: NotificationManager,
+                               private val notificationCompatBuilder: NotificationCompat.Builder,
+                               private val navDeepLinkBuilder: NavDeepLinkBuilder) {
     companion object {
         const val NOTIFICATION_ID = 15_951
+        const val CHANNEL_ID = "${BuildConfig.APPLICATION_ID}.NasaApod"
 
-        private const val CHANNEL_ID = "${BuildConfig.APPLICATION_ID}.NasaApod"
         private const val CHANNEL_NAME = "Astronomy Picture of the Day"
         private const val CHANNEL_DESCRIPTION = "Daily display the astronomical photo of the day from the NASA API."
     }
 
-    fun showNotification(context: Context, photo: Photo, largeIcon: Bitmap) {
-        val notificationManager: NotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    fun showNotification(photo: Photo, largeIcon: Bitmap) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationChannel(notificationManager)
         }
 
         val notificationCompat: NotificationCompat.Builder =
-            NotificationCompat.Builder(context, CHANNEL_ID)
-                .setContentTitle(photo.title)
+            notificationCompatBuilder.setContentTitle(photo.title)
                 .setContentText(photo.explanation)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setLargeIcon(largeIcon)
@@ -45,7 +45,7 @@ class PhotoNotificationBuilder {
                     .bigPicture(largeIcon)
                     .bigLargeIcon(null))
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setContentIntent(getContentIntent(context, photo))
+                .setContentIntent(getContentIntent(photo))
                 .setAutoCancel(true)
 
         val notification: Notification = notificationCompat.build()
@@ -64,9 +64,8 @@ class PhotoNotificationBuilder {
         notificationManager.createNotificationChannel(channel)
     }
 
-    private fun getContentIntent(context: Context, photo: Photo): PendingIntent {
-        return NavDeepLinkBuilder(context)
-            .setGraph(R.navigation.navigation_graph)
+    private fun getContentIntent(photo: Photo): PendingIntent {
+        return navDeepLinkBuilder.setGraph(R.navigation.navigation_graph)
             .setDestination(R.id.detailFragment)
             .setArguments(DetailFragmentArgs(photo.date).toBundle())
             .createPendingIntent()

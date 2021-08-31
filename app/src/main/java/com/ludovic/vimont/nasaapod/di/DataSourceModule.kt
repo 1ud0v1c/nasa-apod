@@ -1,10 +1,15 @@
 package com.ludovic.vimont.nasaapod.di
 
+import android.app.NotificationManager
+import android.content.Context
+import androidx.core.app.NotificationCompat
+import androidx.navigation.NavDeepLinkBuilder
 import androidx.room.Room
 import com.bumptech.glide.Glide
 import com.ludovic.vimont.nasaapod.api.NasaAPI
 import com.ludovic.vimont.nasaapod.api.RetrofitBuilder
 import com.ludovic.vimont.nasaapod.api.VimeoAPI
+import com.ludovic.vimont.nasaapod.background.PhotoNotificationBuilder
 import com.ludovic.vimont.nasaapod.background.image.GlideBitmapLoader
 import com.ludovic.vimont.nasaapod.background.worker.DailyRequestWorkerFactory
 import com.ludovic.vimont.nasaapod.db.PhotoDatabase
@@ -23,9 +28,7 @@ object DataSourceModule {
         buildGlideEntities()
         buildNetworkEntities()
         buildRepositoriesEntities()
-        factory {
-            DailyRequestWorkerFactory(get(), get<GlideBitmapLoader>())
-        }
+        buildWorkers()
     }
 
     private fun Module.buildAndroidEntities() {
@@ -34,6 +37,15 @@ object DataSourceModule {
         }
         single {
             DataHolder.init(androidContext())
+        }
+        single {
+            androidContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        }
+        single {
+            NotificationCompat.Builder(androidContext(), PhotoNotificationBuilder.CHANNEL_ID)
+        }
+        single {
+            NavDeepLinkBuilder(androidContext())
         }
     }
 
@@ -79,6 +91,15 @@ object DataSourceModule {
         }
         factory {
             SettingsRepository(get(), get())
+        }
+    }
+
+    private fun Module.buildWorkers() {
+        single {
+            PhotoNotificationBuilder(get(), get(), get())
+        }
+        factory {
+            DailyRequestWorkerFactory(get(), get(), get<GlideBitmapLoader>())
         }
     }
 }
