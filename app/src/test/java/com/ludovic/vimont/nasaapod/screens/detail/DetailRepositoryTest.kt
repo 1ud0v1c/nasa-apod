@@ -10,14 +10,15 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.test.AutoCloseKoinTest
+import org.koin.core.context.GlobalContext
+import org.koin.test.KoinTest
 import org.koin.test.inject
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @Config(sdk = [Build.VERSION_CODES.P], manifest = Config.NONE)
 @RunWith(RobolectricTestRunner::class)
-class DetailRepositoryTest : AutoCloseKoinTest() {
+class DetailRepositoryTest : KoinTest {
     private val googleURL = "https://google.fr/"
     private val appleURL = "https://apple.com"
     private val imageMediaType = "image"
@@ -33,6 +34,11 @@ class DetailRepositoryTest : AutoCloseKoinTest() {
     fun setUp() {
         photos.add(MockModel.buildPhoto(googleURL, imageMediaType, firstDate))
         photos.add(MockModel.buildPhoto(appleURL, videoMediaType, secondDate))
+    }
+
+    @After
+    fun tearDown() {
+        GlobalContext.stopKoin()
     }
 
     @Test

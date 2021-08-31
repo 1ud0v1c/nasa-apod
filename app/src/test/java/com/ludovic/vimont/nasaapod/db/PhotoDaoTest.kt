@@ -4,21 +4,24 @@ import android.os.Build
 import com.ludovic.vimont.nasaapod.MockModel
 import com.ludovic.vimont.nasaapod.model.Photo
 import kotlinx.coroutines.runBlocking
+import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.test.AutoCloseKoinTest
+import org.koin.core.context.GlobalContext
+import org.koin.test.KoinTest
 import org.koin.test.inject
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @Config(sdk = [Build.VERSION_CODES.P], manifest = Config.NONE)
 @RunWith(RobolectricTestRunner::class)
-class PhotoDaoTest : AutoCloseKoinTest() {
+class PhotoDaoTest : KoinTest {
     companion object {
         const val GOOGLE_URL = "https://google.fr/test.png"
     }
+
     private val photos = ArrayList<Photo>()
     private val photoDao: PhotoDao by inject()
 
@@ -28,6 +31,11 @@ class PhotoDaoTest : AutoCloseKoinTest() {
         photos.add(MockModel.buildPhoto(GOOGLE_URL, Photo.IMAGE_MEDIA_TYPE, "2020-10-09"))
         photos.add(MockModel.buildPhoto(GOOGLE_URL, Photo.VIDEO_MEDIA_TYPE, "2020-10-08"))
         photos.add(MockModel.buildPhoto(GOOGLE_URL, Photo.IMAGE_MEDIA_TYPE, "2020-10-07"))
+    }
+
+    @After
+    fun tearDown() {
+        GlobalContext.stopKoin()
     }
 
     @Test

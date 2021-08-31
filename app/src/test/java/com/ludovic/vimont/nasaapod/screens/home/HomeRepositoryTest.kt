@@ -9,11 +9,12 @@ import com.ludovic.vimont.nasaapod.db.PhotoDao
 import com.ludovic.vimont.nasaapod.model.Photo
 import com.ludovic.vimont.nasaapod.model.VimeoData
 import kotlinx.coroutines.runBlocking
+import org.junit.After
 import org.junit.Assert
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.test.AutoCloseKoinTest
+import org.koin.core.context.GlobalContext
+import org.koin.test.KoinTest
 import org.koin.test.inject
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
@@ -21,10 +22,15 @@ import retrofit2.Response
 
 @Config(sdk = [Build.VERSION_CODES.P], manifest = Config.NONE)
 @RunWith(RobolectricTestRunner::class)
-class HomeRepositoryTest : AutoCloseKoinTest() {
+class HomeRepositoryTest : KoinTest {
     private val vimeoAPI: VimeoAPI by inject()
     private val photoDao: PhotoDao by inject()
     private val homeRepository: HomeRepository by inject()
+
+    @After
+    fun tearDown() {
+        GlobalContext.stopKoin()
+    }
 
     @Test
     fun testRetrievedNasaPhotos(): Unit = runBlocking {

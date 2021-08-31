@@ -5,18 +5,25 @@ import android.os.Build
 import android.os.Looper.getMainLooper
 import androidx.test.core.app.ApplicationProvider
 import com.ludovic.vimont.nasaapod.NetworkMock
+import org.junit.After
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.test.AutoCloseKoinTest
+import org.koin.core.context.GlobalContext
+import org.koin.test.KoinTest
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 
 @Config(sdk = [Build.VERSION_CODES.P], manifest = Config.NONE)
 @RunWith(RobolectricTestRunner::class)
-class NetworkHelperTest: AutoCloseKoinTest() {
+class NetworkHelperTest : KoinTest {
     private val context: Context = ApplicationProvider.getApplicationContext()
+
+    @After
+    fun tearDown() {
+        GlobalContext.stopKoin()
+    }
 
     @Test
     fun testIsOnline() {

@@ -13,18 +13,20 @@ import com.ludovic.vimont.nasaapod.db.PhotoDao
 import com.ludovic.vimont.nasaapod.model.Photo
 import com.ludovic.vimont.nasaapod.screens.home.HomeRepository
 import kotlinx.coroutines.runBlocking
+import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.test.AutoCloseKoinTest
+import org.koin.core.context.GlobalContext.stopKoin
+import org.koin.test.KoinTest
 import org.koin.test.inject
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @Config(sdk = [Build.VERSION_CODES.P], manifest = Config.NONE)
 @RunWith(RobolectricTestRunner::class)
-class DailyRequestWorkerTest : AutoCloseKoinTest() {
+class DailyRequestWorkerTest : KoinTest {
     private val context: Context = ApplicationProvider.getApplicationContext()
     private val photoDao: PhotoDao by inject()
     private val homeRepository: HomeRepository by inject()
@@ -41,7 +43,12 @@ class DailyRequestWorkerTest : AutoCloseKoinTest() {
 
         dailyRequestWorker = TestListenableWorkerBuilder<DailyRequestWorker>(context)
             .setWorkerFactory(dailyRequestWorkerFactory)
-            .build() as DailyRequestWorker
+            .build()
+    }
+
+    @After
+    fun tearDown() {
+        stopKoin()
     }
 
     @Test
