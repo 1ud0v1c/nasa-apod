@@ -74,4 +74,5 @@
     <string name="about_activity_github_description">Nasa Apod is open-source, check it out on Github</string>
     <string name="about_activity_rate_title">Rate App</string>
     <string name="about_activity_rate_description">If you like Nasa Apod, rate it on the Google Play Store</string>
+    <string name="about_activity_licenses_title">Licenses</string>
 </resources>

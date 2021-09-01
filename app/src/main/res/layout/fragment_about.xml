@@ -126,6 +126,22 @@
 
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:background="@color/colorGray" />
+
+        <TextView
+            android:id="@+id/text_view_licenses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/activity_horizontal_margin"
+            android:paddingVertical="@dimen/activity_vertical_little_margin"
+            android:text="@string/about_activity_licenses_title"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/about_activity_title_size" />
+
     </LinearLayout>
 
 </ScrollView>

@@ -30,19 +30,28 @@ class AboutFragment: Fragment() {
 
         with(binding) {
             textViewAppVersion.text = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
+
             linearLayoutTwitter.setOnClickListener {
                 context?.let {
                     IntentHelper.openLink(it, it.getString(R.string.twitter_url))
                 }
             }
+
             linearLayoutGithub.setOnClickListener {
                 context?.let {
                     IntentHelper.openLink(it, it.getString(R.string.github_url))
                 }
             }
+
             linearLayoutRating.setOnClickListener {
                 context?.let {
                     IntentHelper.openLink(it, it.getString(R.string.play_store_url))
+                }
+            }
+
+            textViewLicenses.setOnClickListener {
+                context?.let {
+                    IntentHelper.openLicenses(it, getString(R.string.about_activity_licenses_title))
                 }
             }
         }

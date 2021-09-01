@@ -8,6 +8,7 @@ plugins {
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'com.google.android.gms.oss-licenses-plugin'
 }
 
 android {
@@ -155,6 +156,9 @@ dependencies {
 
     // RoundedImageView, to help fix an issue with Glide @see: https://github.com/bumptech/glide#compatibility
     implementation "com.makeramen:roundedimageview:2.3.0"
+
+    // Open Source Notices
+    implementation "com.google.android.gms:play-services-oss-licenses:17.0.0"
 
     // Unit tests
     testImplementation "junit:junit:4.13.2"
