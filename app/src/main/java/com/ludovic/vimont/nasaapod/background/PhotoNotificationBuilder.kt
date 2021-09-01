@@ -5,7 +5,6 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.content.Context
 import android.graphics.Bitmap
 import android.os.Build
 import androidx.core.app.NotificationCompat
@@ -15,11 +14,6 @@ import com.ludovic.vimont.nasaapod.R
 import com.ludovic.vimont.nasaapod.model.Photo
 import com.ludovic.vimont.nasaapod.screens.detail.DetailFragmentArgs
 
-/**
- * Used to display a media friendly notification to allow the user to interact with the current
- * MediaSession.
- * @see: https://stackoverflow.com/questions/21872022/notification-for-android-music-player
- */
 class PhotoNotificationBuilder(private val notificationManager: NotificationManager,
                                private val notificationCompatBuilder: NotificationCompat.Builder,
                                private val navDeepLinkBuilder: NavDeepLinkBuilder) {
