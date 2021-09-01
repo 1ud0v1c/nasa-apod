@@ -14,6 +14,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.core.context.GlobalContext
 import org.koin.test.KoinTest
+import org.koin.test.inject
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
@@ -22,7 +23,7 @@ import org.robolectric.annotation.Config
 class PhotoNotificationBuilderTest : KoinTest {
     private val context: Context = ApplicationProvider.getApplicationContext()
     private val photo: Photo = MockModel.buildPhoto("https://google.fr/test.png")
-    private val photoNotificationBuilder = PhotoNotificationBuilder()
+    private val photoNotificationBuilder: PhotoNotificationBuilder by inject()
 
     @After
     fun tearDown() {
@@ -31,7 +32,7 @@ class PhotoNotificationBuilderTest : KoinTest {
 
     @Test
     fun testShowNotification() {
-        photoNotificationBuilder.showNotification(context, photo, BitmapHelper.emptyBitmap())
+        photoNotificationBuilder.showNotification(photo, BitmapHelper.emptyBitmap())
         val notificationManager: NotificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val statusBarNotification: StatusBarNotification =

@@ -8,6 +8,7 @@ import android.service.notification.StatusBarNotification
 import androidx.test.core.app.ApplicationProvider
 import androidx.work.testing.TestListenableWorkerBuilder
 import com.ludovic.vimont.nasaapod.BitmapHelper
+import com.ludovic.vimont.nasaapod.background.PhotoNotificationBuilder
 import com.ludovic.vimont.nasaapod.background.image.BitmapLoader
 import com.ludovic.vimont.nasaapod.db.PhotoDao
 import com.ludovic.vimont.nasaapod.model.Photo
@@ -30,12 +31,13 @@ class DailyRequestWorkerTest : KoinTest {
     private val context: Context = ApplicationProvider.getApplicationContext()
     private val photoDao: PhotoDao by inject()
     private val homeRepository: HomeRepository by inject()
+    private val photoNotificationBuilder: PhotoNotificationBuilder by inject()
     private lateinit var dailyRequestWorker: DailyRequestWorker
 
     @Before
     fun setUp() {
         val dailyRequestWorkerFactory =
-            DailyRequestWorkerFactory(homeRepository, object : BitmapLoader {
+            DailyRequestWorkerFactory(homeRepository, photoNotificationBuilder, object : BitmapLoader {
                 override fun loadBitmap(url: String): Bitmap {
                     return BitmapHelper.emptyBitmap()
                 }
