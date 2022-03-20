@@ -20,7 +20,9 @@ import com.ludovic.vimont.nasaapod.ui.DrawableRequestListener
 
 class ZoomFragment: Fragment() {
     private val zoomFragmentArgs: ZoomFragmentArgs by navArgs()
-    private lateinit var binding: FragmentZoomBinding
+
+    private var _binding: FragmentZoomBinding? = null
+    private val binding get() = requireNotNull(_binding)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +36,7 @@ class ZoomFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentZoomBinding.inflate(inflater, container, false)
+        _binding = FragmentZoomBinding.inflate(inflater, container, false)
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
         return binding.root
     }
@@ -51,14 +53,12 @@ class ZoomFragment: Fragment() {
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    private fun loadVideo(mediaURL: String) {
-        with(binding) {
-            photoViewHd.visibility = View.GONE
-            webViewVideo.visibility = View.VISIBLE
-            webViewVideo.settings.javaScriptEnabled = true
-            webViewVideo.loadUrl(mediaURL)
-            webViewVideo.webChromeClient = WebChromeClient()
-        }
+    private fun loadVideo(mediaURL: String) = with(binding) {
+        photoViewHd.visibility = View.GONE
+        webViewVideo.visibility = View.VISIBLE
+        webViewVideo.settings.javaScriptEnabled = true
+        webViewVideo.loadUrl(mediaURL)
+        webViewVideo.webChromeClient = WebChromeClient()
     }
 
     private fun loadImage(mediaURL: String) {
@@ -93,5 +93,6 @@ class ZoomFragment: Fragment() {
             WindowHelper.resetActivityUIVisibility(it)
         }
         super.onDestroyView()
+        _binding = null
     }
 }

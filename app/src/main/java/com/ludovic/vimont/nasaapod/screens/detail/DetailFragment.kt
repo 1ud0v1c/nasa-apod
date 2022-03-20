@@ -37,9 +37,12 @@ class DetailFragment: Fragment() {
     }
     private val detailFragmentArgs: DetailFragmentArgs by navArgs()
     private val viewModel: DetailViewModel by viewModel()
+
     private lateinit var snackBar: Snackbar
     private lateinit var progressBarDialog: ProgressBarDialog
-    private lateinit var binding: FragmentDetailBinding
+
+    private var _binding: FragmentDetailBinding? = null
+    private val binding get() = requireNotNull(_binding)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +56,7 @@ class DetailFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentDetailBinding.inflate(inflater, container, false)
+        _binding = FragmentDetailBinding.inflate(inflater, container, false)
         activity?.let {
             it.title = getString(R.string.home_activity_title, NasaAPI.NUMBER_OF_DAY_TO_FETCH)
         }
@@ -220,5 +223,10 @@ class DetailFragment: Fragment() {
                 viewModel.saveImage(it)
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

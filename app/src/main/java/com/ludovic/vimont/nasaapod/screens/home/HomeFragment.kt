@@ -1,7 +1,12 @@
 package com.ludovic.vimont.nasaapod.screens.home
 
 import android.os.Bundle
-import android.view.*
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
@@ -9,7 +14,10 @@ import androidx.navigation.NavDirections
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.*
+import androidx.recyclerview.widget.ConcatAdapter
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.ludovic.vimont.nasaapod.R
 import com.ludovic.vimont.nasaapod.api.NasaAPI
 import com.ludovic.vimont.nasaapod.databinding.FragmentHomeBinding
@@ -26,12 +34,14 @@ import com.ludovic.vimont.nasaapod.ui.dialog.NumberPickerDialog
 import com.ludovic.vimont.nasaapod.ui.gridlayout.GridSpanSizeLookup
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
 class HomeFragment: Fragment() {
     private val photoAdapter = HomePhotoAdapter(ArrayList())
     private val viewModel: HomeViewModel by viewModel()
     private var numberOfDaysToFetch: Int = NasaAPI.NUMBER_OF_DAY_TO_FETCH
-    private lateinit var binding: FragmentHomeBinding
+
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = requireNotNull(_binding)
+
     private lateinit var connectionLiveData: ConnectionLiveData
 
     override fun onCreateView(
@@ -39,7 +49,7 @@ class HomeFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         activity?.let {
             it.title = getString(R.string.home_activity_title, NasaAPI.NUMBER_OF_DAY_TO_FETCH)
         }
@@ -126,12 +136,12 @@ class HomeFragment: Fragment() {
     }
 
     private fun setLayoutObserver() {
-        viewModel.layout.observe(viewLifecycleOwner, { newLayout: String ->
+        viewModel.layout.observe(viewLifecycleOwner) { newLayout: String ->
             if (photoAdapter.layout != newLayout) {
                 photoAdapter.layout = newLayout
                 configureRecyclerView()
             }
-        })
+        }
     }
 
     private fun setPhotosObserver() {
@@ -247,5 +257,10 @@ class HomeFragment: Fragment() {
             }
         }
         return true
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

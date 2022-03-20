@@ -12,12 +12,13 @@ import com.ludovic.vimont.nasaapod.databinding.FragmentAboutBinding
 import com.ludovic.vimont.nasaapod.helper.IntentHelper
 
 class AboutFragment: Fragment() {
-    private lateinit var binding: FragmentAboutBinding
+    private var _binding: FragmentAboutBinding? = null
+    private val binding get() = requireNotNull(_binding)
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        binding = FragmentAboutBinding.inflate(inflater, container, false)
+        _binding = FragmentAboutBinding.inflate(inflater, container, false)
         activity?.let {
             it.title = getString(R.string.about_activity_title)
         }
@@ -25,35 +26,38 @@ class AboutFragment: Fragment() {
     }
 
     @SuppressLint("SetTextI18n")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) = with(binding) {
         super.onViewCreated(view, savedInstanceState)
 
-        with(binding) {
-            textViewAppVersion.text = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
+        textViewAppVersion.text = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
 
-            linearLayoutTwitter.setOnClickListener {
-                context?.let {
-                    IntentHelper.openLink(it, it.getString(R.string.twitter_url))
-                }
-            }
-
-            linearLayoutGithub.setOnClickListener {
-                context?.let {
-                    IntentHelper.openLink(it, it.getString(R.string.github_url))
-                }
-            }
-
-            linearLayoutRating.setOnClickListener {
-                context?.let {
-                    IntentHelper.openLink(it, it.getString(R.string.play_store_url))
-                }
-            }
-
-            textViewLicenses.setOnClickListener {
-                context?.let {
-                    IntentHelper.openLicenses(it, getString(R.string.about_activity_licenses_title))
-                }
+        linearLayoutTwitter.setOnClickListener {
+            context?.let {
+                IntentHelper.openLink(it, it.getString(R.string.twitter_url))
             }
         }
+
+        linearLayoutGithub.setOnClickListener {
+            context?.let {
+                IntentHelper.openLink(it, it.getString(R.string.github_url))
+            }
+        }
+
+        linearLayoutRating.setOnClickListener {
+            context?.let {
+                IntentHelper.openLink(it, it.getString(R.string.play_store_url))
+            }
+        }
+
+        textViewLicenses.setOnClickListener {
+            context?.let {
+                IntentHelper.openLicenses(it, getString(R.string.about_activity_licenses_title))
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
