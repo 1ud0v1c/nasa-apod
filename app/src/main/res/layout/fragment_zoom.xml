@@ -5,7 +5,7 @@
     android:id="@+id/constraint_layout_zoom_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBlack"
+    android:background="@color/zoomFragmentBackground"
     tools:context=".screens.zoom.ZoomFragment">
 
     <com.github.chrisbanes.photoview.PhotoView

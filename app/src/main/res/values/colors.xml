@@ -10,6 +10,7 @@
     <color name="colorBlack">#FF000000</color>
     <color name="colorGray">#FF8C8C8C</color>
 
+    <color name="zoomFragmentBackground">#FF262625</color>
     <color name="textStateTitle">#DD4B4944</color>
     <color name="itemPhotoTitle">#CC000000</color>
     <color name="itemPhotoDate">#FFB1B1B2</color>
