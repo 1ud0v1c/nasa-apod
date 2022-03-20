@@ -44,7 +44,7 @@ class DetailFragment: Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val transitionResource: Int = android.R.transition.move
-        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(transitionResource)
+        sharedElementEnterTransition = TransitionInflater.from(requireContext()).inflateTransition(transitionResource)
         setHasOptionsMenu(false)
     }
 

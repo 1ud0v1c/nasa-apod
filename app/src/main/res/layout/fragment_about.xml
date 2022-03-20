@@ -129,7 +129,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginVertical="@dimen/activity_vertical_margin"
             android:background="@color/colorGray" />
 
         <TextView
