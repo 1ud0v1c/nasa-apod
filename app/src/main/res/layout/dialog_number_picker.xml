@@ -29,33 +29,28 @@
         app:layout_constraintTop_toBottomOf="@id/text_view_dialog_title"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
+    <Button
+        android:id="@+id/button_cancel"
         style="?android:attr/buttonBarButtonStyle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/number_picker">
+        android:layout_weight="1"
+        android:minWidth="@dimen/dialog_number_picker_button_min_width"
+        android:text="@string/action_cancel"
+        app:layout_constraintEnd_toStartOf="@+id/button_validate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/number_picker" />
 
-        <Button
-            android:id="@+id/button_cancel"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:minWidth="@dimen/dialog_number_picker_button_min_width"
-            android:text="@string/action_cancel" />
-
-        <Button
-            android:id="@+id/button_validate"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:minWidth="@dimen/dialog_number_picker_button_min_width"
-            android:text="@string/action_validate" />
-
-    </LinearLayout>
+    <Button
+        android:id="@+id/button_validate"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:minWidth="@dimen/dialog_number_picker_button_min_width"
+        android:text="@string/action_validate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/button_cancel"
+        app:layout_constraintTop_toBottomOf="@id/number_picker" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

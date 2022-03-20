@@ -9,8 +9,8 @@
     <View
         android:layout_width="0dp"
         android:layout_height="2dp"
-        android:layout_weight="0.15"
         android:layout_gravity="center"
+        android:layout_weight="0.15"
         android:background="@color/colorGray" />
 
     <TextView
@@ -23,8 +23,8 @@
     <View
         android:layout_width="0dp"
         android:layout_height="2dp"
-        android:layout_weight="0.15"
         android:layout_gravity="center"
+        android:layout_weight="0.15"
         android:background="@color/colorGray" />
 
 </LinearLayout>

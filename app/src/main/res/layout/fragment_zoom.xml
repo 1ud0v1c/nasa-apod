@@ -12,7 +12,8 @@
         android:id="@+id/photo_view_hd"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        tools:src="@tools:sample/avatars" />
 
     <WebView
         android:id="@+id/web_view_video"
