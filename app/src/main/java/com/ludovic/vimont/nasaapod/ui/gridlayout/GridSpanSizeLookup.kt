@@ -7,10 +7,6 @@ import com.ludovic.vimont.nasaapod.screens.home.HomePhotoAdapter
 class GridSpanSizeLookup(private val adapter: RecyclerView.Adapter<HomePhotoAdapter.PhotoViewHolder>,
                          private val gridSpanCount: Int): GridLayoutManager.SpanSizeLookup() {
     override fun getSpanSize(position: Int): Int {
-        return if (position == adapter.itemCount) {
-            gridSpanCount
-        } else {
-            1
-        }
+        return if (position == adapter.itemCount) gridSpanCount else 1
     }
 }

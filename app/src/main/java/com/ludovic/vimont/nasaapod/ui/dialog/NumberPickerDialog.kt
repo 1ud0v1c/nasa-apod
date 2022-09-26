@@ -27,22 +27,20 @@ class NumberPickerDialog(activity: Activity,
         setButtonActions()
     }
 
-    private fun updateNumberPicker(numberOfDaysToFetch: Int) {
-        with(binding) {
-            val displayedValues: Array<String> = getDisplayedValues()
-            numberPicker.minValue = 0
-            numberPicker.maxValue = displayedValues.size - 1
-            numberPicker.displayedValues = displayedValues
-            numberPicker.value = displayedValues.indexOf("$numberOfDaysToFetch")
-            numberPicker.wrapSelectorWheel = false
-        }
+    private fun updateNumberPicker(numberOfDaysToFetch: Int) = with(binding){
+        val displayedValues: Array<String> = getDisplayedValues()
+        numberPicker.minValue = 0
+        numberPicker.maxValue = displayedValues.size - 1
+        numberPicker.displayedValues = displayedValues
+        numberPicker.value = displayedValues.indexOf("$numberOfDaysToFetch")
+        numberPicker.wrapSelectorWheel = false
     }
 
-    private fun setButtonActions() {
-        binding.buttonCancel.setOnClickListener {
+    private fun setButtonActions() = with(binding) {
+        buttonCancel.setOnClickListener {
             dismiss()
         }
-        binding.buttonValidate.setOnClickListener {
+        buttonValidate.setOnClickListener {
             val rangeOfDays: Int = (binding.numberPicker.value + 1) * NUMBER_PICKER_STEP
             onValidateClick?.invoke(rangeOfDays)
             dismiss()

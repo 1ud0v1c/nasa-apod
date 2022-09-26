@@ -4,7 +4,10 @@ import com.ludovic.vimont.nasaapod.api.NasaAPI
 import com.ludovic.vimont.nasaapod.model.Photo
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.GregorianCalendar
+import java.util.Locale
 
 object TimeHelper {
     var calendarInterface: CalendarInterface = object: CalendarInterface {

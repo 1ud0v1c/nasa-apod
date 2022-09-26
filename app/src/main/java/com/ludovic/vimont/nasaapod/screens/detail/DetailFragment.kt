@@ -15,16 +15,14 @@ import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.material.snackbar.Snackbar
 import com.ludovic.vimont.nasaapod.R
 import com.ludovic.vimont.nasaapod.api.NasaAPI
 import com.ludovic.vimont.nasaapod.databinding.FragmentDetailBinding
 import com.ludovic.vimont.nasaapod.ext.hasWritePermission
+import com.ludovic.vimont.nasaapod.ext.loadImage
 import com.ludovic.vimont.nasaapod.ext.requestPermission
 import com.ludovic.vimont.nasaapod.helper.IntentHelper
-import com.ludovic.vimont.nasaapod.helper.ViewHelper
 import com.ludovic.vimont.nasaapod.helper.viewmodel.DataStatus
 import com.ludovic.vimont.nasaapod.helper.viewmodel.StateData
 import com.ludovic.vimont.nasaapod.model.Photo
@@ -101,11 +99,7 @@ class DetailFragment: Fragment() {
     private fun updateUI(photo: Photo) {
         activity?.let { activity: FragmentActivity ->
             with(binding) {
-                Glide.with(activity)
-                    .load(photo.getImageURL())
-                    .placeholder(R.drawable.photo_placeholder)
-                    .transition(DrawableTransitionOptions.withCrossFade(ViewHelper.GLIDE_FADE_IN_DURATION))
-                    .into(imageViewPhoto)
+                imageViewPhoto.loadImage(photo.getImageURL())
 
                 if (photo.isMediaVideo()) {
                     val videoDrawable = ContextCompat.getDrawable(activity, R.drawable.ic_video)

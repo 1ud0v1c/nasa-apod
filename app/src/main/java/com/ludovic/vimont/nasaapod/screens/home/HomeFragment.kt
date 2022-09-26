@@ -261,6 +261,7 @@ class HomeFragment: Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        binding.recyclerViewPhotos.adapter = null
         _binding = null
     }
 }

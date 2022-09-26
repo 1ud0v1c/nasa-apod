@@ -16,6 +16,10 @@ class ProgressBarDialog(activity: Activity): Dialog(activity, R.style.NasaApodDi
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         binding = DialogProgressBarBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupActions()
+    }
+
+    private fun setupActions() {
         binding.buttonCancel.setOnClickListener {
             onCancelClick?.invoke()
         }
