@@ -21,7 +21,7 @@ class HomeViewModel(private val homeRepository: HomeRepository): ViewModel() {
             val isDatabaseEmpty: Boolean = homeRepository.isDatabaseEmpty()
 
             if (!isConnected && isDatabaseEmpty) {
-                photosState.postValue(StateData.error(DataStatus.ERROR_NO_INTERNET, ""))
+                photosState.postValue(StateData.error(DataStatus.ERROR_NO_INTERNET))
                 return@launch
             }
 

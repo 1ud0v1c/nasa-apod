@@ -64,12 +64,11 @@ class HomeRepository(private val nasaAPI: NasaAPI,
     }
 
     private fun readHeadersResponse(responsePhoto: Response<List<Photo>>) {
-        val quotaLimit: Int =
-            responsePhoto.headers().get(NasaAPI.HEADER_RATE_LIMIT)?.toIntOrNull()
+        val headers = responsePhoto.headers()
+        val quotaLimit: Int = headers.get(NasaAPI.HEADER_RATE_LIMIT)?.toIntOrNull()
                 ?: NasaAPI.DEFAULT_RATE_LIMIT_PER_HOUR
-        val remainingQuota: Int =
-            responsePhoto.headers().get(NasaAPI.HEADER_REMAINING_RATE_LIMIT)?.toIntOrNull()
-                ?: NasaAPI.DEFAULT_RATE_LIMIT_PER_HOUR - 1
+        val remainingQuota: Int = headers.get(NasaAPI.HEADER_REMAINING_RATE_LIMIT)?.toIntOrNull()
+            ?: (NasaAPI.DEFAULT_RATE_LIMIT_PER_HOUR - 1)
         dataHolder[UserPreferences.KEY_RATE_LIMIT] = quotaLimit
         dataHolder[UserPreferences.KEY_REMAINING_RATE_LIMIT] = remainingQuota
     }
@@ -84,8 +83,9 @@ class HomeRepository(private val nasaAPI: NasaAPI,
             }
             if (photo.isVimeoVideo()) {
                 try {
-                    val vimeoResponse: Response<List<VimeoData>> = vimeoAPI.getVideoInformation(photo.getVimeoID())
-                    vimeoResponse.body()?.let { vimeoData: List<VimeoData> ->
+                    vimeoAPI.getVideoInformation(
+                        photo.getVimeoID()
+                    ).body()?.let { vimeoData: List<VimeoData> ->
                         photo.videoThumbnail = vimeoData[0].thumbnailLarge
                     }
                 } catch (exception: Exception) {

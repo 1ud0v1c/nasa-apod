@@ -16,6 +16,10 @@ data class StateData<T>(val status: DataStatus,
             return StateData(DataStatus.SUCCESS, data, "")
         }
 
+        fun <T> error(dataStatus: DataStatus): StateData<T> {
+            return error(dataStatus, "")
+        }
+
         fun <T> error(errorMessage: String): StateData<T> {
             return error(DataStatus.ERROR_NETWORK, errorMessage)
         }

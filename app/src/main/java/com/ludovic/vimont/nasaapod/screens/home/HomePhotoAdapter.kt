@@ -12,7 +12,9 @@ import com.ludovic.vimont.nasaapod.ext.loadImage
 import com.ludovic.vimont.nasaapod.model.Photo
 import com.ludovic.vimont.nasaapod.preferences.UserPreferences
 
-class HomePhotoAdapter(private val photos: ArrayList<Photo>): RecyclerView.Adapter<HomePhotoAdapter.PhotoViewHolder>() {
+class HomePhotoAdapter(
+    private val photos: MutableList<Photo>
+): RecyclerView.Adapter<HomePhotoAdapter.PhotoViewHolder>() {
     var layout: String = UserPreferences.DEFAULT_LAYOUT
     var onItemClick: ((ImageView, Photo) -> Unit)? = null
 
@@ -34,18 +36,12 @@ class HomePhotoAdapter(private val photos: ArrayList<Photo>): RecyclerView.Adapt
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
         val photo: Photo = photos[position]
         when (getItemViewType(position)) {
-            R.layout.item_list_photo -> {
-                (holder as ListPhotoViewHolder).bind(photo, onItemClick)
-            }
-            R.layout.item_grid_photo -> {
-                (holder as GridPhotoViewHolder).bind(photo, onItemClick)
-            }
+            R.layout.item_list_photo -> (holder as ListPhotoViewHolder).bind(photo, onItemClick)
+            R.layout.item_grid_photo -> (holder as GridPhotoViewHolder).bind(photo, onItemClick)
         }
     }
 
-    override fun getItemCount(): Int {
-        return photos.size
-    }
+    override fun getItemCount(): Int = photos.size
 
     fun setItems(newPhotos: List<Photo>) {
         photos.clear()
