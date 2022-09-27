@@ -192,12 +192,8 @@ class HomeFragment: Fragment() {
 
     private fun showSuccessStatus(stateData: StateData<List<Photo>>) {
         with(binding) {
-            ViewHelper.fadeOutAnimation(linearLayoutStateContainer, {
-                linearLayoutStateContainer.visibility = View.GONE
-            })
-            ViewHelper.fadeInAnimation(recyclerViewPhotos, {
-                recyclerViewPhotos.visibility = View.VISIBLE
-            })
+            ViewHelper.fadeOutAnimation(linearLayoutStateContainer, { it.visibility = View.GONE })
+            ViewHelper.fadeInAnimation(recyclerViewPhotos, { it.visibility = View.VISIBLE })
             stateData.data?.let { photos: List<Photo> ->
                 photoAdapter.setItems(photos)
             }
@@ -206,12 +202,8 @@ class HomeFragment: Fragment() {
 
     private fun showErrorStatus(stateData: StateData<List<Photo>>, hasInternet: Boolean) {
         with(binding) {
-            ViewHelper.fadeOutAnimation(recyclerViewPhotos, {
-                recyclerViewPhotos.visibility = View.GONE
-            })
-            ViewHelper.fadeInAnimation(linearLayoutStateContainer, {
-                linearLayoutStateContainer.visibility = View.VISIBLE
-            })
+            ViewHelper.fadeOutAnimation(recyclerViewPhotos, { it.visibility = View.GONE })
+            ViewHelper.fadeInAnimation(linearLayoutStateContainer, { it.visibility = View.VISIBLE })
             if (hasInternet) {
                 imageViewState.setImageResource(R.drawable.state_request_error)
                 textViewStateTitle.text = getString(R.string.home_activity_error_title)

@@ -14,8 +14,9 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.ludovic.vimont.nasaapod.databinding.FragmentZoomBinding
+import com.ludovic.vimont.nasaapod.ext.resetActivityUIVisibility
+import com.ludovic.vimont.nasaapod.ext.useImmersiveActivity
 import com.ludovic.vimont.nasaapod.helper.ViewHelper
-import com.ludovic.vimont.nasaapod.helper.WindowHelper
 import com.ludovic.vimont.nasaapod.ui.DrawableRequestListener
 
 class ZoomFragment: Fragment() {
@@ -26,9 +27,7 @@ class ZoomFragment: Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.let {
-            WindowHelper.useImmersiveActivity(it)
-        }
+        requireActivity().window.useImmersiveActivity()
     }
 
     override fun onCreateView(
@@ -37,7 +36,7 @@ class ZoomFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentZoomBinding.inflate(inflater, container, false)
-        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
+        requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
         return binding.root
     }
 
@@ -62,36 +61,30 @@ class ZoomFragment: Fragment() {
     }
 
     private fun loadImage(mediaURL: String) {
-        activity?.let {
-            Glide.with(it)
-                .load(mediaURL)
-                .transition(DrawableTransitionOptions.withCrossFade(ViewHelper.GLIDE_FADE_IN_DURATION))
-                .listener(DrawableRequestListener {
-                    hideProgressBar()
-                })
-                .into(binding.photoViewHd)
-        }
+        Glide.with(requireContext())
+            .load(mediaURL)
+            .transition(DrawableTransitionOptions.withCrossFade(ViewHelper.GLIDE_FADE_IN_DURATION))
+            .listener(DrawableRequestListener {
+                hideProgressBar()
+            })
+            .into(binding.photoViewHd)
     }
 
     private fun showProgressBar() {
-        val progressBar: ProgressBar = binding.progressBar
-        progressBar.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.VISIBLE
     }
 
     private fun hideProgressBar() {
         val progressBar: ProgressBar = binding.progressBar
         if (progressBar.isVisible) {
-            ViewHelper.fadeOutAnimation(progressBar, {
-                progressBar.visibility = View.GONE
-            })
+            ViewHelper.fadeOutAnimation(progressBar, { it.visibility = View.GONE })
         }
     }
 
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onDestroyView() {
-        activity?.let {
-            activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-            WindowHelper.resetActivityUIVisibility(it)
-        }
+        requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        requireActivity().window.resetActivityUIVisibility()
         super.onDestroyView()
         _binding = null
     }
