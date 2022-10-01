@@ -15,8 +15,12 @@ class NumberPickerDialog(activity: Activity,
         const val NUMBER_PICKER_STEP = 15
     }
 
+    fun interface OnNumberPickerClickListener {
+        operator fun invoke(rangeOfDays: Int)
+    }
+    var clickListener: OnNumberPickerClickListener? = null
+
     private lateinit var binding: DialogNumberPickerBinding
-    var onValidateClick: ((rangeOfDays: Int) -> Unit)? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +46,7 @@ class NumberPickerDialog(activity: Activity,
         }
         buttonValidate.setOnClickListener {
             val rangeOfDays: Int = (binding.numberPicker.value + 1) * NUMBER_PICKER_STEP
-            onValidateClick?.invoke(rangeOfDays)
+            clickListener?.invoke(rangeOfDays)
             dismiss()
         }
     }

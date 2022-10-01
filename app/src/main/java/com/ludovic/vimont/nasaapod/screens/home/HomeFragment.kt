@@ -29,8 +29,9 @@ import com.ludovic.vimont.nasaapod.helper.viewmodel.DataStatus
 import com.ludovic.vimont.nasaapod.helper.viewmodel.StateData
 import com.ludovic.vimont.nasaapod.model.Photo
 import com.ludovic.vimont.nasaapod.preferences.UserPreferences
-import com.ludovic.vimont.nasaapod.ui.gridlayout.GridItemOffsetDecoration
 import com.ludovic.vimont.nasaapod.ui.dialog.NumberPickerDialog
+import com.ludovic.vimont.nasaapod.ui.gridlayout.GridItemOffsetDecoration
+import com.ludovic.vimont.nasaapod.ui.dialog.NumberPickerDialog.OnNumberPickerClickListener
 import com.ludovic.vimont.nasaapod.ui.gridlayout.GridSpanSizeLookup
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -50,9 +51,7 @@ class HomeFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        activity?.let {
-            it.title = getString(R.string.home_activity_title, NasaAPI.NUMBER_OF_DAY_TO_FETCH)
-        }
+        requireActivity().title = getString(R.string.home_activity_title, NasaAPI.NUMBER_OF_DAY_TO_FETCH)
         setHasOptionsMenu(true)
         return binding.root
     }
@@ -129,9 +128,7 @@ class HomeFragment: Fragment() {
     private fun setNumberOfDaysToFetchObserver() {
         viewModel.numberOfDaysToFetch.observe(viewLifecycleOwner) { lastDesiredRange: Int ->
             numberOfDaysToFetch = lastDesiredRange
-            activity?.let {
-                it.title = getString(R.string.home_activity_title, numberOfDaysToFetch)
-            }
+            requireActivity().title = getString(R.string.home_activity_title, numberOfDaysToFetch)
         }
     }
 
@@ -147,18 +144,10 @@ class HomeFragment: Fragment() {
     private fun setPhotosObserver() {
         viewModel.photosState.observe(viewLifecycleOwner) { stateData: StateData<List<Photo>> ->
             when (stateData.status) {
-                DataStatus.LOADING -> {
-                    showLoadingStatus()
-                }
-                DataStatus.SUCCESS -> {
-                    showSuccessStatus(stateData)
-                }
-                DataStatus.ERROR_NO_INTERNET -> {
-                    showErrorStatus(stateData, false)
-                }
-                DataStatus.ERROR_NETWORK -> {
-                    showErrorStatus(stateData, true)
-                }
+                DataStatus.LOADING -> showLoadingStatus()
+                DataStatus.SUCCESS -> showSuccessStatus(stateData)
+                DataStatus.ERROR_NO_INTERNET -> showErrorStatus(stateData, false)
+                DataStatus.ERROR_NETWORK -> showErrorStatus(stateData, true)
             }
             with(binding) {
                 if (swipeRefreshLayout.isRefreshing) {
@@ -177,12 +166,8 @@ class HomeFragment: Fragment() {
 
     private fun showLoadingStatus() {
         with(binding) {
-            ViewHelper.fadeOutAnimation(recyclerViewPhotos, {
-                recyclerViewPhotos.visibility = View.GONE
-            })
-            ViewHelper.fadeInAnimation(linearLayoutStateContainer, {
-                linearLayoutStateContainer.visibility = View.VISIBLE
-            })
+            ViewHelper.fadeOutAnimation(recyclerViewPhotos, { it.visibility = View.GONE })
+            ViewHelper.fadeInAnimation(linearLayoutStateContainer, { it.visibility = View.VISIBLE })
             imageViewState.setImageResource(R.drawable.state_loading)
             textViewStateTitle.text = getString(R.string.home_activity_loading_title)
             textViewStateDescription.text = getString(R.string.home_activity_loading_description)
@@ -229,26 +214,25 @@ class HomeFragment: Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_item_refresh -> {
-                viewModel.loadNasaPhotos(true)
-            }
-            R.id.menu_item_number_picker -> {
-                activity?.let {
-                    val numberPickerDialog = NumberPickerDialog(it, numberOfDaysToFetch)
-                    numberPickerDialog.show()
-                    numberPickerDialog.onValidateClick = { rangeOfDays: Int ->
-                        viewModel.saveNumberOfDaysToFetchPreference(rangeOfDays)
-                        viewModel.loadNasaPhotos(true)
-                    }
-                }
-            }
-            R.id.menu_item_settings -> {
-                val action: NavDirections =
-                    HomeFragmentDirections.actionHomeFragmentToSettingsFragment()
-                findNavController().navigate(action)
-            }
+            R.id.menu_item_refresh -> viewModel.loadNasaPhotos(true)
+            R.id.menu_item_number_picker -> setUpNumberPicker()
+            R.id.menu_item_settings -> goToSettingsFragment()
         }
         return true
+    }
+
+    private fun setUpNumberPicker() {
+        val numberPickerDialog = NumberPickerDialog(requireActivity(), numberOfDaysToFetch)
+        numberPickerDialog.show()
+        numberPickerDialog.clickListener = OnNumberPickerClickListener { rangeOfDays ->
+            viewModel.saveNumberOfDaysToFetchPreference(rangeOfDays)
+            viewModel.loadNasaPhotos(true)
+        }
+    }
+
+    private fun goToSettingsFragment() {
+        val action: NavDirections = HomeFragmentDirections.actionHomeFragmentToSettingsFragment()
+        findNavController().navigate(action)
     }
 
     override fun onDestroyView() {

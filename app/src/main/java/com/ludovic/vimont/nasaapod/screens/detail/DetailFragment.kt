@@ -27,6 +27,7 @@ import com.ludovic.vimont.nasaapod.helper.viewmodel.DataStatus
 import com.ludovic.vimont.nasaapod.helper.viewmodel.StateData
 import com.ludovic.vimont.nasaapod.model.Photo
 import com.ludovic.vimont.nasaapod.ui.dialog.ProgressBarDialog
+import com.ludovic.vimont.nasaapod.ui.dialog.ProgressBarDialog.OnProgressBarCancelListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailFragment: Fragment() {
@@ -55,9 +56,7 @@ class DetailFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
-        activity?.let {
-            it.title = getString(R.string.home_activity_title, NasaAPI.NUMBER_OF_DAY_TO_FETCH)
-        }
+        requireActivity().title = getString(R.string.home_activity_title, NasaAPI.NUMBER_OF_DAY_TO_FETCH)
         postponeEnterTransition()
         return binding.root
     }
@@ -66,17 +65,13 @@ class DetailFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         snackBar = Snackbar.make(binding.root, "", Snackbar.LENGTH_INDEFINITE)
-        activity?.let {
-            progressBarDialog = ProgressBarDialog(it)
-        }
+        progressBarDialog = ProgressBarDialog(requireActivity())
 
         val photoDate: String = detailFragmentArgs.photoDate
         viewModel.loadPhoto(photoDate)
 
         viewModel.photo.observe(viewLifecycleOwner) { photo: Photo ->
-            activity?.let {
-                it.title = photo.title
-            }
+            requireActivity().title = photo.title
             updateUI(photo)
         }
 
@@ -165,7 +160,7 @@ class DetailFragment: Fragment() {
     private fun setAsWallpaper(photo: Photo) {
         if (photo.isMediaImage() && photo.hdurl != null) {
             progressBarDialog.show()
-            progressBarDialog.onCancelClick = {
+            progressBarDialog.cancelClickListener = OnProgressBarCancelListener {
                 viewModel.cancelImageDownload()
                 progressBarDialog.update(0)
                 progressBarDialog.dismiss()

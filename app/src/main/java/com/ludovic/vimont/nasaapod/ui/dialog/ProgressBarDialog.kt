@@ -8,8 +8,12 @@ import com.ludovic.vimont.nasaapod.R
 import com.ludovic.vimont.nasaapod.databinding.DialogProgressBarBinding
 
 class ProgressBarDialog(activity: Activity): Dialog(activity, R.style.NasaApodDialog) {
+    fun interface OnProgressBarCancelListener {
+        operator fun invoke()
+    }
+    var cancelClickListener: OnProgressBarCancelListener? = null
+
     private lateinit var binding: DialogProgressBarBinding
-    var onCancelClick: (() -> Unit)? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,10 +25,10 @@ class ProgressBarDialog(activity: Activity): Dialog(activity, R.style.NasaApodDi
 
     private fun setupActions() {
         binding.buttonCancel.setOnClickListener {
-            onCancelClick?.invoke()
+            cancelClickListener?.invoke()
         }
         setOnCancelListener {
-            onCancelClick?.invoke()
+            cancelClickListener?.invoke()
         }
     }
 
