@@ -23,9 +23,7 @@ class GlideDispatchProgressListener: ResponseProgressListener {
     override fun update(url: String, totalBytesRead: Long, contentLength: Long, isDone: Boolean) {
         val currentProgress: Int = (HUNDRED_PERCENT * totalBytesRead / contentLength).toInt()
         if (isDispatchNeeded(url, currentProgress)) {
-            listeners[url]?.let { uiDownloadProgressListener: UIDownloadProgressListener ->
-                uiDownloadProgressListener.update(currentProgress)
-            }
+            listeners[url]?.invoke(currentProgress)
         }
     }
 
