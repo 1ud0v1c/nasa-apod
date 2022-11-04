@@ -6,7 +6,9 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 
-open class DrawableRequestListener(private val lambda: (success: Boolean) -> Unit): RequestListener<Drawable> {
+class DrawableRequestListener(
+    private val lambda: (success: Boolean) -> Unit
+): RequestListener<Drawable> {
     override fun onResourceReady(
         resource: Drawable?,
         model: Any?,

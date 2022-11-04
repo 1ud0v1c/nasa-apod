@@ -64,9 +64,7 @@ class ZoomFragment: Fragment() {
         Glide.with(requireContext())
             .load(mediaURL)
             .transition(DrawableTransitionOptions.withCrossFade(ViewHelper.GLIDE_FADE_IN_DURATION))
-            .listener(DrawableRequestListener {
-                hideProgressBar()
-            })
+            .listener(DrawableRequestListener { hideProgressBar() })
             .into(binding.photoViewHd)
     }
 
@@ -85,6 +83,7 @@ class ZoomFragment: Fragment() {
     override fun onDestroyView() {
         requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         requireActivity().window.resetActivityUIVisibility()
+        Glide.with(requireContext()).clear(binding.photoViewHd)
         super.onDestroyView()
         _binding = null
     }
