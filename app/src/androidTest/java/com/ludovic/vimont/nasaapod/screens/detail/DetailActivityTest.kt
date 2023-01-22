@@ -9,10 +9,10 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
-import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions
 import com.ludovic.vimont.nasaapod.AppConstants
 import com.ludovic.vimont.nasaapod.R
 import com.ludovic.vimont.nasaapod.RecyclerViewItemCountAssertion
+import com.ludovic.vimont.nasaapod.extensions.isViewDisplayed
 import com.ludovic.vimont.nasaapod.screens.MainActivity
 import org.junit.Rule
 import org.junit.Test
@@ -41,12 +41,12 @@ class DetailActivityTest {
             )
         )
 
-        BaristaVisibilityAssertions.assertDisplayed(R.id.image_view_photo)
-        BaristaVisibilityAssertions.assertDisplayed(R.id.image_view_media_type)
-        BaristaVisibilityAssertions.assertDisplayed(R.id.linear_layout_action_container)
+        onView(withId(R.id.image_view_photo)).isViewDisplayed()
+        onView(withId(R.id.image_view_media_type)).isViewDisplayed()
+        onView(withId(R.id.linear_layout_action_container)).isViewDisplayed()
 
         onView(withId(R.id.image_view_photo)).perform(click())
 
-        BaristaVisibilityAssertions.assertDisplayed(R.id.constraint_layout_zoom_container)
+        onView(withId(R.id.constraint_layout_zoom_container)).isViewDisplayed()
     }
 }

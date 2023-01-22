@@ -13,11 +13,11 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
-import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions
 import com.ludovic.vimont.nasaapod.AppConstants
 import com.ludovic.vimont.nasaapod.R
 import com.ludovic.vimont.nasaapod.RecyclerViewItemCountAssertion
 import com.ludovic.vimont.nasaapod.ViewMatcher
+import com.ludovic.vimont.nasaapod.extensions.isViewDisplayed
 import com.ludovic.vimont.nasaapod.screens.MainActivity
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.`is`
@@ -29,6 +29,8 @@ import org.junit.runner.RunWith
 @LargeTest
 @RunWith(AndroidJUnit4::class)
 class MainActivityTest {
+    private val CONSTRAINT_LAYOUT_CLASS_NAME = "androidx.constraintlayout.widget.ConstraintLayout"
+
     @Rule
     @JvmField
     val activityRule: ActivityTestRule<MainActivity> = ActivityTestRule(MainActivity::class.java)
@@ -37,14 +39,15 @@ class MainActivityTest {
     fun homeActivityTestInsideDetailActivity() {
         Thread.sleep(3_000)
 
-        onView(withId(R.id.recycler_view_photos)).check(RecyclerViewItemCountAssertion(AppConstants.TOTAL_ITEMS_EXPECTED))
+        onView(withId(R.id.recycler_view_photos)).check(
+            RecyclerViewItemCountAssertion(AppConstants.TOTAL_ITEMS_EXPECTED)
+        )
 
         val recyclerView = onView(
             allOf(
                 withId(R.id.recycler_view_photos),
                 ViewMatcher.childAtPosition(
-                    withClassName(`is`("androidx.constraintlayout.widget.ConstraintLayout")),
-                    0
+                    withClassName(`is`(CONSTRAINT_LAYOUT_CLASS_NAME)), 0
                 )
             )
         )
@@ -55,9 +58,9 @@ class MainActivityTest {
             )
         )
 
-        BaristaVisibilityAssertions.assertDisplayed(R.id.image_view_photo)
-        BaristaVisibilityAssertions.assertDisplayed(R.id.image_view_media_type)
-        BaristaVisibilityAssertions.assertDisplayed(R.id.linear_layout_action_container)
+        onView(withId(R.id.image_view_photo)).isViewDisplayed()
+        onView(withId(R.id.image_view_media_type)).isViewDisplayed()
+        onView(withId(R.id.linear_layout_action_container)).isViewDisplayed()
     }
 
     @Test
