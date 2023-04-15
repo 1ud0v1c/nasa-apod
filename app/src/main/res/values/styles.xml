@@ -5,27 +5,30 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="FullScreenDialog" parent="AppTheme">
+    <!-- Dialog -->
+    <style name="FullScreenDialog" parent="Theme.AppCompat.DayNight.Dialog">
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">false</item>
-        <item name="android:windowBackground">@color/colorWhite</item>
-        <item name="android:statusBarColor">@color/colorWhite</item>
+        <item name="android:windowBackground">@color/dialogBackground</item>
+        <item name="android:statusBarColor">@color/dialogBackground</item>
     </style>
 
     <style name="FullScreenDialog.Modal">
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
     </style>
 
+    <style name="NumberPickerDialog" parent="Theme.AppCompat.DayNight.Dialog">
+        <item name="android:windowNoTitle">false</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowBackground">@color/dialogBackground</item>
+    </style>
+
+    <!-- Buttons -->
     <style name="MaterialImageButton">
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
         <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
         <item name="android:padding">@dimen/button_padding</item>
-    </style>
-
-    <style name="NasaApodDialog" parent="AppTheme">
-        <item name="android:windowNoTitle">false</item>
-        <item name="android:windowIsFloating">true</item>
     </style>
 </resources>

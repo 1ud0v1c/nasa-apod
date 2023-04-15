@@ -4,4 +4,6 @@
     <color name="textStateTitle">#DDEEEEEE</color>
     <color name="itemPhotoTitle">#DDEEEEEE</color>
     <color name="itemPhotoDate">#FFB1B1B2</color>
+
+    <color name="dialogBackground">#FF616161</color>
 </resources>

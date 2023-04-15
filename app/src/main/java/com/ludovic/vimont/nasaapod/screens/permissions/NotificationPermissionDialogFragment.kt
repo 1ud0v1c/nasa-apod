@@ -49,8 +49,8 @@ class NotificationPermissionDialogFragment: DialogFragment() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_CODE) {
             viewModel.onNotificationPermissionSeen()
-            dismiss()
         }
+        dismiss()
     }
 
     override fun onDestroyView() {

@@ -7,7 +7,7 @@ import android.view.Window
 import com.ludovic.vimont.nasaapod.R
 import com.ludovic.vimont.nasaapod.databinding.DialogProgressBarBinding
 
-class ProgressBarDialog(activity: Activity): Dialog(activity, R.style.NasaApodDialog) {
+class ProgressBarDialog(activity: Activity): Dialog(activity, R.style.NumberPickerDialog) {
     fun interface OnProgressBarCancelListener {
         operator fun invoke()
     }

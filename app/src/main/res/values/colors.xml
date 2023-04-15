@@ -15,4 +15,6 @@
     <color name="itemPhotoTitle">#CC000000</color>
     <color name="itemPhotoDate">#FFB1B1B2</color>
     <color name="copyrightTextColor">#FFA2A2A2</color>
+
+    <color name="dialogBackground">#FFFFFFFF</color>
 </resources>
