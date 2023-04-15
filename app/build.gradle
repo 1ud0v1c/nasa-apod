@@ -38,18 +38,6 @@ android {
                 testLogging {
                     events "passed", "skipped", "failed", "standardOut", "standardError"
                 }
-                // https://kotlin.github.io/kotlinx-kover/
-                if (name == "testDebugUnitTest") {
-                    kover {
-                        disabled = false
-
-                        filters {
-                            classes {
-                                excludes.addAll("com.ludovic.vimont.nasaapod.databinding.*")
-                            }
-                        }
-                    }
-                }
             }
         }
     }
@@ -58,6 +46,14 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+afterEvaluate {
+    tasks.withType(Test.class).configureEach {
+        kover {
+            excludes.addAll("*.databinding.*")
         }
     }
 }
