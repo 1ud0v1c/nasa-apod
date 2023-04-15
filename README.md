@@ -44,10 +44,8 @@ I wanted to thank, those two applications which give me inspiration for design o
 
 ## HomeActivity
 
-> L’écran d’accueil listera les photos (présentation libre)
-
-For the HomeActivity, I tried to provide a nice & efficient user experience, thanks to different state. If you launch the application without having internet, you will have a screen which gives you a way to relaunch 
-the request, In the same spirit, if you have a timeout or a server issue, you will ended with a different screen. 
+For the HomeActivity, I tried to provide a nice & efficient user experience, thanks to different state. If you launch the application without having internet, you will have a
+screen which gives you a way to relaunch the request, In the same spirit, if you have a timeout or a server issue, you will ended with a different screen.
 
 <div align="center">
 
@@ -90,8 +88,6 @@ user validated the new number of days, we launch a new request.
 
 ## DetailActivity
 
-> Tandis qu’un écran de détail affichera la photo ainsi que sa description et les informations relatives. 
-
 After a click on an item from the HomeActivity, you will enter in the DetailActivity, which list every information about the photo of the day.
 
 <div align="center">
@@ -116,8 +112,6 @@ Use the HD version of the image as wallpaper for your smartphone.
 
 
 ## ZoomActivity
-
-> Enfin, un troisième écran permettra de visualiser la photo en haute résolution.
 
 Last, but not least, the ZoomActivity, entered after a click on the photo from the DetailActivity, allow an user to access the HD version of the image and can zoom on it.
 
@@ -167,11 +161,3 @@ than Jackson.
 Easy to use and easily configurable, it was the perfect library for this test.
 - [Koin](https://github.com/InsertKoinIO/koin): I used Koin for dependency injection.
 - [PhotoView](https://github.com/chrisbanes/PhotoView): A wrapper of an ImageView which supports a zooming experience. Very appropriate to display HD images.
-
-
-## What can be improved
-
-- I really liked the appearance of the Resplash application, they used a grid to display the image gallery. I wanted to implement a similar solution using a [StaggeredGridLayoutManager](https://developer.android.com/reference/androidx/recyclerview/widget/StaggeredGridLayoutManager).
-And then provide a simple solution to switch between the two styles, for example by adding another menu item inside the ActionBar.
-- I encountered an issue, when testing the application near midnight. Indeed, in my local hour, it was already midnight, but in the server timezone I suppose it was not. It could be a great idea to monitor the server current 
-date and base our request on it, instead of using our timezone. Maybe a marginal case, but definitely something worth investigation.
