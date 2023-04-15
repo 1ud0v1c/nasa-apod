@@ -60,7 +60,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
     // Android
-    implementation "androidx.core:core-ktx:1.9.0"
+    implementation "androidx.core:core-ktx:1.10.0"
     implementation "androidx.appcompat:appcompat:1.6.1"
     implementation "androidx.constraintlayout:constraintlayout:2.1.4"
     implementation "androidx.recyclerview:recyclerview:1.3.0"
@@ -70,7 +70,7 @@ dependencies {
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
     // ViewModel
-    implementation "androidx.fragment:fragment-ktx:1.5.5"
+    implementation "androidx.fragment:fragment-ktx:1.5.6"
 
     // Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
@@ -80,8 +80,8 @@ dependencies {
     implementation "androidx.preference:preference-ktx:1.2.0"
 
     // Firebase
-    implementation "com.google.firebase:firebase-analytics:21.2.0"
-    implementation "com.google.firebase:firebase-crashlytics:18.3.5"
+    implementation "com.google.firebase:firebase-analytics:21.2.2"
+    implementation "com.google.firebase:firebase-crashlytics:18.3.6"
 
     // Retrofit for API call
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
@@ -122,6 +122,8 @@ dependencies {
     testImplementation "junit:junit:4.13.2"
     testImplementation "org.robolectric:robolectric:4.4"
     testImplementation "androidx.test:core:1.5.0"
+    testImplementation "androidx.arch.core:core-testing:2.2.0"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinx_coroutines_version"
     testImplementation "io.insert-koin:koin-test:$koin_version"
     testImplementation "androidx.work:work-testing:$worker_version"
 

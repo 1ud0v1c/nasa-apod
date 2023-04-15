@@ -6,6 +6,10 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.content.ContextCompat
 
+fun Context.hasPostNotificationPermission(): Boolean {
+    return Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && hasPermission(Manifest.permission.POST_NOTIFICATIONS)
+}
+
 fun Context.hasWritePermission(): Boolean {
     return Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q || hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
 }

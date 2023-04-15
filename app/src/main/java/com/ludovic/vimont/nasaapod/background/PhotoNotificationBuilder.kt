@@ -37,7 +37,7 @@ class PhotoNotificationBuilder(private val notificationManager: NotificationMana
                 .setLargeIcon(largeIcon)
                 .setStyle(NotificationCompat.BigPictureStyle()
                     .bigPicture(largeIcon)
-                    .bigLargeIcon(null))
+                )
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setContentIntent(getContentIntent(photo))
                 .setAutoCancel(true)
