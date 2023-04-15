@@ -6,6 +6,7 @@ plugins {
     id 'com.google.firebase.crashlytics'
     id 'androidx.navigation.safeargs.kotlin'
     id 'com.google.android.gms.oss-licenses-plugin'
+    id 'kover'
 }
 
 android {
@@ -36,6 +37,18 @@ android {
                 ignoreFailures false
                 testLogging {
                     events "passed", "skipped", "failed", "standardOut", "standardError"
+                }
+                // https://kotlin.github.io/kotlinx-kover/
+                if (name == "testDebugUnitTest") {
+                    kover {
+                        disabled = false
+
+                        filters {
+                            classes {
+                                excludes.addAll("com.ludovic.vimont.nasaapod.databinding.*")
+                            }
+                        }
+                    }
                 }
             }
         }
