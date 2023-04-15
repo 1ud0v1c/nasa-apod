@@ -9,37 +9,71 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <TextView
+            android:id="@+id/text_view_notification_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="@string/dialog_fragment_notification_permission_title"
+            android:textAlignment="center"
+            android:textColor="@color/colorGray"
+            android:textSize="@dimen/dialog_fragment_notification_permission_title_size"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_view_notification_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="@string/dialog_fragment_notification_permission_description"
+            android:textAlignment="center"
+            android:textColor="@color/colorGray"
+            android:textSize="@dimen/dialog_fragment_notification_permission_description_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_notification_title" />
+
         <ImageView
             android:id="@+id/image_view_notification_illustration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:contentDescription="@null"
+            app:layout_constraintBottom_toTopOf="@id/button_accept_notification_permission"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/text_view_notification_description"
+            app:srcCompat="@drawable/ic_notification" />
 
         <Button
             android:id="@+id/button_accept_notification_permission"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:text="Valider"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:background="@color/colorAccent"
+            android:text="@string/action_validate"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintBottom_toTopOf="@id/button_denied_notification_permission"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/image_view_notification_illustration" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/button_denied_notification_permission"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:text="Cancel"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:text="@string/action_cancel"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_accept_notification_permission" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

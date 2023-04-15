@@ -75,4 +75,8 @@
     <string name="about_activity_rate_title">Rate App</string>
     <string name="about_activity_rate_description">If you like Nasa Apod, rate it on the Google Play Store</string>
     <string name="about_activity_licenses_title">Licenses</string>
+
+    <!-- NotificationDialog -->
+    <string name="dialog_fragment_notification_permission_title">Get notified!</string>
+    <string name="dialog_fragment_notification_permission_description">Discover the vastness of space every day at 9 a.m. thanks to the NASA\'s API</string>
 </resources>

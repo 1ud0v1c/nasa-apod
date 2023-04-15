@@ -9,7 +9,6 @@ import com.ludovic.vimont.nasaapod.screens.MainViewModel.NavigationEvent
 import com.ludovic.vimont.nasaapod.preferences.Constants
 import com.ludovic.vimont.nasaapod.preferences.DataHolder
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.After

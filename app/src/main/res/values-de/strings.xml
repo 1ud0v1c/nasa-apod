@@ -68,4 +68,8 @@
     <string name="about_activity_rate_title">Bewerten</string>
     <string name="about_activity_rate_description">Dir gefällt Nasa Apod? Dann bewerte die App im Play Store</string>
     <string name="about_activity_licenses_title">Lizenzen</string>
+
+    <!-- NotificationDialog -->
+    <string name="dialog_fragment_notification_permission_title">Lassen Sie sich benachrichtigen!</string>
+    <string name="dialog_fragment_notification_permission_description">Entdecken Sie die unendlichen Weiten des Weltraums jeden Tag um 9 Uhr mit der Nasa API.</string>
 </resources>

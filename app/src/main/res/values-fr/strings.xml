@@ -68,4 +68,8 @@
     <string name="about_activity_rate_title">Votez pour l\'application</string>
     <string name="about_activity_rate_description">Si vous aimez Nasa Apod, allez voter sur le Google Play Store</string>
     <string name="about_activity_licenses_title">Licences</string>
+
+    <!-- NotificationDialog -->
+    <string name="dialog_fragment_notification_permission_title">Soyez informés !</string>
+    <string name="dialog_fragment_notification_permission_description">Découvrez l\'immensité de l\'espace tous les jours à 9h, grâce à l\'API de la Nasa</string>
 </resources>
