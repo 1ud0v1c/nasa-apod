@@ -79,11 +79,15 @@ class ZoomFragment: Fragment() {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        Glide.with(requireContext()).clear(binding.photoViewHd)
+    }
+
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onDestroyView() {
         requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         requireActivity().window.resetActivityUIVisibility()
-        Glide.with(requireContext()).clear(binding.photoViewHd)
         super.onDestroyView()
         _binding = null
     }

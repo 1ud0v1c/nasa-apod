@@ -37,8 +37,8 @@ class DetailFragment: Fragment() {
     private val detailFragmentArgs: DetailFragmentArgs by navArgs()
     private val viewModel: DetailViewModel by viewModel()
 
-    private lateinit var snackBar: Snackbar
-    private lateinit var progressBarDialog: ProgressBarDialog
+    private var snackBar: Snackbar? = null
+    private var progressBarDialog: ProgressBarDialog? = null
 
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = requireNotNull(_binding)
@@ -77,17 +77,16 @@ class DetailFragment: Fragment() {
 
         viewModel.bitmap.observe(viewLifecycleOwner) { stateData: StateData<Bitmap> ->
             if (stateData.status == DataStatus.SUCCESS) {
-                progressBarDialog.dismiss()
+                progressBarDialog?.dismiss()
             } else if (stateData.status == DataStatus.ERROR_NETWORK) {
-                snackBar.setText(stateData.errorMessage)
-                    .setAction(getString(R.string.action_ok)) {
-                        snackBar.dismiss()
-                    }
+                snackBar?.setText(stateData.errorMessage)?.setAction(getString(R.string.action_ok)) {
+                    snackBar?.dismiss()
+                }
             }
         }
 
         viewModel.bitmapDownloadProgression.observe(viewLifecycleOwner) { progression: Int ->
-            progressBarDialog.update(progression)
+            progressBarDialog?.update(progression)
         }
     }
 
@@ -159,26 +158,26 @@ class DetailFragment: Fragment() {
      */
     private fun setAsWallpaper(photo: Photo) {
         if (photo.isMediaImage() && photo.hdurl != null) {
-            progressBarDialog.show()
-            progressBarDialog.cancelClickListener = OnProgressBarCancelListener {
+            progressBarDialog?.show()
+            progressBarDialog?.cancelClickListener = OnProgressBarCancelListener {
                 viewModel.cancelImageDownload()
-                progressBarDialog.update(0)
-                progressBarDialog.dismiss()
+                progressBarDialog?.update(0)
+                progressBarDialog?.dismiss()
             }
             viewModel.setImageAsWallpaper(photo.hdurl)
         } else {
             val errorMessage: String = getString(R.string.detail_activity_cannot_set_wallpaper_for_video)
             updateSnackBar(errorMessage)
-            snackBar.setAction(getString(R.string.action_ok)) {
-                snackBar.dismiss()
+            snackBar?.setAction(getString(R.string.action_ok)) {
+                snackBar?.dismiss()
             }
-            snackBar.show()
+            snackBar?.show()
         }
     }
 
     private fun updateSnackBar(text: String, length: Int = Snackbar.LENGTH_INDEFINITE) {
         snackBar = Snackbar.make(binding.root, text, length)
-        val snackBarView: View = snackBar.view
+        val snackBarView: View = snackBar?.view ?: return
         val snackBarTextView: TextView = snackBarView.findViewById(com.google.android.material.R.id.snackbar_text)
         snackBarTextView.maxLines = SNACK_BAR_MAX_LINES
     }
