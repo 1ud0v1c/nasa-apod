@@ -2,6 +2,7 @@
 *.apk
 *.aar
 *.ap_
+.DS_Store
 *.aab
 
 # Files for the ART/Dalvik VM

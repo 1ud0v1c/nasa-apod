@@ -24,8 +24,8 @@
         <activity
             android:name=".screens.MainActivity"
             android:configChanges="orientation"
-            android:screenOrientation="fullSensor"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="fullSensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
