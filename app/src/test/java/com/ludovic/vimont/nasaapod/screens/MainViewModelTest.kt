@@ -1,7 +1,7 @@
 package com.ludovic.vimont.nasaapod.screens
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.test.core.app.ApplicationProvider
+import com.ludovic.vimont.nasaapod.helper.FakeSharedPreferences
 import com.ludovic.vimont.nasaapod.helper.MainCoroutineRule
 import com.ludovic.vimont.nasaapod.helper.test
 import com.ludovic.vimont.nasaapod.screens.MainViewModel.NavigationEvent
@@ -26,7 +26,7 @@ class MainViewModelTest {
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
 
-    private val dataHolder = DataHolder.init(ApplicationProvider.getApplicationContext())
+    private val dataHolder = DataHolder(FakeSharedPreferences())
 
     @After
     fun tearDown() {
@@ -36,7 +36,7 @@ class MainViewModelTest {
     @Test
     fun `hasNotificationPermissionBeingAsked should send AskForNotificationPermission`() = runTest {
         // Given
-        val viewModel = MainViewModel(dataHolder)
+        val viewModel = MainViewModel(dataHolder, mainCoroutineRule.dispatcher)
 
         // When
         viewModel.hasNotificationPermissionBeingAsked()
@@ -50,7 +50,7 @@ class MainViewModelTest {
     fun `hasNotificationPermissionBeingAsked should do nothing, if permission already asked`() = runTest {
         // Given
         dataHolder[Constants.NOTIFICATION_PERMISSION_KEY] = true
-        val viewModel = MainViewModel(dataHolder)
+        val viewModel = MainViewModel(dataHolder, mainCoroutineRule.dispatcher)
 
         // When
         viewModel.hasNotificationPermissionBeingAsked()

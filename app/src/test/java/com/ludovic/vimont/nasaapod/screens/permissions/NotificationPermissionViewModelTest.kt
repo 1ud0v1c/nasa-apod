@@ -1,7 +1,7 @@
 package com.ludovic.vimont.nasaapod.screens.permissions
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.test.core.app.ApplicationProvider
+import com.ludovic.vimont.nasaapod.helper.FakeSharedPreferences
 import com.ludovic.vimont.nasaapod.helper.MainCoroutineRule
 import com.ludovic.vimont.nasaapod.preferences.Constants
 import com.ludovic.vimont.nasaapod.preferences.DataHolder
@@ -25,7 +25,7 @@ class NotificationPermissionViewModelTest {
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
 
-    private val dataHolder = DataHolder.init(ApplicationProvider.getApplicationContext())
+    private val dataHolder = DataHolder(FakeSharedPreferences())
 
     @After
     fun tearDown() {
@@ -35,7 +35,7 @@ class NotificationPermissionViewModelTest {
     @Test
     fun `onNotificationPermissionSeen should save notification in dataHolder`() = runTest {
         // Given
-        val viewModel = NotificationPermissionViewModel(dataHolder)
+        val viewModel = NotificationPermissionViewModel(dataHolder, mainCoroutineRule.dispatcher)
 
         // When
         viewModel.onNotificationPermissionSeen()

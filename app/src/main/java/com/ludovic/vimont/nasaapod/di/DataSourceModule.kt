@@ -4,6 +4,7 @@ import android.app.NotificationManager
 import android.content.Context
 import androidx.core.app.NotificationCompat
 import androidx.navigation.NavDeepLinkBuilder
+import androidx.preference.PreferenceManager
 import androidx.room.Room
 import com.bumptech.glide.Glide
 import com.ludovic.vimont.nasaapod.api.NasaAPI
@@ -36,7 +37,7 @@ object DataSourceModule {
             androidContext().contentResolver
         }
         single {
-            DataHolder.init(androidContext())
+            DataHolder(PreferenceManager.getDefaultSharedPreferences(androidContext()))
         }
         single {
             androidContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

@@ -1,19 +1,12 @@
 package com.ludovic.vimont.nasaapod.preferences
 
-import android.content.Context
 import android.content.SharedPreferences
-import androidx.preference.PreferenceManager
 
-object DataHolder {
-    lateinit var preferences: SharedPreferences
-
-    fun init(context: Context): DataHolder {
-        preferences = PreferenceManager.getDefaultSharedPreferences(context)
-        return this
-    }
-
+class DataHolder(
+    val sharedPreferences: SharedPreferences,
+) {
     private inline fun edit(operation: (SharedPreferences.Editor) -> Unit) {
-        val editor: SharedPreferences.Editor = preferences.edit()
+        val editor: SharedPreferences.Editor = sharedPreferences.edit()
         operation(editor)
         editor.apply()
     }
@@ -44,12 +37,12 @@ object DataHolder {
 
     inline operator fun <reified T : Any> get(key: String, defaultValue: T? = null): T {
         return when (T::class) {
-            String::class -> preferences.getString(key, defaultValue as? String ?: "") as T
-            Int::class -> preferences.getInt(key, defaultValue as? Int ?: -1) as T
-            Boolean::class -> preferences.getBoolean(key, defaultValue as? Boolean ?: false) as T
-            Float::class -> preferences.getFloat(key, defaultValue as? Float ?: -1f) as T
-            Long::class -> preferences.getLong(key, defaultValue as? Long ?: -1) as T
-            Double::class -> Double.fromBits(preferences.getLong(key, defaultValue as? Long ?: -1)) as T
+            String::class -> sharedPreferences.getString(key, defaultValue as? String ?: "") as T
+            Int::class -> sharedPreferences.getInt(key, defaultValue as? Int ?: -1) as T
+            Boolean::class -> sharedPreferences.getBoolean(key, defaultValue as? Boolean ?: false) as T
+            Float::class -> sharedPreferences.getFloat(key, defaultValue as? Float ?: -1f) as T
+            Long::class -> sharedPreferences.getLong(key, defaultValue as? Long ?: -1) as T
+            Double::class -> Double.fromBits(sharedPreferences.getLong(key, defaultValue as? Long ?: -1)) as T
             else -> throw UnsupportedOperationException("Not yet implemented")
         }
     }

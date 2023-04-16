@@ -6,17 +6,19 @@ import androidx.lifecycle.viewModelScope
 import com.ludovic.vimont.nasaapod.helper.livedata.SingleLiveEvent
 import com.ludovic.vimont.nasaapod.preferences.Constants
 import com.ludovic.vimont.nasaapod.preferences.DataHolder
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainViewModel(
-    private val dataHolder: DataHolder
+    private val dataHolder: DataHolder,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
 ): ViewModel() {
     private val _navigationEvent = SingleLiveEvent<NavigationEvent>()
     val navigationEvent: LiveData<NavigationEvent> = _navigationEvent
 
     fun hasNotificationPermissionBeingAsked() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
             val hasNotificationPermissionBeingAsked = dataHolder[Constants.NOTIFICATION_PERMISSION_KEY, false]
             if (!hasNotificationPermissionBeingAsked) {
                 _navigationEvent.postValue(NavigationEvent.AskForNotificationPermission)
