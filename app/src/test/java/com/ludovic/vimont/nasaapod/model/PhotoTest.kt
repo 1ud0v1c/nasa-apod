@@ -1,6 +1,5 @@
 package com.ludovic.vimont.nasaapod.model
 
-import android.os.Build
 import com.ludovic.vimont.nasaapod.MockModel
 import com.ludovic.vimont.nasaapod.NetworkHelper
 import org.junit.After
@@ -11,9 +10,7 @@ import org.junit.runner.RunWith
 import org.koin.core.context.GlobalContext
 import org.koin.test.KoinTest
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 
-@Config(sdk = [Build.VERSION_CODES.P], manifest = Config.NONE)
 @RunWith(RobolectricTestRunner::class)
 class PhotoTest : KoinTest {
     private val imageURL = "https://apod.nasa.gov/apod/image/2010/SquidBat_Akar_960.jpg"

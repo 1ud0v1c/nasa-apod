@@ -1,6 +1,5 @@
 package com.ludovic.vimont.nasaapod.screens.settings
 
-import android.os.Build
 import com.ludovic.vimont.nasaapod.api.NasaAPI
 import com.ludovic.vimont.nasaapod.model.Photo
 import com.ludovic.vimont.nasaapod.screens.home.HomeRepository
@@ -13,9 +12,7 @@ import org.koin.core.context.GlobalContext
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 
-@Config(sdk = [Build.VERSION_CODES.P], manifest = Config.NONE)
 @RunWith(RobolectricTestRunner::class)
 class SettingsRepositoryTest : KoinTest {
     private val homeRepository: HomeRepository by inject()

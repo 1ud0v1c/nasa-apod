@@ -1,6 +1,5 @@
 package com.ludovic.vimont.nasaapod.screens.detail
 
-import android.os.Build
 import com.ludovic.vimont.nasaapod.MockModel
 import com.ludovic.vimont.nasaapod.db.PhotoDao
 import com.ludovic.vimont.nasaapod.model.Photo
@@ -14,9 +13,7 @@ import org.koin.core.context.GlobalContext
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 
-@Config(sdk = [Build.VERSION_CODES.P], manifest = Config.NONE)
 @RunWith(RobolectricTestRunner::class)
 class DetailRepositoryTest : KoinTest {
     private val googleURL = "https://google.fr/"

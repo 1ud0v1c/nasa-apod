@@ -1,6 +1,5 @@
 package com.ludovic.vimont.nasaapod.screens.home
 
-import android.os.Build
 import com.ludovic.vimont.nasaapod.MockModel
 import com.ludovic.vimont.nasaapod.NetworkHelper
 import com.ludovic.vimont.nasaapod.api.NasaAPI
@@ -17,10 +16,8 @@ import org.koin.core.context.GlobalContext
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 import retrofit2.Response
 
-@Config(sdk = [Build.VERSION_CODES.P], manifest = Config.NONE)
 @RunWith(RobolectricTestRunner::class)
 class HomeRepositoryTest : KoinTest {
     private val vimeoAPI: VimeoAPI by inject()

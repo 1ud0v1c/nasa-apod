@@ -3,7 +3,6 @@ package com.ludovic.vimont.nasaapod.background.worker
 import android.app.NotificationManager
 import android.content.Context
 import android.graphics.Bitmap
-import android.os.Build
 import android.service.notification.StatusBarNotification
 import androidx.test.core.app.ApplicationProvider
 import androidx.work.testing.TestListenableWorkerBuilder
@@ -23,9 +22,7 @@ import org.koin.core.context.GlobalContext.stopKoin
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 
-@Config(sdk = [Build.VERSION_CODES.P], manifest = Config.NONE)
 @RunWith(RobolectricTestRunner::class)
 class DailyRequestWorkerTest : KoinTest {
     private val context: Context = ApplicationProvider.getApplicationContext()

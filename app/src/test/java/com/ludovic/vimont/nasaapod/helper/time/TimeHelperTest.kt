@@ -1,6 +1,5 @@
 package com.ludovic.vimont.nasaapod.helper.time
 
-import android.os.Build
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
@@ -9,10 +8,8 @@ import org.junit.runner.RunWith
 import org.koin.core.context.GlobalContext
 import org.koin.test.KoinTest
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 import java.util.Calendar
 
-@Config(sdk = [Build.VERSION_CODES.P], manifest = Config.NONE)
 @RunWith(RobolectricTestRunner::class)
 class TimeHelperTest : KoinTest, CalendarInterface {
     private val ONE_HOUR_MS: Int = 60 * 60 * 1_000
@@ -51,6 +48,7 @@ class TimeHelperTest : KoinTest, CalendarInterface {
         calendar.set(2020, 10, 23, 14, 0)
         calendarInstance = calendar
         val timeToTriggerWorker: Long = TimeHelper.computeInitialDelay(15)
+
         // We can lose some seconds while making the test, so we check if we have at most a ONE_MINUTE difference
         Assert.assertEquals(
             timeToTriggerWorker.toDouble(),
