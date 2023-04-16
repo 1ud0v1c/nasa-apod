@@ -168,7 +168,7 @@ class HomeFragment: Fragment() {
         with(binding) {
             ViewHelper.fadeOutAnimation(recyclerViewPhotos, { it.visibility = View.GONE })
             ViewHelper.fadeInAnimation(linearLayoutStateContainer, { it.visibility = View.VISIBLE })
-            imageViewState.setImageResource(R.drawable.state_loading)
+            imageViewState.setImageResource(R.drawable.ic_loading)
             textViewStateTitle.text = getString(R.string.home_activity_loading_title)
             textViewStateDescription.text = getString(R.string.home_activity_loading_description)
             buttonStateAction.visibility = View.GONE
@@ -190,11 +190,11 @@ class HomeFragment: Fragment() {
             ViewHelper.fadeOutAnimation(recyclerViewPhotos, { it.visibility = View.GONE })
             ViewHelper.fadeInAnimation(linearLayoutStateContainer, { it.visibility = View.VISIBLE })
             if (hasInternet) {
-                imageViewState.setImageResource(R.drawable.state_request_error)
+                imageViewState.setImageResource(R.drawable.ic_bug_fixing)
                 textViewStateTitle.text = getString(R.string.home_activity_error_title)
                 textViewStateDescription.text = stateData.errorMessage
             } else {
-                imageViewState.setImageResource(R.drawable.state_error_no_internet)
+                imageViewState.setImageResource(R.drawable.ic_server_down)
                 textViewStateTitle.text = getString(R.string.home_activity_no_internet_title)
                 textViewStateDescription.text = getString(R.string.home_activity_no_internet_description)
             }

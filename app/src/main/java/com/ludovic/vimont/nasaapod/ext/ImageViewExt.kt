@@ -18,7 +18,7 @@ fun ImageView.loadImage(imageURL: String) {
 
     Glide.with(this.context)
         .load(imageURL)
-        .placeholder(R.drawable.photo_placeholder)
+        .placeholder(R.drawable.image_placeholder)
         .transition(DrawableTransitionOptions.withCrossFade(factory))
         .transform(CenterCrop(), RoundedCorners(cornersRadiusSize))
         .into(this)

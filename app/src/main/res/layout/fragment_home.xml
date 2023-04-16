@@ -40,7 +40,7 @@
             android:layout_gravity="center"
             android:contentDescription="@string/home_activity_image_view_state_content_description"
             android:scaleType="centerCrop"
-            android:src="@drawable/state_no_data" />
+            android:src="@drawable/ic_server_down" />
 
         <TextView
             android:id="@+id/text_view_state_title"
