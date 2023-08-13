@@ -2,19 +2,15 @@ package com.ludovic.vimont.nasaapod.background.worker
 
 import android.app.NotificationManager
 import android.content.Context
-import android.graphics.Bitmap
-import android.service.notification.StatusBarNotification
 import androidx.test.core.app.ApplicationProvider
 import androidx.work.testing.TestListenableWorkerBuilder
 import com.ludovic.vimont.nasaapod.BitmapHelper
+import com.ludovic.vimont.nasaapod.MockModel
 import com.ludovic.vimont.nasaapod.background.PhotoNotificationBuilder
-import com.ludovic.vimont.nasaapod.background.image.BitmapLoader
-import com.ludovic.vimont.nasaapod.db.PhotoDao
-import com.ludovic.vimont.nasaapod.model.Photo
+import com.ludovic.vimont.nasaapod.helper.FakeHomeRepository
 import com.ludovic.vimont.nasaapod.screens.home.HomeRepository
 import kotlinx.coroutines.runBlocking
 import org.junit.After
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -22,23 +18,24 @@ import org.koin.core.context.GlobalContext.stopKoin
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import org.robolectric.RobolectricTestRunner
+import kotlin.test.assertEquals
 
 @RunWith(RobolectricTestRunner::class)
 class DailyRequestWorkerTest : KoinTest {
     private val context: Context = ApplicationProvider.getApplicationContext()
-    private val photoDao: PhotoDao by inject()
-    private val homeRepository: HomeRepository by inject()
+    private val photos = listOf(MockModel.buildPhoto(
+        explanation = "A very faint but very large squid-like nebula is visible in planet Earth's sky",
+    ))
+    private val homeRepository: HomeRepository = FakeHomeRepository(photos = photos)
     private val photoNotificationBuilder: PhotoNotificationBuilder by inject()
     private lateinit var dailyRequestWorker: DailyRequestWorker
 
     @Before
     fun setUp() {
-        val dailyRequestWorkerFactory =
-            DailyRequestWorkerFactory(homeRepository, photoNotificationBuilder, object : BitmapLoader {
-                override fun loadBitmap(url: String): Bitmap {
-                    return BitmapHelper.emptyBitmap()
-                }
-            })
+        val dailyRequestWorkerFactory = DailyRequestWorkerFactory(
+            homeRepository = homeRepository,
+            notificationBuilder = photoNotificationBuilder,
+        ) { BitmapHelper.emptyBitmap() }
 
         dailyRequestWorker = TestListenableWorkerBuilder<DailyRequestWorker>(context)
             .setWorkerFactory(dailyRequestWorkerFactory)
@@ -52,21 +49,23 @@ class DailyRequestWorkerTest : KoinTest {
 
     @Test
     fun testDoWork(): Unit = runBlocking {
-        Assert.assertTrue(photoDao.getAll().isEmpty())
-        dailyRequestWorker.doWork()
-        Assert.assertTrue(photoDao.getAll().isNotEmpty())
+        // Given
+        val photo = photos.first()
 
-        val photo: Photo = photoDao.getAll().first()
-        val notificationManager: NotificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val statusBarNotification: StatusBarNotification =
-            notificationManager.activeNotifications[0]
-        statusBarNotification.notification.extras.getString("android.title")?.let { title: String ->
-            Assert.assertEquals(photo.title, title)
-        }
-        statusBarNotification.notification.extras.getString("android.text")
-            ?.let { description: String ->
-                Assert.assertEquals(photo.explanation, description)
-            }
+        // When
+        dailyRequestWorker.doWork()
+
+        // Then
+        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val statusBarNotification = notificationManager.activeNotifications[0]
+        val notificationTitle = requireNotNull(
+            statusBarNotification.notification.extras.getString("android.title")
+        )
+        val notificationDescription = requireNotNull(
+            statusBarNotification.notification.extras.getString("android.text")
+        )
+        assertEquals(expected = photo.title, actual = notificationTitle)
+        assertEquals(expected = photo.explanation, actual = notificationDescription)
     }
+
 }

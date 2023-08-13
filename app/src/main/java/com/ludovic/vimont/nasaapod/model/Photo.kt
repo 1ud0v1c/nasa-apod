@@ -10,17 +10,19 @@ import com.squareup.moshi.Json
  * @see: NasaAPI
  */
 @Entity
-data class Photo(val title: String,
-                 @PrimaryKey
-                 val date: String,
-				 val url: String,
-				 val hdurl: String?,
-				 val explanation: String,
-				 @field:Json(name = "media_type")
-				 val mediaType: String,
-				 @field:Json(name = "service_version")
-				 val serviceVersion: String,
-				 val copyright: String?) {
+data class Photo(
+    val title: String,
+    @PrimaryKey
+    val date: String,
+    val url: String,
+    val hdurl: String?,
+    val explanation: String,
+    @field:Json(name = "media_type")
+    val mediaType: String,
+    @field:Json(name = "service_version")
+    val serviceVersion: String,
+    val copyright: String?,
+) {
     companion object {
         const val DETAIL_DATE_FORMAT = "dd MMMM yyyy"
         const val IMAGE_MEDIA_TYPE = "image"
@@ -28,6 +30,7 @@ data class Photo(val title: String,
         const val YOUTUBE_NAME = "youtube"
         const val VIMEO_NAME = "vimeo"
     }
+
     var videoThumbnail: String? = null
 
     fun isMediaImage(): Boolean {
@@ -98,4 +101,5 @@ data class Photo(val title: String,
         val day: String = fragmentedDate[2]
         return "https://apod.nasa.gov/apod/ap$year$month$day.html"
     }
+
 }

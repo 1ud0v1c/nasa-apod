@@ -3,6 +3,7 @@ package com.ludovic.vimont.nasaapod.screens.settings
 import com.ludovic.vimont.nasaapod.api.NasaAPI
 import com.ludovic.vimont.nasaapod.model.Photo
 import com.ludovic.vimont.nasaapod.screens.home.HomeRepository
+import com.ludovic.vimont.nasaapod.screens.home.HomeRepositoryImpl
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert
@@ -29,7 +30,7 @@ class SettingsRepositoryTest : KoinTest {
             NasaAPI.DEFAULT_RATE_LIMIT_PER_HOUR,
             settingsRepository.getQuota().split("/")[0].toInt()
         )
-        homeRepository.retrievedNasaPhotos().data?.let { _: List<Photo> ->
+        homeRepository.retrievedNasaPhotos(false).data?.let { _: List<Photo> ->
             Assert.assertNotEquals(
                 NasaAPI.DEFAULT_RATE_LIMIT_PER_HOUR,
                 settingsRepository.getQuota().split("/")[0].toInt()

@@ -31,7 +31,7 @@ class HomeRepositoryTest : KoinTest {
 
     @Test
     fun testRetrievedNasaPhotos(): Unit = runBlocking {
-        homeRepository.retrievedNasaPhotos().data?.let { photos: List<Photo> ->
+        homeRepository.retrievedNasaPhotos(false).data?.let { photos: List<Photo> ->
             Assert.assertTrue(photos.isNotEmpty())
             Assert.assertEquals(NasaAPI.NUMBER_OF_DAY_TO_FETCH, photos.size)
         }
@@ -40,7 +40,7 @@ class HomeRepositoryTest : KoinTest {
     @Test
     fun testDatabaseFilled() = runBlocking {
         Assert.assertTrue(photoDao.getAll().isEmpty())
-        homeRepository.retrievedNasaPhotos().data?.let { photos: List<Photo> ->
+        homeRepository.retrievedNasaPhotos(false).data?.let { photos: List<Photo> ->
             Assert.assertTrue(photos.isNotEmpty())
             Assert.assertEquals(NasaAPI.NUMBER_OF_DAY_TO_FETCH, photos.size)
         }
@@ -68,7 +68,7 @@ class HomeRepositoryTest : KoinTest {
         homeRepository.setNumberOfDaysToFetch(90)
         Assert.assertEquals(90, homeRepository.getNumberOfDaysToFetch())
 
-        homeRepository.retrievedNasaPhotos().data?.let { photos: List<Photo> ->
+        homeRepository.retrievedNasaPhotos(false).data?.let { photos: List<Photo> ->
             Assert.assertTrue(photos.isNotEmpty())
             Assert.assertEquals(90, photos.size)
         }

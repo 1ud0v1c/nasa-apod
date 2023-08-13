@@ -26,7 +26,7 @@ class PhotoTest : KoinTest {
 
     @Before
     fun setUp() {
-        photo = MockModel.buildPhoto(imageURL)
+        photo = MockModel.buildPhoto(url = imageURL)
     }
 
     @After
@@ -37,27 +37,40 @@ class PhotoTest : KoinTest {
     @Test
     fun testGetImageURL() {
         Assert.assertEquals(imageURL, photo.getImageURL())
-        photo = MockModel.buildPhoto(youtubeURLFromAPI, "video")
+        photo = MockModel.buildPhoto(
+            url = youtubeURLFromAPI,
+            mediaType = "video",
+        )
         photo.videoThumbnail = expectedYoutubeThumbnailURL
         Assert.assertEquals(expectedYoutubeThumbnailURL, photo.getImageURL())
     }
 
     @Test
     fun testGetYoutubeID() {
-        photo = MockModel.buildPhoto(youtubeURLFromAPI, "video")
+        photo = MockModel.buildPhoto(
+            url = youtubeURLFromAPI,
+            mediaType = "video",
+        )
         Assert.assertEquals(youtubeID, photo.getYoutubeID())
     }
 
     @Test
     fun testGetVimeoID() {
-        photo = MockModel.buildPhoto(vimeoURL, "video")
+        photo = MockModel.buildPhoto(
+            url = vimeoURL,
+            mediaType = "video",
+        )
         Assert.assertEquals(vimeoID, photo.getVimeoID())
     }
 
     @Test
     fun testGetApodLink() {
         Assert.assertFalse(NetworkHelper.isUrlValid("https://www.unit.tests.nasa.apod.com"))
-        photo = MockModel.buildPhoto(imageURL, "image", "2020-07-01")
+        photo = MockModel.buildPhoto(
+            url = imageURL,
+            mediaType = "image",
+            date = "2020-07-01",
+        )
         Assert.assertTrue(NetworkHelper.isUrlValid(photo.getApodLink()))
     }
 }

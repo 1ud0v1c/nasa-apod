@@ -29,8 +29,8 @@ class DetailRepositoryTest : KoinTest {
 
     @Before
     fun setUp() {
-        photos.add(MockModel.buildPhoto(googleURL, imageMediaType, firstDate))
-        photos.add(MockModel.buildPhoto(appleURL, videoMediaType, secondDate))
+        photos.add(MockModel.buildPhoto(url = googleURL, mediaType = imageMediaType, date = firstDate))
+        photos.add(MockModel.buildPhoto(url = appleURL, mediaType = videoMediaType, date = secondDate))
     }
 
     @After

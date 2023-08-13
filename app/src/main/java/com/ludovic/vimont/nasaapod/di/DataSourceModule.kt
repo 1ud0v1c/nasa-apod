@@ -17,6 +17,7 @@ import com.ludovic.vimont.nasaapod.db.PhotoDatabase
 import com.ludovic.vimont.nasaapod.preferences.DataHolder
 import com.ludovic.vimont.nasaapod.screens.detail.DetailRepository
 import com.ludovic.vimont.nasaapod.screens.home.HomeRepository
+import com.ludovic.vimont.nasaapod.screens.home.HomeRepositoryImpl
 import com.ludovic.vimont.nasaapod.screens.settings.SettingsRepository
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.Module
@@ -84,8 +85,8 @@ object DataSourceModule {
     }
 
     private fun Module.buildRepositoriesEntities() {
-        factory {
-            HomeRepository(get(), get(), get(), get())
+        factory<HomeRepository> {
+            HomeRepositoryImpl(get(), get(), get(), get())
         }
         factory {
             DetailRepository(get(), get(), get())
