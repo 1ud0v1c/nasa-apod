@@ -7,7 +7,8 @@ import android.os.Build
 import androidx.core.content.ContextCompat
 
 fun Context.hasPostNotificationPermission(): Boolean {
-    return Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && hasPermission(Manifest.permission.POST_NOTIFICATIONS)
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return true
+    return hasPermission(Manifest.permission.POST_NOTIFICATIONS)
 }
 
 fun Context.hasWritePermission(): Boolean {
@@ -15,11 +16,8 @@ fun Context.hasWritePermission(): Boolean {
 }
 
 fun Context.hasPermission(vararg permissions: String): Boolean {
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        permissions.all { singlePermission ->
-            ContextCompat.checkSelfPermission(this, singlePermission) == PackageManager.PERMISSION_GRANTED
-        }
-    } else {
-        true
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return true
+    return permissions.all { singlePermission ->
+        ContextCompat.checkSelfPermission(this, singlePermission) == PackageManager.PERMISSION_GRANTED
     }
 }
