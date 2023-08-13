@@ -15,11 +15,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: set up JDK 11
+      - name: set up JDK 17
         uses: actions/setup-java@v2
         with:
           distribution: 'zulu'
-          java-version: 11
+          java-version: 17
       - name: decode google-services.json
         env:
             GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES }}
