@@ -16,6 +16,8 @@ class TimeHelperTest : KoinTest, CalendarInterface {
     private val ONE_MINUTE_MS: Int = 60 * 1_000
     private var calendarInstance: Calendar = Calendar.getInstance()
 
+    override fun getCalendar(): Calendar = calendarInstance
+
     @Before
     fun setUp() {
         TimeHelper.calendarInterface = this
@@ -68,7 +70,4 @@ class TimeHelperTest : KoinTest, CalendarInterface {
         )
     }
 
-    override fun getCalendar(): Calendar {
-        return calendarInstance
-    }
 }

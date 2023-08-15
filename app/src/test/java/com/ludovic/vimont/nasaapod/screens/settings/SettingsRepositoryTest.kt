@@ -3,7 +3,6 @@ package com.ludovic.vimont.nasaapod.screens.settings
 import com.ludovic.vimont.nasaapod.api.NasaAPI
 import com.ludovic.vimont.nasaapod.model.Photo
 import com.ludovic.vimont.nasaapod.screens.home.HomeRepository
-import com.ludovic.vimont.nasaapod.screens.home.HomeRepositoryImpl
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert

@@ -10,7 +10,6 @@ import com.ludovic.vimont.nasaapod.helper.viewmodel.DataStatus
 import com.ludovic.vimont.nasaapod.helper.viewmodel.StateData
 import com.ludovic.vimont.nasaapod.model.Photo
 import com.ludovic.vimont.nasaapod.screens.home.HomeRepository
-import com.ludovic.vimont.nasaapod.screens.home.HomeRepositoryImpl
 
 class DailyRequestWorker(context: Context,
                          workerParameters: WorkerParameters,

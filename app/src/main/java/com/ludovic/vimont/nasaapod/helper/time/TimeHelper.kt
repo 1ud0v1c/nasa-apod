@@ -10,11 +10,7 @@ import java.util.GregorianCalendar
 import java.util.Locale
 
 object TimeHelper {
-    var calendarInterface: CalendarInterface = object: CalendarInterface {
-        override fun getCalendar(): Calendar {
-            return Calendar.getInstance()
-        }
-    }
+    var calendarInterface: CalendarInterface = CalendarInterface { Calendar.getInstance() }
 
     fun getFormattedDate(dateValue: String): String? {
         val apiFormat = SimpleDateFormat(NasaAPI.API_DATE_FORMAT, Locale.getDefault())
