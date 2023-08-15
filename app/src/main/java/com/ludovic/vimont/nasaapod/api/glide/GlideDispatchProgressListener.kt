@@ -5,6 +5,7 @@ package com.ludovic.vimont.nasaapod.api.glide
  * the download with a percentage.
  */
 class GlideDispatchProgressListener: ResponseProgressListener {
+
     companion object {
         private const val HUNDRED_PERCENT: Int = 100
         private val listeners = HashMap<String, UIDownloadProgressListener>()
@@ -20,11 +21,10 @@ class GlideDispatchProgressListener: ResponseProgressListener {
         }
     }
 
-    override fun update(url: String, totalBytesRead: Long, contentLength: Long, isDone: Boolean) {
+    override fun invoke(url: String, totalBytesRead: Long, contentLength: Long, isDone: Boolean) {
         val currentProgress: Int = (HUNDRED_PERCENT * totalBytesRead / contentLength).toInt()
-        if (isDispatchNeeded(url, currentProgress)) {
-            listeners[url]?.invoke(currentProgress)
-        }
+        if (!isDispatchNeeded(url, currentProgress)) return
+        listeners[url]?.invoke(currentProgress)
     }
 
     private fun isDispatchNeeded(key: String, currentProgress: Int): Boolean {
@@ -41,4 +41,5 @@ class GlideDispatchProgressListener: ResponseProgressListener {
         progresses[key] = currentProgress
         return true
     }
+
 }

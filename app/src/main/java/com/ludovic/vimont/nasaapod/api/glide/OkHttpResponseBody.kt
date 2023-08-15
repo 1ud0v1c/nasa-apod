@@ -17,22 +17,16 @@ import okio.Source
 class OkHttpResponseBody(private val httpUrl: HttpUrl,
                          private val responseBody: ResponseBody,
                          private val progressListener: ResponseProgressListener) : ResponseBody() {
-    private var bufferedSource: BufferedSource? = null
 
-    override fun contentType(): MediaType? {
-        return responseBody.contentType()
+    private val bufferedSource: BufferedSource by lazy {
+        Okio.buffer(source(responseBody.source()))
     }
 
-    override fun contentLength(): Long {
-        return responseBody.contentLength()
-    }
+    override fun contentType(): MediaType? = responseBody.contentType()
 
-    override fun source(): BufferedSource? {
-        if (bufferedSource == null) {
-            bufferedSource = Okio.buffer(source(responseBody.source()))
-        }
-        return bufferedSource
-    }
+    override fun contentLength(): Long = responseBody.contentLength()
+
+    override fun source(): BufferedSource = bufferedSource
 
     private fun source(source: Source): Source {
         return object : ForwardingSource(source) {
@@ -48,9 +42,17 @@ class OkHttpResponseBody(private val httpUrl: HttpUrl,
                 }
                 val isDone: Boolean = (bytesRead == -1L)
                 val url: String = httpUrl.uri().toString()
-                progressListener.update(url, totalBytesRead, responseBody.contentLength(), isDone)
+
+                progressListener.invoke(
+                    url = url,
+                    totalBytesRead = totalBytesRead,
+                    contentLength = responseBody.contentLength(),
+                    isDone = isDone,
+                )
+
                 return bytesRead
             }
         }
     }
+
 }

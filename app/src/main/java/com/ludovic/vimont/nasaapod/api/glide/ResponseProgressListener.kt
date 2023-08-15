@@ -1,10 +1,12 @@
 package com.ludovic.vimont.nasaapod.api.glide
 
-interface ResponseProgressListener {
-    fun update(
+fun interface ResponseProgressListener {
+
+    operator fun invoke(
         url: String,
         totalBytesRead: Long,
         contentLength: Long,
         isDone: Boolean
     )
+
 }
