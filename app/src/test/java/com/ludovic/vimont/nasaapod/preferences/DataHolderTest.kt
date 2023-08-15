@@ -1,7 +1,6 @@
 package com.ludovic.vimont.nasaapod.preferences
 
 import org.junit.After
-import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.core.context.GlobalContext
@@ -9,10 +8,11 @@ import org.koin.test.KoinTest
 import org.koin.test.inject
 import org.robolectric.RobolectricTestRunner
 import java.util.UUID
+import kotlin.test.assertEquals
 
 @RunWith(RobolectricTestRunner::class)
 class DataHolderTest : KoinTest {
-    private val KEY_RANDOM_STRING = "nasa.apod.unit.test"
+    private val keyOfRandomString = "nasa.apod.unit.test"
     private val dataHolder: DataHolder by inject()
 
     @After
@@ -21,11 +21,40 @@ class DataHolderTest : KoinTest {
     }
 
     @Test
-    fun testInsert() {
-        val defaultString = "default"
-        val randomString: String = UUID.randomUUID().toString()
-        Assert.assertEquals(defaultString, dataHolder[KEY_RANDOM_STRING, defaultString])
-        dataHolder[KEY_RANDOM_STRING] = randomString
-        Assert.assertEquals(randomString, dataHolder[KEY_RANDOM_STRING, defaultString])
+    fun `get should return stored data`() {
+        // Given
+        val randomString = "lorem ipsum"
+        dataHolder[keyOfRandomString] = randomString
+
+        // When
+        val result = dataHolder.get<String>(keyOfRandomString)
+
+        // Then
+        assertEquals(
+            expected = randomString,
+            actual = result,
+        )
     }
+
+    @Test
+    fun `set should put data in SharedPreferences`() {
+        // Given
+        val defaultString = "default"
+        val randomString = UUID.randomUUID().toString()
+        val firstString = dataHolder[keyOfRandomString, defaultString]
+
+        // When
+        dataHolder[keyOfRandomString] = randomString
+
+        // Then
+        assertEquals(
+            expected = defaultString,
+            actual = firstString,
+        )
+        assertEquals(
+            expected = randomString,
+            actual = dataHolder[keyOfRandomString, defaultString],
+        )
+    }
+
 }
