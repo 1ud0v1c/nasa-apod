@@ -16,16 +16,23 @@ class DailyRequestWorker(context: Context,
                          private val homeRepository: HomeRepository,
                          private val notificationBuilder: PhotoNotificationBuilder,
                          private val bitmapLoader: BitmapLoader): CoroutineWorker(context, workerParameters) {
+
     override suspend fun doWork(): Result {
-        val stateDataPhotos: StateData<List<Photo>> = homeRepository.retrievedNasaPhotos(true)
-        if (stateDataPhotos.status == DataStatus.SUCCESS) {
-            stateDataPhotos.data?.let { photos: List<Photo> ->
-                val newPhoto: Photo = photos[0]
-                val bitmap: Bitmap = bitmapLoader.loadBitmap(newPhoto.getImageURL())
-                notificationBuilder.showNotification(newPhoto, bitmap)
-            }
-            return Result.success()
-        }
-        return Result.failure()
+        val stateDataPhotos: StateData<List<Photo>> = homeRepository.retrievedNasaPhotos(
+            isRefreshNeeded = true,
+        )
+        if (stateDataPhotos.status != DataStatus.SUCCESS) return Result.failure()
+        val listOfPhotos = stateDataPhotos.data ?: return Result.failure()
+
+        val newPhoto: Photo = listOfPhotos.first()
+        val bitmap: Bitmap = bitmapLoader.loadBitmap(newPhoto.getImageURL())
+
+        notificationBuilder.showNotification(
+            photo = newPhoto,
+            largeIcon = bitmap,
+        )
+
+        return Result.success()
     }
+
 }
