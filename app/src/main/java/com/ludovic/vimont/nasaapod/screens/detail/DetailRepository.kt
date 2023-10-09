@@ -71,7 +71,9 @@ class DetailRepository(private val photoDao: PhotoDao,
             val image = File(picturesFolder.toString(), name)
             FileOutputStream(image)
         }
+
+        if (fileOutputStream == null) return
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
-        fileOutputStream?.close()
+        fileOutputStream.close()
     }
 }

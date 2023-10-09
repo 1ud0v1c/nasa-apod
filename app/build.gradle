@@ -10,14 +10,14 @@ plugins {
 }
 
 android {
-    compileSdk 33
+    compileSdk 34
     buildToolsVersion = "33.0.1"
     namespace "com.ludovic.vimont.nasaapod"
 
     defaultConfig {
         applicationId "com.ludovic.vimont.nasaapod"
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode 9
         versionName "1.4.0"
         vectorDrawables.useSupportLibrary = true
