@@ -8,7 +8,7 @@ import retrofit2.http.Path
 /**
  * https://developer.vimeo.com/api/reference/videos#get_video
  */
-interface VimeoAPI {
+fun interface VimeoAPI {
     companion object {
         const val BASE_URL = "https://vimeo.com/api/v2/"
     }

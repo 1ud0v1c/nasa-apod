@@ -34,21 +34,21 @@ class HomeRepositoryImpl(private val nasaAPI: NasaAPI,
     }
 
     private suspend fun fetchNasaPhotos(): StateData<List<Photo>> {
-        val photos = ArrayList<Photo>()
+        val photos = mutableListOf<Photo>()
         val rangeOfDaysToFetch: Int = getNumberOfDaysToFetch() - 1
         val startDate: String = TimeHelper.getSpecificDay(-rangeOfDaysToFetch)
-        try {
+
+        return try {
             val responsePhoto: Response<List<Photo>> = nasaAPI.getPhotos(startDate)
             if (!responsePhoto.isSuccessful) {
                 return when (responsePhoto.code()) {
-                    HTTP_ERROR_CODE_TOO_MANY_REQUESTS -> {
-                        StateData.error("The user has sent too many requests in a given amount of time.")
-                    }
-                    else -> {
-                        StateData.error(responsePhoto.message())
-                    }
+                    HTTP_ERROR_CODE_TOO_MANY_REQUESTS -> StateData.error(
+                        "The user has sent too many requests in a given amount of time."
+                    )
+                    else -> StateData.error(responsePhoto.message())
                 }
             }
+
             readHeadersResponse(responsePhoto)
             responsePhoto.body()?.let { receivedPhotos: List<Photo> ->
                 val newPhotos: List<Photo> = receivedPhotos.reversed()
@@ -57,9 +57,9 @@ class HomeRepositoryImpl(private val nasaAPI: NasaAPI,
                 photoDao.drop()
                 photoDao.insert(newPhotos)
             }
-            return StateData.success(photos)
+            StateData.success(photos)
         } catch (exception: Exception) {
-            return StateData.error(exception.message.toString())
+            StateData.error(exception.message.toString())
         }
     }
 
@@ -78,11 +78,11 @@ class HomeRepositoryImpl(private val nasaAPI: NasaAPI,
      */
     private suspend fun updateVideoThumbnails(photos: List<Photo>) {
         for (photo: Photo in photos) {
-            if (photo.isYoutubeVideo()) {
-                photo.videoThumbnail = "https://img.youtube.com/vi/${photo.getYoutubeID()}/0.jpg"
-            }
-            if (photo.isVimeoVideo()) {
-                try {
+            when {
+                photo.isYoutubeVideo() -> {
+                    photo.videoThumbnail = "https://img.youtube.com/vi/${photo.getYoutubeID()}/0.jpg"
+                }
+                photo.isVimeoVideo() -> try {
                     vimeoAPI.getVideoInformation(
                         photo.getVimeoID()
                     ).body()?.let { vimeoData: List<VimeoData> ->
@@ -95,15 +95,16 @@ class HomeRepositoryImpl(private val nasaAPI: NasaAPI,
         }
     }
 
-    override fun getNumberOfDaysToFetch(): Int {
-        return dataHolder[UserPreferences.KEY_RANGE_OF_DAYS_TO_FETCH, NasaAPI.NUMBER_OF_DAY_TO_FETCH]
-    }
+    override fun getNumberOfDaysToFetch(): Int = dataHolder[
+        UserPreferences.KEY_RANGE_OF_DAYS_TO_FETCH, NasaAPI.NUMBER_OF_DAY_TO_FETCH
+    ]
 
     override fun setNumberOfDaysToFetch(rangeOfDays: Int) {
         dataHolder[UserPreferences.KEY_RANGE_OF_DAYS_TO_FETCH] = rangeOfDays
     }
 
-    override fun getCurrentLayout(): String {
-        return dataHolder[UserPreferences.KEY_CURRENT_LAYOUT, UserPreferences.DEFAULT_LAYOUT]
-    }
+    override fun getCurrentLayout(): String = dataHolder[
+        UserPreferences.KEY_CURRENT_LAYOUT, UserPreferences.DEFAULT_LAYOUT
+    ]
+
 }

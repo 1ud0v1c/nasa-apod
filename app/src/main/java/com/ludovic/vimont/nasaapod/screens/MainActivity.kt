@@ -38,12 +38,10 @@ class MainActivity: AppCompatActivity() {
         viewModel.navigationEvent.observe(this, ::handleNavigationEvent)
     }
 
-    private fun handleNavigationEvent(navigationEvent: NavigationEvent) {
-        when (navigationEvent) {
-            NavigationEvent.AskForNotificationPermission -> NotificationPermissionDialogFragment.display(
-                supportFragmentManager
-            )
-        }
+    private fun handleNavigationEvent(navigationEvent: NavigationEvent) = when (navigationEvent) {
+        NavigationEvent.AskForNotificationPermission -> NotificationPermissionDialogFragment.display(
+            supportFragmentManager
+        )
     }
 
     override fun onSupportNavigateUp(): Boolean {

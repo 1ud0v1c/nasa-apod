@@ -33,17 +33,11 @@ data class Photo(
 
     var videoThumbnail: String? = null
 
-    fun isMediaImage(): Boolean {
-        return mediaType == IMAGE_MEDIA_TYPE
-    }
+    fun isMediaImage(): Boolean = mediaType == IMAGE_MEDIA_TYPE
 
-    fun isMediaVideo(): Boolean {
-        return mediaType == VIDEO_MEDIA_TYPE
-    }
+    fun isMediaVideo(): Boolean = mediaType == VIDEO_MEDIA_TYPE
 
-    fun isImageHDValid(): Boolean {
-        return isMediaImage() && hdurl != null
-    }
+    fun isImageHDValid(): Boolean = isMediaImage() && hdurl != null
 
     /**
      * After analysis, the API, we can have two different type of media:
@@ -55,44 +49,27 @@ data class Photo(
      * @see: https://stackoverflow.com/questions/8841159/how-to-make-youtube-video-thumbnails-in-android/8842839#8842839
      */
     fun getImageURL(): String {
-        if (isMediaVideo()) {
-            return videoThumbnail ?: ""
-        }
-        return url
+        if (isMediaImage()) return url
+        return videoThumbnail ?: ""
     }
 
-    fun isYoutubeVideo(): Boolean {
-        return isMediaVideo() && url.contains(YOUTUBE_NAME)
-    }
+    fun isYoutubeVideo(): Boolean = isMediaVideo() && url.contains(YOUTUBE_NAME)
 
     /**
      * Format example: https://www.youtube.com/embed/ictZttw3c98?rel=0
      */
-    fun getYoutubeID(): String {
-        return url.split("?")[0].split("/").last()
-    }
+    fun getYoutubeID(): String = url.split("?")[0].split("/").last()
 
-    fun isVimeoVideo(): Boolean {
-        return isMediaVideo() && url.contains(VIMEO_NAME)
-    }
+    fun isVimeoVideo(): Boolean = isMediaVideo() && url.contains(VIMEO_NAME)
 
     /**
      * Format example: https://player.vimeo.com/video/438799770
      */
-    fun getVimeoID(): String {
-        return url.split("/").last()
-    }
+    fun getVimeoID(): String = url.split("/").last()
 
-    fun getReversedDate(): String {
-        return date.split("-").reversed().joinToString("-")
-    }
+    fun getReversedDate(): String = date.split("-").reversed().joinToString("-")
 
-    fun getFormattedDate(): String {
-        TimeHelper.getFormattedDate(date)?.let { formattedDate: String ->
-            return formattedDate
-        }
-        return date
-    }
+    fun getFormattedDate(): String = TimeHelper.getFormattedDate(date) ?: date
 
     fun getApodLink(): String {
         val fragmentedDate: List<String> = date.split("-")
