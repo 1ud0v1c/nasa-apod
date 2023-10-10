@@ -18,20 +18,35 @@ object NetworkMock {
         return context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     }
 
-    fun mockNetworkAccess(context: Context) {
+    fun mockNetworkAccess(context: Context, shouldBeConnected: Boolean) {
         val connectivityManager: ConnectivityManager = getConnectivityManager(context)
         val shadowConnectivityManager = Shadows.shadowOf(connectivityManager)
-        val networkInfo: NetworkInfo = ShadowNetworkInfo.newInstance(
-            NetworkInfo.DetailedState.CONNECTED,
-            ConnectivityManager.TYPE_WIFI,
-            0,
-            false,
-            NetworkInfo.State.CONNECTED
-        )
-        val network: Network = ShadowNetwork.newInstance(1)
-        val networkCapabilities: NetworkCapabilities = ShadowNetworkCapabilities.newInstance()
-        Shadows.shadowOf(networkCapabilities).addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+
+        val networkInfo = if (shouldBeConnected) {
+            ShadowNetworkInfo.newInstance(
+                /* detailedState = */ NetworkInfo.DetailedState.CONNECTED,
+                /* type = */ ConnectivityManager.TYPE_WIFI,
+                /* subType = */ 0,
+                /* isAvailable = */ false,
+                /* state = */ NetworkInfo.State.CONNECTED
+            )
+        } else {
+            ShadowNetworkInfo.newInstance(
+                /* detailedState = */ NetworkInfo.DetailedState.DISCONNECTED,
+                /* type = */ ConnectivityManager.TYPE_WIFI,
+                /* subType = */ 0,
+                /* isAvailable = */ false,
+                /* state = */ NetworkInfo.State.DISCONNECTED
+            )
+        }
         shadowConnectivityManager.setActiveNetworkInfo(networkInfo)
+
+        val network = ShadowNetwork.newInstance(1)
+        val networkCapabilities: NetworkCapabilities = ShadowNetworkCapabilities.newInstance()
+        if (shouldBeConnected) {
+            Shadows.shadowOf(networkCapabilities).addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+        }
         shadowConnectivityManager.setNetworkCapabilities(network, networkCapabilities)
     }
+
 }

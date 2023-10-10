@@ -1,17 +1,16 @@
 package com.ludovic.vimont.nasaapod.helper.network
 
 import android.content.Context
-import android.os.Looper.getMainLooper
 import androidx.test.core.app.ApplicationProvider
 import com.ludovic.vimont.nasaapod.NetworkMock
 import org.junit.After
-import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.core.context.GlobalContext
 import org.koin.test.KoinTest
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.Shadows.shadowOf
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 @RunWith(RobolectricTestRunner::class)
 class NetworkHelperTest : KoinTest {
@@ -23,10 +22,33 @@ class NetworkHelperTest : KoinTest {
     }
 
     @Test
-    fun testIsOnline() {
-        shadowOf(getMainLooper()).idle()
-        Assert.assertTrue(NetworkHelper.isOnline(context))
-        NetworkMock.mockNetworkAccess(context)
-        Assert.assertTrue(NetworkHelper.isOnline(context))
+    fun `isOnline should return true, if the network is available`() {
+        // Given
+        NetworkMock.mockNetworkAccess(
+            context = context,
+            shouldBeConnected = true,
+        )
+
+        // When
+        val isOnline = NetworkHelper.isOnline(context)
+
+        // Then
+        assertTrue(isOnline)
     }
+
+    @Test
+    fun `isOnline should return false, if the network cannot be reached`() {
+        // Given
+        NetworkMock.mockNetworkAccess(
+            context = context,
+            shouldBeConnected = false,
+        )
+
+        // When
+        val isOnline = NetworkHelper.isOnline(context)
+
+        // Then
+        assertFalse(isOnline)
+    }
+
 }

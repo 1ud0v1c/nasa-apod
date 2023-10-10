@@ -10,37 +10,31 @@ import android.os.Build
  * @see: https://developer.android.com/training/monitoring-device-state/connectivity-status-type
  */
 object NetworkHelper {
+
     fun isOnline(context: Context): Boolean {
-        val connectivityManager: ConnectivityManager? =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
-        connectivityManager?.let {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                it.getNetworkCapabilities(it.activeNetwork)?.run {
-                    return when {
-                        hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
-                            true
-                        }
-                        hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
-                            true
-                        }
-                        hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> {
-                            true
-                        }
-                        else -> {
-                            false
-                        }
-                    }
-                }
-            } else {
-                it.activeNetworkInfo?.run {
-                    if (type == ConnectivityManager.TYPE_WIFI) {
-                        return true
-                    } else if (type == ConnectivityManager.TYPE_MOBILE) {
-                        return true
-                    }
-                }
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
+        if (connectivityManager == null) return false
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            val networkInfo = connectivityManager.activeNetworkInfo
+            if (networkInfo == null) return false
+
+            return when (networkInfo.type) {
+                ConnectivityManager.TYPE_WIFI -> true
+                ConnectivityManager.TYPE_MOBILE -> true
+                else -> false
             }
         }
-        return false
+
+        val networkCapabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+        if (networkCapabilities == null) return false
+
+        return when {
+            networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+            networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+            networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+            else -> false
+        }
     }
+
 }
