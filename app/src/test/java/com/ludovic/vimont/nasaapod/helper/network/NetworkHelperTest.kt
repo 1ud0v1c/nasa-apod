@@ -22,7 +22,7 @@ class NetworkHelperTest : KoinTest {
     }
 
     @Test
-    fun `isOnline should return true, if the network is available`() {
+    fun `isOnline should return true while the network is available`() {
         // Given
         NetworkMock.mockNetworkAccess(
             context = context,
@@ -37,7 +37,7 @@ class NetworkHelperTest : KoinTest {
     }
 
     @Test
-    fun `isOnline should return false, if the network cannot be reached`() {
+    fun `isOnline should return false while the network cannot be reached`() {
         // Given
         NetworkMock.mockNetworkAccess(
             context = context,

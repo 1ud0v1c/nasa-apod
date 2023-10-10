@@ -2,7 +2,6 @@ package com.ludovic.vimont.nasaapod
 
 import android.content.Context
 import android.net.ConnectivityManager
-import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkInfo
 import org.robolectric.Shadows
