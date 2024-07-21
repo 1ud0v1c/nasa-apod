@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        kotlin_version = "1.8.0"
+        kotlin_version = "1.9.21"
         navigation_version = "2.5.3"
     }
     repositories {
@@ -19,7 +19,7 @@ buildscript {
 }
 
 plugins {
-    id 'com.google.devtools.ksp' version '1.8.10-1.0.9' apply false
+    id 'com.google.devtools.ksp' version '1.9.21-1.0.15' apply false
 }
 
 allprojects {
