@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'com.google.devtools.ksp'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
     id 'androidx.navigation.safeargs.kotlin'
@@ -100,7 +101,7 @@ dependencies {
     // Glide for Image loading
     implementation libs.glide
     implementation libs.glide.okhttp
-    kapt libs.glide.compiler
+    ksp libs.glide.compiler
 
     // Kotlin
     implementation libs.kotlinx.coroutines

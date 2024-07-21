@@ -9,11 +9,12 @@ import com.bumptech.glide.request.target.Target
 class DrawableRequestListener(
     private val lambda: (success: Boolean) -> Unit
 ): RequestListener<Drawable> {
+
     override fun onResourceReady(
-        resource: Drawable?,
-        model: Any?,
+        resource: Drawable,
+        model: Any,
         target: Target<Drawable>?,
-        dataSource: DataSource?,
+        dataSource: DataSource,
         isFirstResource: Boolean
     ): Boolean {
         lambda(true)
@@ -23,10 +24,11 @@ class DrawableRequestListener(
     override fun onLoadFailed(
         e: GlideException?,
         model: Any?,
-        target: Target<Drawable>?,
+        target: Target<Drawable>,
         isFirstResource: Boolean
     ): Boolean {
         lambda(false)
         return false
     }
+
 }
