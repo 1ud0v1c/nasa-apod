@@ -7,7 +7,7 @@ import com.ludovic.vimont.nasaapod.model.Photo
 /**
  * Handle the creation of the database by extending RoomDatabase.
  */
-@Database(entities = [Photo::class], version = 1)
+@Database(entities = [Photo::class], version = 1, exportSchema = true)
 abstract class PhotoDatabase: RoomDatabase() {
     companion object {
         const val DATABASE_NAME = "nasa_apod_database"
