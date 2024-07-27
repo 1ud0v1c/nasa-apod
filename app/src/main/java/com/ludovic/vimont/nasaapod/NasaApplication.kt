@@ -19,6 +19,7 @@ class NasaApplication : Application(), Configuration.Provider {
     companion object {
         private const val WORKER_LAUNCH_TIME: Int = 9
     }
+
     private val dailyRequestWorkerFactory: DailyRequestWorkerFactory by inject()
 
     override fun onCreate() {
@@ -37,12 +38,14 @@ class NasaApplication : Application(), Configuration.Provider {
         WorkerHelper.launchDailyWorker<DailyRequestWorker>(applicationContext, initialDelay)
     }
 
-    override fun getWorkManagerConfiguration(): Configuration {
-        val delegatingWorkerFactory = DelegatingWorkerFactory()
-        delegatingWorkerFactory.addFactory(dailyRequestWorkerFactory)
+    override val workManagerConfiguration: Configuration
+        get() {
+            val delegatingWorkerFactory = DelegatingWorkerFactory()
+            delegatingWorkerFactory.addFactory(dailyRequestWorkerFactory)
 
-        return Configuration.Builder()
-            .setWorkerFactory(delegatingWorkerFactory)
-            .build()
-    }
+            return Configuration.Builder()
+                .setWorkerFactory(delegatingWorkerFactory)
+                .build()
+        }
+
 }
