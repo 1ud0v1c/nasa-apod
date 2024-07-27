@@ -3,7 +3,7 @@
 androidx_appcompat_version = "1.7.0"
 androidx_arch_core_testing_version = "2.2.0"
 androidx_constraintlayout_version = "2.1.4"
-androidx_core_ktx_version = "1.12.0"
+androidx_core_ktx_version = "1.13.1"
 androidx_espresso_version = "3.6.1"
 androidx_fragment_version = "1.6.2"
 androidx_material_version = "1.10.0"
