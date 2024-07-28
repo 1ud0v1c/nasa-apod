@@ -9,6 +9,33 @@ plugins {
     id 'kover'
 }
 
+def getVersionProperties() {
+    Properties properties = new Properties()
+    file("version.properties").withInputStream {
+        properties.load(it)
+    }
+    return properties
+}
+
+def getVersionName() {
+    Properties properties = getVersionProperties()
+    String major = properties["version.major"]
+    String minor = properties["version.minor"]
+    String patch = properties["version.patch"]
+    return "$major.$minor.$patch"
+}
+
+def getVersionCode() {
+    Properties properties = getVersionProperties()
+    String major = properties["version.major"]
+    String minor = properties["version.minor"]
+    String patch = properties["version.patch"]
+    return major.toInteger() * 10_000 + minor.toInteger() * 100 + patch.toInteger()
+}
+
+def computedVersionName = getVersionName()
+def computedVersionCode = getVersionCode()
+
 android {
     compileSdk 34
     namespace "com.ludovic.vimont.nasaapod"
@@ -17,8 +44,10 @@ android {
         applicationId "com.ludovic.vimont.nasaapod"
         minSdkVersion 21
         targetSdkVersion 34
-        versionCode 9
-        versionName "1.4.0"
+        versionCode computedVersionCode
+        versionName computedVersionName
+        buildConfigField "int", "VERSION_CODE", computedVersionCode.toString()
+        buildConfigField "String", "VERSION_NAME", "\"${computedVersionName}\""
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
@@ -37,6 +66,7 @@ android {
     }
 
     buildFeatures {
+        buildConfig true
         viewBinding true
     }
 
